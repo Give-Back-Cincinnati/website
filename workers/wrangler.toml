@@ -1,0 +1,32 @@
+name = "facade-api"
+type = "javascript"
+account_id = "aee6d4c8125a336201b0aced263d3921"
+compatibility_date = "2022-02-14"
+
+[vars]
+NODE_ENV = "development"
+
+[production]
+zone_id = "b14980cd527fbfd334763a9fd3c6db3d"
+route = "studyhall.org/api/*"
+
+[env.production.vars]
+NODE_ENV = "production"
+
+[env.dev]
+zone_id = "762e9f681872915a3fb3165068ff852f"
+workers_dev = true
+
+[env.dev.vars]
+NODE_ENV = "development"
+SEGMENT_WRITE_KEY = ""
+
+# [secrets]
+# SEGMENT_WRITE_KEY
+# RECAPTCHA_SECRET_KEY
+
+[build]
+command = "yarn install && yarn build"
+[build.upload]
+format = "service-worker"
+

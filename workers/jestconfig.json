@@ -1,0 +1,15 @@
+{
+  "transform": {
+    "^.+\\.(t|j)sx?$": "ts-jest"
+  },
+  "testRegex": ".*\\.test\\.ts$",
+  "collectCoverageFrom": [
+    "src/**/*.{ts,js}",
+    "!src/index.ts"
+  ],
+  "globals": {
+    "NODE_ENV": "development",
+    "SEGMENT_WRITE_KEY": "YOUR_SEGMENT_WRITE_KEY",
+    "RECAPTCHA_SECRET_KEY": "RECAPTCHA_SECRET_KEY"
+  }
+}
