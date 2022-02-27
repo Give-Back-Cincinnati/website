@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import React from 'react'
 import Head from 'next/head'
-import Image from "next/image"
 import type { AppProps } from 'next/app'
 import { Pane, Text, defaultTheme, ThemeProvider, mergeTheme } from "evergreen-ui"
 
@@ -53,7 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <link rel="icon" href="/favicon-96x96.ico" sizes="96x96" />
     </Head>
     <Pane background="gray200" height={93} width='100%' is='nav'>
-      <Image src='/logos/half_circle.svg' width={144} height={107} alt='logo' />
+      <img src='/logos/half_circle.svg' width={144} height={107} alt='logo' />
     </Pane>
 
     <Pane paddingTop={93} minHeight={'calc(100vh - 93px)'} is={'main'}>
