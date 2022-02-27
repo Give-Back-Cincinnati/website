@@ -56,15 +56,15 @@ const navigationRoutes = [
   },
   {
     label: 'Upcoming Events',
-    href: '/about-us',
+    href: '/about-us1',
   },
   {
     label: 'Join GBC',
-    href: '/about-us',
+    href: '/about-us2',
   },
   {
     label: 'Support GBC',
-    href: '/about-us',
+    href: '/about-us3',
   },
 ]
 
@@ -94,7 +94,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Pane className='sm md lg xl xxl' marginRight={majorScale(4)} display='flex' justifyContent={'center'} alignItems={'center'}>
         {
           navigationRoutes.map(({ label, href }, idx) => (
-            <Text size='navigation' fontFamily='stylized' color='gbc-red' marginRight={majorScale(idx !== navigationRoutes.length-1 ? 2: 0)}>
+            <Text key={href} size='navigation' fontFamily='stylized' color='gbc-red' marginRight={majorScale(idx !== navigationRoutes.length-1 ? 2: 0)}>
               <Link href={href}>
                   {label}
               </Link>
