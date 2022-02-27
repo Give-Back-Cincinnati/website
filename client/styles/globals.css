@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'AlternateGotNo3D';
+  src: url(/AlternateGotNo3D_Regular.ttf) format('truetype');
+}
+
 html,
 body {
   padding: 0;
@@ -18,4 +23,58 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.sm,.md,.lg,.xl,.xxl {
+  display: none;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+  .xs {
+    display: none;
+  }
+  .sm {
+    display: block;
+  }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+  .sm {
+    display: none;
+  }
+  .md {
+    display: block;
+  }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+  .md {
+    display: none;
+  }
+  .lg {
+    display: block;
+  }
+}
+
+/*X-Large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .lg {
+    display: none;
+  }
+  .xl {
+    display: block;
+  }
+}
+
+/*XX-Large devices (larger desktops, 1400px and up)*/
+@media (min-width: 1400px) {
+  .xl {
+    display: none;
+  }
+  .xxl {
+    display: block;
+  }
 }
