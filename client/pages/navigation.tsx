@@ -84,36 +84,35 @@ function Navigation () {
             <Overlay
                 isShown={isNavigationOpen}
                 onExited={() => setNavigationOpen(false)}
-                children={
-                    <Pane
-                        position='fixed'
-                        width={250}
-                        height='100vh'
-                        right={0}
-                        backgroundColor='#FFF'
-                        display={isNavigationOpen ? 'block' : 'none'}
-                    >
-                        <Pane background='gbc-red' height={93} width='100%'>
-                            <span onClick={() => setNavigationOpen(false)}>X</span>
-                        </Pane>
-                        {navigationRoutes.map(({ label, href }, idx) => (
-                            <Text
-                                key={href}
-                                width='100%'
-                                is='div'
-                                paddingY={majorScale(2)}
-                                paddingLeft={majorScale(2)}
-                                onClick={() => {
-                                    setNavigationOpen(false)
-                                    void router.push(href)
-                                }}
-                            >
-                                {label}
-                            </Text>
-                        ))}
+            >
+                <Pane
+                    position='fixed'
+                    width={250}
+                    height='100vh'
+                    right={0}
+                    backgroundColor='#FFF'
+                    display={isNavigationOpen ? 'block' : 'none'}
+                >
+                    <Pane background='gbc-red' height={93} width='100%'>
+                        <span onClick={() => setNavigationOpen(false)}>X</span>
                     </Pane>
-                }
-            />
+                    {navigationRoutes.map(({ label, href }, idx) => (
+                        <Text
+                            key={href}
+                            width='100%'
+                            is='div'
+                            paddingY={majorScale(2)}
+                            paddingLeft={majorScale(2)}
+                            onClick={() => {
+                                setNavigationOpen(false)
+                                void router.push(href)
+                            }}
+                        >
+                            {label}
+                        </Text>
+                    ))}
+                </Pane>
+            </Overlay>
         </Pane>
     )
 }
