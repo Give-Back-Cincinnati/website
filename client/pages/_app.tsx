@@ -13,6 +13,7 @@ const gbcColors = {
 
 const customTheme = {
   colors: {
+    'overlay': 'rgba(0, 0, 0, .65)',
     'gbc-red': gbcColors.red,
     'gbc-black': gbcColors.black,
   },
