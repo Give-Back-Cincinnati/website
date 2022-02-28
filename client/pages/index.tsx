@@ -94,7 +94,7 @@ const Home: NextPage = () => {
                                 '500+ houses painted throughout the region',
                                 'The region\'s largest Thanksgiving meal',
                                 'International service in Ghana, Romania, Peru, and beyond'
-                            ].map(bulletPoint => <Text className='bulletPoint' color='white'>{bulletPoint}</Text>)
+                            ].map(bulletPoint => <Text key={bulletPoint} className='bulletPoint' color='white'>{bulletPoint}</Text>)
                         }
                     </Pane>
                 </Pane>
