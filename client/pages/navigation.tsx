@@ -33,7 +33,7 @@ function Navigation () {
     const [ isNavigationOpen, setNavigationOpen ] = useState(false)
 
     return (
-        <Pane height={93} width='100%' is='nav' display='flex'>
+        <Pane height={93} width='100%' is='nav' display='flex' zIndex={19}>
             <Pane flex={1} display='flex' alignItems='center'>
                 <img
                     src='/logos/half_circle.svg'
