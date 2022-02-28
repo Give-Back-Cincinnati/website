@@ -7,8 +7,8 @@ import Navigation from "./navigation"
 import Footer from './footer'
 
 const gbcColors = {
-  red: '#d03236',
-  black: '#1d1d1d',
+  red: '#d03236', // 208, 50, 54
+  black: '#333333',
 }
 
 const customTheme = {
