@@ -25,6 +25,22 @@ a {
   box-sizing: border-box;
 }
 
+.bulletPoint::before {
+  content: '';
+  display: block;
+  border-radius: 100px;
+  height: 10px;
+  width: 10px;
+  background: white;
+  position: relative;
+  left: -38px;
+  top: 15px;
+}
+
+.redUnderline {
+  border-bottom: 2px solid #d03236;
+}
+
 .sm,.md,.lg,.xl,.xxl {
   display: none;
 }
