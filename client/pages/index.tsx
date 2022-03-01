@@ -187,7 +187,7 @@ const Home: NextPage = () => {
                                 {text}
                             </Text>
                         </Pane>
-                        <Pane width='28%' maxWidth={300} margin={majorScale(2)} lineHeight={2} className='md lg xl xxl'>
+                        <Pane width='33%' maxWidth={250} padding={majorScale(2)} lineHeight={2} className='md lg xl xxl'>
                             <Text
                                 textTransform='uppercase'
                                 color='gbc-black'
