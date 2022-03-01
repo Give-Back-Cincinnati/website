@@ -9,6 +9,13 @@ const highlightTextStyles = {
     fontSize: majorScale(3)
 }
 
+const volunteerOpportunities = [
+    { logo: '/logos/civic-engagement.svg', title: 'Civic Engagement', description: 'Sounding off on local issues and taking a closer look at our community' },
+    { logo: '/logos/interactive.svg', title: 'Interactive', description: 'Sounding off on local issues and taking a closer look at our community' },
+    { logo: '/logos/hands-on.svg', title: 'Hands-On', description: 'Sounding off on local issues and taking a closer look at our community' },
+    { logo: '/logos/social.svg', title: 'Social', description: 'Sounding off on local issues and taking a closer look at our community' },
+]
+
 const Home: NextPage = () => {
   return (
     <Pane>
@@ -169,6 +176,60 @@ const Home: NextPage = () => {
             </Pane>
             <Pane width='110px' />
         </Pane>
+
+    {/*    Upcoming Events   */}
+        <Pane
+            minHeight='300px'
+            background={'gray300'}
+        >
+            <Text>WIP: Upcoming Events</Text>
+        </Pane>
+
+    {/*    VOLUNTEER OPPORTUNITIES */}
+        <Pane
+            minHeight='300px'
+            backgroundColor='white'
+        >
+            <Pane
+                textAlign={'center'}
+                paddingTop={majorScale(4)}
+            >
+                <Text fontFamily='stylized' fontSize={majorScale(4)} color='gbc-black'>
+                    Volunteer Opportunities
+                </Text>
+            </Pane>
+            <Pane display='flex' flexFlow='row wrap' justifyContent='space-around'>
+                {
+                    volunteerOpportunities.map(({ logo, title, description }) => (
+                        <Pane key={title} textAlign='center' paddingBottom={majorScale(5)} maxWidth={250}>
+                            <Pane
+                                display='block'
+                                minHeight={180}
+                                maxWidth={120}
+                                marginTop={majorScale(4)}
+                                marginX='auto'
+                                backgroundImage={`url(${logo})`}
+                                backgroundRepeat='no-repeat'
+                                backgroundSize='contain'
+                                backgroundPosition='bottom'
+                            />
+                            <Text
+                                color='gbc-red'
+                                fontFamily='stylized'
+                                fontSize={majorScale(3)}
+                                display='block'
+                            >{title}</Text>
+                            <Pane paddingTop={majorScale(3)}>
+                                <Text display='block'>
+                                    {description}
+                                </Text>
+                            </Pane>
+                        </Pane>
+                    ))
+                }
+            </Pane>
+        </Pane>
+
     </Pane>
   )
 }
