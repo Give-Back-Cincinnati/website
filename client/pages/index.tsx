@@ -1,3 +1,4 @@
+import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import {majorScale, minorScale, Pane, Text} from 'evergreen-ui'
@@ -8,6 +9,14 @@ const highlightTextStyles = {
     textTransform: 'uppercase',
     fontSize: majorScale(3)
 }
+
+const whoWeAreTexts = [
+    <React.Fragment>A <span className='redUnderline'>Diverse</span> group of young professionals</React.Fragment>,
+    <React.Fragment>COMMITTED TO <span className='redUnderline'>GIVING BACK</span> TO OUR COMMUNITY</React.Fragment>,
+    <React.Fragment>CURRENT AND FUTURE <span className='redUnderline'>VISIONARY LEADERS</span></React.Fragment>,
+    <React.Fragment>GLOBAL <span className='redUnderline'>ADVENTURERS</span> HELPING OUT ABROAD</React.Fragment>,
+    <React.Fragment>DEDICATED TO <span className='redUnderline'>LOCAL</span> PHILANTHROPIC INITIATIVES</React.Fragment>,
+]
 
 const volunteerOpportunities = [
     { logo: '/logos/civic-engagement.svg', title: 'Civic Engagement', description: 'Sounding off on local issues and taking a closer look at our community' },
@@ -115,67 +124,47 @@ const Home: NextPage = () => {
             flexFlow='row wrap'
             justifyContent='space-around'
         >
-            <Pane width='100%' margin={majorScale(2)} lineHeight={2}>
-                <Text
-                    textTransform='uppercase'
-                    color='gbc-black'
-                    fontFamily='stylized'
-                    fontSize={majorScale(3)}
-                >
-                    A <span className='redUnderline'>Diverse</span> group of young professionals
-                </Text>
-            </Pane>
-            <Pane width='100%' margin={majorScale(2)}>
-                <Text
-                    textTransform='uppercase'
-                    color='gbc-black'
-                    fontFamily='stylized'
-                    fontSize={majorScale(3)}
-                >
-                    COMMITTED TO <span className='redUnderline'>GIVING BACK</span> TO OUR COMMUNITY
-                </Text>
-            </Pane>
-            <Pane width='100%' margin={majorScale(2)} lineHeight={2}>
-                <Text
-                    textTransform='uppercase'
-                    color='gbc-black'
-                    fontFamily='stylized'
-                    fontSize={majorScale(3)}
-                >
-                    CURRENT AND FUTURE <span className='redUnderline'>VISIONARY LEADERS</span>
-                </Text>
-            </Pane>
-            <Pane width='100%' textAlign='center' marginY={majorScale(5)}>
-                <Text
-                    color='gbc-red'
-                    fontSize={majorScale(9)}
-                    fontFamily='stylized'
-                >
-                    WHO WE ARE
-                </Text>
-            </Pane>
-            <Pane width='100%' margin={majorScale(2)} lineHeight={2}>
-                <Text
-                    textTransform='uppercase'
-                    color='gbc-black'
-                    fontFamily='stylized'
-                    fontSize={majorScale(3)}
-                >
-                    GLOBAL <span className='redUnderline'>ADVENTURERS</span> HELPING OUT ABROAD
-                </Text>
-            </Pane>
-            <Pane width='100%' margin={majorScale(2)} lineHeight={2}>
-                <Text
-                    textTransform='uppercase'
-                    color='gbc-black'
-                    fontFamily='stylized'
-                    fontSize={majorScale(3)}
-                >
-                    DEDICATED TO <span className='redUnderline'>LOCAL</span> PHILANTHROPIC INITIATIVES
-                </Text>
-            </Pane>
-            <Pane width='110px' />
+            {
+                whoWeAreTexts.map((text, i) => (
+                    <React.Fragment key={i}>
+                        {
+                            i === 3
+                                ? <Pane width='100%' textAlign='center' marginY={majorScale(5)}>
+                                    <Text
+                                        color='gbc-red'
+                                        fontSize={majorScale(9)}
+                                        fontFamily='stylized'
+                                    >
+                                        WHO WE ARE
+                                    </Text>
+                                </Pane>
+                                : ''
+                        }
+                        <Pane width='100%' margin={majorScale(2)} lineHeight={2} className='xs sm' textAlign='center'>
+                            <Text
+                                textTransform='uppercase'
+                                color='gbc-black'
+                                fontFamily='stylized'
+                                fontSize={majorScale(3)}
+                            >
+                                {text}
+                            </Text>
+                        </Pane>
+                        <Pane width='28%' maxWidth={300} margin={majorScale(2)} lineHeight={2} className='md lg xl xxl'>
+                            <Text
+                                textTransform='uppercase'
+                                color='gbc-black'
+                                fontFamily='stylized'
+                                fontSize={majorScale(3)}
+                            >
+                                {text}
+                            </Text>
+                        </Pane>
+                    </React.Fragment>
+                ))
+            }
         </Pane>
+
 
     {/*    Upcoming Events   */}
         <Pane

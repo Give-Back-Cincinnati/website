@@ -45,6 +45,16 @@ a {
   display: none;
 }
 
+/*Extra Small devices (landscape phones, 576px and up)*/
+@media (min-width: 0px) {
+  .sm {
+    display: none;
+  }
+  .xs {
+    display: block;
+  }
+}
+
 /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
   .xs {
