@@ -11,11 +11,11 @@ const highlightTextStyles = {
 }
 
 const whoWeAreTexts = [
-    <React.Fragment>A <span className='redUnderline'>Diverse</span> group of young professionals</React.Fragment>,
-    <React.Fragment>COMMITTED TO <span className='redUnderline'>GIVING BACK</span> TO OUR COMMUNITY</React.Fragment>,
-    <React.Fragment>CURRENT AND FUTURE <span className='redUnderline'>VISIONARY LEADERS</span></React.Fragment>,
-    <React.Fragment>GLOBAL <span className='redUnderline'>ADVENTURERS</span> HELPING OUT ABROAD</React.Fragment>,
-    <React.Fragment>DEDICATED TO <span className='redUnderline'>LOCAL</span> PHILANTHROPIC INITIATIVES</React.Fragment>,
+    <React.Fragment key={0}>A <span className='redUnderline'>Diverse</span> group of young professionals</React.Fragment>,
+    <React.Fragment key={1}>COMMITTED TO <span className='redUnderline'>GIVING BACK</span> TO OUR COMMUNITY</React.Fragment>,
+    <React.Fragment key={2}>CURRENT AND FUTURE <span className='redUnderline'>VISIONARY LEADERS</span></React.Fragment>,
+    <React.Fragment key={3}>GLOBAL <span className='redUnderline'>ADVENTURERS</span> HELPING OUT ABROAD</React.Fragment>,
+    <React.Fragment key={4}>DEDICATED TO <span className='redUnderline'>LOCAL</span> PHILANTHROPIC INITIATIVES</React.Fragment>,
 ]
 
 const volunteerOpportunities = [
