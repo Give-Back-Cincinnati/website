@@ -4,7 +4,7 @@
 /* eslint-disable react/no-danger */
 import React from 'react'
 import { extractStyles } from 'evergreen-ui'
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 export default class MyDocument extends Document {
     // @ts-ignore
@@ -31,10 +31,11 @@ export default class MyDocument extends Document {
         const { css, hydrationScript } = this.props
 
         return (
-            <html>
+            <Html>
             <Head>
                 <title>SSR in Next.js</title>
                 <style dangerouslySetInnerHTML={{ __html: css }} />
+                <link rel="preload" href="/AlternateGotNo3D_Regular.ttf" as="font" type="font/ttf"/>
             </Head>
 
             <body>
@@ -42,7 +43,7 @@ export default class MyDocument extends Document {
             {hydrationScript}
             <NextScript />
             </body>
-            </html>
+            </Html>
         )
     }
 }
