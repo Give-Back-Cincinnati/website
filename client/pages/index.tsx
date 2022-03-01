@@ -58,13 +58,12 @@ const Home: NextPage = () => {
         >
             <Pane
                 borderLeft='1px dashed white'
-                paddingY={majorScale(3)}
-                minHeight='300px'
+                paddingTop={majorScale(4)}
             >
                 <Pane
                     textAlign={'center'}
                 >
-                    <Text fontFamily='stylized' fontSize={majorScale(4)} color='white'>
+                    <Text fontFamily='stylized' fontSize={majorScale(5)} color='white'>
                         WHAT WE DO
                     </Text>
                 </Pane>
@@ -80,30 +79,56 @@ const Home: NextPage = () => {
                     top={30}
                     is='span'
                 />
-                <Pane textAlign='left' paddingLeft={majorScale(4)}>
-                    <Text
-                        color='white'
-                        fontFamily='stylized'
-                        textTransform='uppercase'
-                        fontSize={majorScale(3)}
-                        is='div'
-                    >
-                        WE AIM FOR COMMUNITY SERVICE WITH A SOCIAL
+                <Pane className='what-we-do' textAlign='left' paddingLeft={majorScale(4)} display='flex' flexFlow='row-wrap' justifyContent='space-between'>
+                    <Pane className='xs sm'>
                         <Text
+                            color='white'
                             fontFamily='stylized'
                             textTransform='uppercase'
                             fontSize={majorScale(3)}
-                            color='gbc-red'
-                        > TWIST</Text>.
-                    </Text>
-                    <Pane marginTop={majorScale(2)}>
-                        <Text
-                            color='gray300'
+                            is='div'
                         >
-                            What does that mean? It means members can participate in as many or as few volunteer opportunities as they’d like, and at the end of the day, they celebrate new friendships. In fact, our turnkey events only require one thing – for members to show up! Here’s a snapshot of Give Back Cincinnati’s impact:
+                            WE AIM FOR COMMUNITY SERVICE WITH A SOCIAL
+                            <Text
+                                fontFamily='stylized'
+                                textTransform='uppercase'
+                                fontSize={majorScale(3)}
+                                color='gbc-red'
+                            > TWIST</Text>.
                         </Text>
+                        <Pane marginTop={majorScale(2)}>
+                            <Text
+                                color='gray300'
+                            >
+                                What does that mean? It means members can participate in as many or as few volunteer opportunities as they’d like, and at the end of the day, they celebrate new friendships. In fact, our turnkey events only require one thing – for members to show up! Here’s a snapshot of Give Back Cincinnati’s impact:
+                            </Text>
+                        </Pane>
                     </Pane>
-                    <Pane marginTop={majorScale(3)}>
+                    <Pane className='md lg xl xxl' width='45%' maxWidth={400}>
+                        <Text
+                            color='white'
+                            fontFamily='stylized'
+                            textTransform='uppercase'
+                            fontSize={majorScale(3)}
+                            is='div'
+                        >
+                            WE AIM FOR COMMUNITY SERVICE WITH A SOCIAL
+                            <Text
+                                fontFamily='stylized'
+                                textTransform='uppercase'
+                                fontSize={majorScale(3)}
+                                color='gbc-red'
+                            > TWIST</Text>.
+                        </Text>
+                        <Pane marginTop={majorScale(2)}>
+                            <Text
+                                color='gray300'
+                            >
+                                What does that mean? It means members can participate in as many or as few volunteer opportunities as they’d like, and at the end of the day, they celebrate new friendships. In fact, our turnkey events only require one thing – for members to show up! Here’s a snapshot of Give Back Cincinnati’s impact:
+                            </Text>
+                        </Pane>
+                    </Pane>
+                    <Pane marginTop={majorScale(3)} className='xs sm'>
                         {
                             [
                                 'More than 15,000 hours of service donated to-date',
@@ -111,6 +136,18 @@ const Home: NextPage = () => {
                                 'The region\'s largest Thanksgiving meal',
                                 'International service in Ghana, Romania, Peru, and beyond'
                             ].map(bulletPoint => <Text key={bulletPoint} className='bulletPoint' color='white'>{bulletPoint}</Text>)
+                        }
+                    </Pane>
+                    <Pane width='45%' maxWidth={400} height='300px' className='md lg xl xxl' borderLeft='1px dashed white'>
+                        {
+                            [
+                                'More than 15,000 hours of service donated to-date',
+                                '500+ houses painted throughout the region',
+                                'The region\'s largest Thanksgiving meal',
+                                'International service in Ghana, Romania, Peru, and beyond'
+                            ].map(bulletPoint => <Pane key={bulletPoint} className='bulletPoint bulletPoint-left-minimal' paddingLeft={10}>
+                                <Text color='white'>{bulletPoint}</Text>
+                            </Pane>)
                         }
                     </Pane>
                 </Pane>

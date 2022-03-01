@@ -37,6 +37,10 @@ a {
   top: 15px;
 }
 
+.bulletPoint-left-minimal::before {
+  left: -15.5px;
+}
+
 .redUnderline {
   border-bottom: 2px solid #d03236;
 }
@@ -102,5 +106,20 @@ a {
   }
   .xxl {
     display: block;
+  }
+}
+
+
+@media (min-width: 0px) {
+  .what-we-do {
+    padding-bottom: 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .what-we-do {
+    overflow-y: hidden;
+    height: 230px;
+    padding-bottom: 0;
   }
 }
