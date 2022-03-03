@@ -1,7 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import {majorScale, minorScale, Pane, Text} from 'evergreen-ui'
+import {majorScale, Button, Pane, Text} from 'evergreen-ui'
 
 const highlightTextStyles = {
     color: 'white',
@@ -26,6 +26,38 @@ const volunteerOpportunities = [
 ]
 
 const Home: NextPage = () => {
+    const upcomingEvents = [
+        {
+            date: 'January 1st',
+            title: 'First Event',
+            description: 'short description about the event... like a single sentence'
+        },
+        {
+            date: 'January 1st',
+            title: 'First Event',
+            description: 'short description about the event... like a single sentence'
+        },
+        {
+            date: 'January 1st',
+            title: 'First Event',
+            description: 'short description about the event... like a single sentence'
+        },
+        {
+            date: 'January 1st',
+            title: 'First Event',
+            description: 'short description about the event... like a single sentence'
+        },
+        {
+            date: 'January 1st',
+            title: 'First Event',
+            description: 'short description about the event... like a single sentence'
+        },
+        {
+            date: 'January 1st',
+            title: 'First Event',
+            description: 'short description about the event... like a single sentence'
+        },
+    ]
   return (
     <Pane>
       <Head>
@@ -225,10 +257,111 @@ const Home: NextPage = () => {
 
     {/*    Upcoming Events   */}
         <Pane
-            minHeight='300px'
             background={'gray300'}
+            display='flex'
+            flexFlow='row wrap'
+            justifyContent='space-around'
+            padding={majorScale(5)}
         >
-            <Text>WIP: Upcoming Events</Text>
+            <Pane width='100%' textAlign='center' paddingBottom={majorScale(3)}>
+                <Text fontFamily='stylized' fontSize={majorScale(5)} color='gbc-black'>
+                    Upcoming Events
+                </Text>
+            </Pane>
+
+            {
+                upcomingEvents.map(({ date, title, description}, i) => (
+                    <>
+                        <Pane
+                            key={i}
+                            width='33%'
+                            padding={majorScale(2)}
+                            className='md lg xl xxl'
+                        >
+                            <Text
+                                is={'div'}
+                                color='gbc-red'
+                            >
+                                {date}
+                            </Text>
+                            <Pane marginY={majorScale(1)}>
+                                <Text
+                                    textTransform='uppercase'
+                                    color='gbc-black'
+                                    fontFamily='stylized'
+                                    fontSize={majorScale(3)}
+                                    is='div'
+                                >
+                                    {title}
+                                </Text>
+                            </Pane>
+                            <Text>
+                                {description}
+                            </Text>
+                        </Pane>
+                        <Pane
+                            key={i}
+                            width='50%'
+                            padding={majorScale(2)}
+                            className='sm'
+                        >
+                            <Text
+                                is={'div'}
+                                color='gbc-red'
+                            >
+                                {date}
+                            </Text>
+                            <Pane marginY={majorScale(1)}>
+                                <Text
+                                    textTransform='uppercase'
+                                    color='gbc-black'
+                                    fontFamily='stylized'
+                                    fontSize={majorScale(3)}
+                                    is='div'
+                                >
+                                    {title}
+                                </Text>
+                            </Pane>
+                            <Text>
+                                {description}
+                            </Text>
+                        </Pane>
+                        <Pane
+                            key={i}
+                            width='100%'
+                            padding={majorScale(2)}
+                            className='xs'
+                        >
+                            <Text
+                                is={'div'}
+                                color='gbc-red'
+                            >
+                                {date}
+                            </Text>
+                            <Pane marginY={majorScale(1)}>
+                                <Text
+                                    textTransform='uppercase'
+                                    color='gbc-black'
+                                    fontFamily='stylized'
+                                    fontSize={majorScale(3)}
+                                    is='div'
+                                >
+                                    {title}
+                                </Text>
+                            </Pane>
+                            <Text>
+                                {description}
+                            </Text>
+                        </Pane>
+                    </>
+                ))
+            }
+
+            <Pane width='100%' margin='auto' textAlign='center' paddingTop={majorScale(2)}>
+                <Button appearance='gbc-red'>
+                    See all Upcoming Events
+                </Button>
+            </Pane>
         </Pane>
 
     {/*    VOLUNTEER OPPORTUNITIES */}
