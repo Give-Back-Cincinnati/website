@@ -33,10 +33,30 @@ const Home: NextPage = () => {
       </Head>
         {/*  MISSION  */}
         <Pane
+            className='xs'
             background='gbc-red'
-            backgroundImage='url(/city-skyline-red.svg)'
-            backgroundRepeat='no-repeat'
-            backgroundSize='contain'
+            backgroundImage='url(/city-skyline-red.svg), url(/bank-note.svg)'
+            backgroundRepeat='no-repeat, repeat'
+            backgroundSize='contain, 50px 10px'
+            backgroundPosition='bottom'
+            minHeight='300px'
+            textAlign='center'
+            padding={majorScale(3)}
+        >
+            <Text
+                color='white'
+                fontSize={majorScale(3)}
+                fontFamily='stylized'
+            >
+                Developing today’s communities and tomorrow’s leaders.
+            </Text>
+        </Pane>
+        <Pane
+            className='sm md lg xl xxl'
+            background='gbc-red'
+            backgroundImage='url(/city-skyline-red.svg), url(/bank-note.svg)'
+            backgroundRepeat='no-repeat, repeat'
+            backgroundSize='auto 250px, 50px 10px'
             backgroundPosition='bottom'
             minHeight='300px'
             textAlign='center'
