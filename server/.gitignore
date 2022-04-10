@@ -12,3 +12,4 @@
 
 docker-compose.override.yml.dist
 /var/db/*
+coverage/
