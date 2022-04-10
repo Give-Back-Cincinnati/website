@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  gbc:
+    container_name: gbc
+    build:
+      args:
+        NODE_ENV: development
+    volumes:
+      - ./:/app
+    ports:
+      - "3001:3000"

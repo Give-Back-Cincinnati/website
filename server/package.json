@@ -1,7 +1,26 @@
 {
-  "name": "server",
-  "version": "0.0.1",
-  "main": "index.js",
-  "author": "Michael Young <michael25young25@gmail.com>",
-  "license": "MIT"
+    "name": "server",
+    "packageManager": "yarn@3.2.0",
+    "scripts": {
+        "test": "yarn jest --runInBand ./src",
+        "start": "yarn ts-node src/app.ts"
+    },
+    "dependencies": {
+        "express": "^4.17.3",
+        "ts-node": "^10.7.0"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/jest": "^27.4.1",
+        "@types/node": "^17.0.23",
+        "jest": "^27.5.1",
+        "nodemon": "^2.0.15",
+        "ts-jest": "^27.1.4",
+        "typescript": "^4.6.3"
+    },
+    "dependenciesMeta": {
+        "ts-node@10.7.0": {
+            "unplugged": true
+        }
+    }
 }
