@@ -39,14 +39,18 @@ describe('getMongoDBUriString', () => {
 })
 
 describe('establishMongooseConnection', () => {
-    
-        it('returns a promise', () => {
-            expect(typeof establishMongooseConnection()).toBe('object')
-        })
-    
-        it('calls mongoose.connect with the uri and config options', () => {
-            establishMongooseConnection()
-            expect(mockConnect).toHaveBeenLastCalledWith(getMongoDBUriString(), config.mongo.options)
-        })
+   
+    afterAll(() => {
+        mockConnect.mockRestore()
+    })
+
+    it('returns a promise', () => {
+        expect(typeof establishMongooseConnection()).toBe('object')
+    })
+
+    it('calls mongoose.connect with the uri and config options', () => {
+        establishMongooseConnection()
+        expect(mockConnect).toHaveBeenLastCalledWith(getMongoDBUriString(), config.mongo.options)
+    })
     
 })
