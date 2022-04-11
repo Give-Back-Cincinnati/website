@@ -2,6 +2,10 @@ import { config } from './config/index.js'
 import { getMongoDBUriString, establishMongooseConnection } from './mongodb'
 import mongoose from 'mongoose'
 
+declare global {
+    var __MONGO_URI__: string
+}
+
 const mockConnect = jest.spyOn(mongoose, 'connect')
     .mockImplementation((uri, options) => Promise.resolve(mongoose))
 // limit any console messages
@@ -39,7 +43,6 @@ describe('getMongoDBUriString', () => {
 })
 
 describe('establishMongooseConnection', () => {
-   
     afterAll(() => {
         mockConnect.mockRestore()
     })

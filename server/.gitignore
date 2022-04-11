@@ -10,6 +10,7 @@
 !.yarn/cache
 #.pnp.*
 
-docker-compose.override.yml.dist
+docker-compose.override.yml
 /var/db/*
 coverage/
+globalConfig.json
