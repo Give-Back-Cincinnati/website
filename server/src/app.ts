@@ -4,30 +4,7 @@ import express from 'express'
 
 export const app = express()
 
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort (val: string | number) {
-    let desiredPort = val
-    if (typeof val === "string") {
-        desiredPort = parseInt(val, 10)
-    }
-
-    if (Number.isNaN(desiredPort)) {
-        // named pipe
-        return val
-    }
-
-    if (desiredPort >= 0) {
-        // port number
-        return desiredPort
-    }
-
-    return false
-}
-
-const port = normalizePort(config.port || '3000')
+const port = config.port
 app.set('port', port)
 
 /**
@@ -48,22 +25,18 @@ function onError (error: ErrnoException) {
         throw error
     }
 
-    const bind = typeof port === 'string'
-        ? `Pipe ${port}`
-        : `Port ${port}`
+    const bind = `Port ${port}`
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
             logger.error(`${bind} requires elevated privileges`)
             process.exit(1)
-            break
         case 'EADDRINUSE':
             logger.error(`${bind} is already in use`)
             process.exit(1)
-            break
         default:
-            throw error
+            logger.error(error)
     }
 }
 
@@ -74,10 +47,8 @@ export const server = http.createServer(app)
  */
 
 function onListening () {
-    const addr = server.address()
-    const bind = typeof addr === 'string'
-        ? `pipe ${addr}`
-        : `port ${addr?.port}`
+    const addr = server.address() as { port: number, address: string, family: string }
+    const bind = `port ${addr.port}`
     logger.info(`Listening on ${bind}`)
 }
 
