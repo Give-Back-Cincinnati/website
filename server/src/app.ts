@@ -1,8 +1,6 @@
 import http from 'http'
 import { config, logger } from './config'
-import express from 'express'
-
-export const app = express()
+import { app } from './routes/index'
 
 const port = config.port
 app.set('port', port)
