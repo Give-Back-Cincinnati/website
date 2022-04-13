@@ -12,17 +12,6 @@ const rl = readline.createInterface({
     output: process.stdout,
 })
 
-const ansiColors = (text, color) => {
-    const colors = {
-        'green': 32,
-        'blue': 34,
-        'yellow': 33   
-    }
-    if (colors[color]) `\x1b[${colors[color]}m${text}\x1b[0m`
-    //default for colors not included
-    return `\x1b[32m${text}\x1b[0m`
-}
-
 const questions = [
     "What would you like to call this entity?",
     "Would you like to initialize CRUD routes for this entity? (y/n)"
