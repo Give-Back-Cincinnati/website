@@ -3,7 +3,7 @@ name: Auto-Update Base
 on:
   push:
     branches:
-      - none
+      - main
 #  schedule:
 #    - cron: "0 3 * * *"
 
