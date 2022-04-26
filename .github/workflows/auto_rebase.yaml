@@ -1,0 +1,46 @@
+name: Auto-Update Base
+
+on:
+  push:
+    branches:
+      - main
+#  schedule:
+#    - cron: "0 3 * * *"
+
+jobs:
+  update_base:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Fetch
+        run: git --git-dir=./server/.git fetch upstream
+
+      - name: Server Rebase
+        run: git --git-dir=./server/.git rebase upstream/main
+
+      - name: Server Add
+        run: git --git-dir=./server/.git add -A
+
+      - name: Server Commit
+        run: git --git-dir=./server/.git commit -m "Rebased"
+
+      - name: Server Push
+        run: git --git-dir=./server/.git push
+
+      - name: Mono Add
+        run: git add -A
+
+      - name: Mono Commit
+        run: git commit -m "Rebased Server"
+
+      - name: Mono Push
+        run: git push
+
+
+#      - name: Update Base
+#        uses: actions/github-script@v6
+#        with:
+#          script: |
+
