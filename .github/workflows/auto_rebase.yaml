@@ -3,7 +3,7 @@ name: Auto-Update Base
 on:
   push:
     branches:
-      - none
+      - main
 #  schedule:
 #    - cron: "0 3 * * *"
 
@@ -16,33 +16,19 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Fetch
-        run: git --git-dir=./server/.git fetch upstream
-
-      - name: Server Rebase
-        run: git --git-dir=./server/.git rebase upstream/main
-
-      - name: Server Add
-        run: git --git-dir=./server/.git add -A
-
-      - name: Server Commit
-        run: git --git-dir=./server/.git commit -m "Rebased"
-
-      - name: Server Push
-        run: git --git-dir=./server/.git push
+      - name: Update Server Base
+        run: |
+          cd ./server \
+          && git fetch upstream \
+          && git rebase upstream/main \
+          && git add ./ \
+          && git commit -m "Rebased Server" \
+          && git push origin main
 
       - name: Mono Add
-        run: git add -A
-
-      - name: Mono Commit
-        run: git commit -m "Rebased Server"
-
-      - name: Mono Push
-        run: git push
-
-
-#      - name: Update Base
-#        uses: actions/github-script@v6
-#        with:
-#          script: |
+        run: |
+          cd ../ \
+          && git add ./server \
+          && git commit -m "Rebased Server" \
+          && git push origin main
 
