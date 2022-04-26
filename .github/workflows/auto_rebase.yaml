@@ -3,7 +3,7 @@ name: Auto-Update Base
 on:
   push:
     branches:
-      - main
+      - none
 #  schedule:
 #    - cron: "0 3 * * *"
 
@@ -19,6 +19,7 @@ jobs:
       - name: Update Server Base
         run: |
           cd ./server
+          git remote add upstream https://github.com/MYoung25/boilerplate-ts.git
           git fetch upstream
           git rebase upstream/main
           git add ./
