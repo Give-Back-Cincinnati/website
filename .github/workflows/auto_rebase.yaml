@@ -18,17 +18,17 @@ jobs:
 
       - name: Update Server Base
         run: |
-          cd ./server \
-          && git fetch upstream \
-          && git rebase upstream/main \
-          && git add ./ \
-          && git commit -m "Rebased Server" \
-          && git push origin main
+          cd ./server
+          git fetch upstream
+          git rebase upstream/main
+          git add ./
+          git commit -m "Rebased Server"
+          git push origin main
 
       - name: Mono Add
         run: |
-          cd ../ \
-          && git add ./server \
-          && git commit -m "Rebased Server" \
-          && git push origin main
+          cd ../
+          git add ./server
+          git commit -m "Rebased Server"
+          git push origin main
 
