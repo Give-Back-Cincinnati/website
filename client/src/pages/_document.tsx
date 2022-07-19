@@ -32,17 +32,16 @@ export default class MyDocument extends Document {
 
         return (
             <Html>
-            <Head>
-                <title>SSR in Next.js</title>
-                <style dangerouslySetInnerHTML={{ __html: css }} />
-                <link rel="preload" href="/AlternateGotNo3D_Regular.ttf" as="font" type="font/ttf"/>
-            </Head>
+                <Head>
+                    <style dangerouslySetInnerHTML={{ __html: css }} />
+                    {/* <link rel="preload" href='/AlternateGotNo3D_Regular.ttf' as="font" type="font/ttf"/> */}
+                </Head>
 
-            <body>
-            <Main />
-            {hydrationScript}
-            <NextScript />
-            </body>
+                <body>
+                <Main />
+                {hydrationScript}
+                <NextScript />
+                </body>
             </Html>
         )
     }

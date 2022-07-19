@@ -1,0 +1,60 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.nav {
+    height: 93px;
+    width: 100%;
+    display: flex;
+    z-index: 19;
+    aside {
+        position: fixed;
+        width: 250px;
+        height: 100vh;
+        right: 0;
+        background-color: $white;
+        header {
+            background-color: $gbc-red;
+            height: 93px;
+            width: 100%;
+        }
+        div {
+            width: 100%;
+            padding: 16px 0 16px 16px;
+        }
+    }
+}
+
+.logo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    img {
+        width: 144px;
+        height: 107px;
+        cursor: pointer;
+    }
+}
+
+.navBarHorizontal {
+    font-family: $alt-goth;
+    font-size: 1.7rem;
+    color: $gbc-red;
+    margin-right: 1.7em;
+    cursor: pointer;
+    &:last-of-type {
+        margin-right: 0;
+    }
+}
+
+.navigationLinks {
+    margin-right: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuIcon {
+    width: 2.5em;
+    height: 2.5em;
+    color: $gbc-black;
+}

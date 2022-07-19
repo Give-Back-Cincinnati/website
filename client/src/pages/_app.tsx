@@ -1,10 +1,12 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-import {Pane, Text, majorScale, defaultTheme, ThemeProvider, mergeTheme, MenuIcon} from "evergreen-ui"
-import Navigation from "./navigation"
-import Footer from './footer'
+import { Pane, defaultTheme, ThemeProvider, mergeTheme } from "evergreen-ui"
+import { Navigation } from "../components/navigation/navigation"
+import Footer from '../components/footer'
+
+import AlternateGothic from '../styles/AlternateGotNo3D_Regular.ttf'
 
 const gbcColors = {
   red: '#d03236', // 208, 50, 54
@@ -54,6 +56,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       <link rel="icon" href="/favicon-16x16.ico" sizes="16x16" />
       <link rel="icon" href="/favicon-32x32.ico" sizes="32x32" />
       <link rel="icon" href="/favicon-96x96.ico" sizes="96x96" />
+      <link rel="preload" href={AlternateGothic} as="font" type="font/ttf"/>
+      
     </Head>
 
     <Navigation />

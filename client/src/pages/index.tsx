@@ -25,39 +25,40 @@ const volunteerOpportunities = [
     { logo: '/logos/social.svg', title: 'Social', description: 'Sounding off on local issues and taking a closer look at our community' },
 ]
 
+const upcomingEvents = [
+    {
+        date: 'January 1st',
+        title: 'First Event',
+        description: 'short description about the event... like a single sentence'
+    },
+    {
+        date: 'January 1st',
+        title: 'First Event',
+        description: 'short description about the event... like a single sentence'
+    },
+    {
+        date: 'January 1st',
+        title: 'First Event',
+        description: 'short description about the event... like a single sentence'
+    },
+    {
+        date: 'January 1st',
+        title: 'First Event',
+        description: 'short description about the event... like a single sentence'
+    },
+    {
+        date: 'January 1st',
+        title: 'First Event',
+        description: 'short description about the event... like a single sentence'
+    },
+    {
+        date: 'January 1st',
+        title: 'First Event',
+        description: 'short description about the event... like a single sentence'
+    },
+]
+
 const Home: NextPage = () => {
-    const upcomingEvents = [
-        {
-            date: 'January 1st',
-            title: 'First Event',
-            description: 'short description about the event... like a single sentence'
-        },
-        {
-            date: 'January 1st',
-            title: 'First Event',
-            description: 'short description about the event... like a single sentence'
-        },
-        {
-            date: 'January 1st',
-            title: 'First Event',
-            description: 'short description about the event... like a single sentence'
-        },
-        {
-            date: 'January 1st',
-            title: 'First Event',
-            description: 'short description about the event... like a single sentence'
-        },
-        {
-            date: 'January 1st',
-            title: 'First Event',
-            description: 'short description about the event... like a single sentence'
-        },
-        {
-            date: 'January 1st',
-            title: 'First Event',
-            description: 'short description about the event... like a single sentence'
-        },
-    ]
   return (
     <Pane>
       <Head>
@@ -271,9 +272,8 @@ const Home: NextPage = () => {
 
             {
                 upcomingEvents.map(({ date, title, description}, i) => (
-                    <>
+                    <React.Fragment key={title + i.toString()}>
                         <Pane
-                            key={i}
                             width='33%'
                             padding={majorScale(2)}
                             className='md lg xl xxl'
@@ -300,7 +300,6 @@ const Home: NextPage = () => {
                             </Text>
                         </Pane>
                         <Pane
-                            key={i}
                             width='50%'
                             padding={majorScale(2)}
                             className='sm'
@@ -353,7 +352,7 @@ const Home: NextPage = () => {
                                 {description}
                             </Text>
                         </Pane>
-                    </>
+                    </React.Fragment>
                 ))
             }
 
