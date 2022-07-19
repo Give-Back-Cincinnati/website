@@ -3,8 +3,7 @@ import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
 import { Pane, defaultTheme, ThemeProvider, mergeTheme } from "evergreen-ui"
-import { Navigation } from "../components/navigation/navigation"
-import Footer from '../components/navigation/footer'
+import { Navigation, Footer } from "../components/Navigation"
 
 const gbcColors = {
   red: '#d03236', // 208, 50, 54
