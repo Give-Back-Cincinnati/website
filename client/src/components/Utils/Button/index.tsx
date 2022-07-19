@@ -7,8 +7,8 @@ export interface ButtonProps {
     size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
-export const Button = ({ children, variant = 'default', size = 'md' } : ButtonProps ) => {
-    return <button className={`${styles.base} ${styles[variant]} ${styles[size]}`}>
+export const Button = ({ children, variant = 'default', size = 'md', ...props } : ButtonProps ) => {
+    return <button className={`${styles.base} ${styles[variant]} ${styles[size]}`} {...props}>
         <span>
             { children.toUpperCase() }
         </span>
