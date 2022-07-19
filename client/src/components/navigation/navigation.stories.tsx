@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Navigation } from './navigation'
 
 const story =  {
-    title: 'Navigation/Bar',
+    title: 'Navigation/TopBar',
     component: Navigation,
     parameters: {
         layout: 'fullscreen'
