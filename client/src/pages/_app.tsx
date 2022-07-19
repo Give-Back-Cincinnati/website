@@ -6,8 +6,6 @@ import { Pane, defaultTheme, ThemeProvider, mergeTheme } from "evergreen-ui"
 import { Navigation } from "../components/navigation/navigation"
 import Footer from '../components/footer'
 
-import AlternateGothic from '../styles/AlternateGotNo3D_Regular.ttf'
-
 const gbcColors = {
   red: '#d03236', // 208, 50, 54
   black: '#333333',
@@ -56,7 +54,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <link rel="icon" href="/favicon-16x16.ico" sizes="16x16" />
       <link rel="icon" href="/favicon-32x32.ico" sizes="32x32" />
       <link rel="icon" href="/favicon-96x96.ico" sizes="96x96" />
-      {/* <link rel="preload" href={AlternateGothic} as="font" type="font/ttf"/> */}
       
     </Head>
 
