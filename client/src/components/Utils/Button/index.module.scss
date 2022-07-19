@@ -1,0 +1,68 @@
+@use "sass:color";
+@import '../../../styles/colors.scss';
+@import '../../../styles/fonts.scss';
+
+.base {
+    padding: 6px 14px;
+    border-radius: 3px;
+    border: none;
+    font-family: $alt-goth;
+    font-size: 1rem;
+    cursor: pointer;
+    &:hover {
+        background-color: color.adjust($gbc-red, $alpha: -0.15);
+    }
+    span {
+        position: relative;
+        top: -2px;
+    }
+}
+
+/***********
+   VARIANTS
+************/
+.default {
+    background-color: $gbc-red;
+    color: $white;
+}
+
+.outlined {
+    background-color: $white;
+    color: $gbc-red;
+    border: 1px solid $gbc-red;
+    &:hover {
+        background-color: color.adjust($gbc-red, $alpha: -0.9);
+    }
+}
+
+ /***********
+    SIZES
+ ************/
+.sm {
+    padding: 3px 7px;
+    font-size: .75rem;
+    border-radius: 2px;
+    span {
+        top: -1px;
+    }
+}
+
+// .md is the default behavior
+
+.lg {
+    padding: 9px 21px;
+    font-size: 1.5rem;
+    border-radius: 4px;
+    span {
+        top: -3px;
+    }
+}
+
+.xl {
+    padding: 12px 28px;
+    font-size: 2rem;
+    border-radius: 5px;
+    span {
+        top: -4px;
+    }
+}

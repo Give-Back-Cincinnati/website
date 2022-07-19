@@ -1,14 +1,8 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import {majorScale, Button, Pane, Text} from 'evergreen-ui'
-
-const highlightTextStyles = {
-    color: 'white',
-    fontFamily: 'stylized',
-    textTransform: 'uppercase',
-    fontSize: majorScale(3)
-}
+import {majorScale, Pane, Text} from 'evergreen-ui'
+import { Button } from '../components/Utils'
 
 const whoWeAreTexts = [
     <React.Fragment key={0}>A <span className='redUnderline'>Diverse</span> group of young professionals</React.Fragment>,
@@ -357,7 +351,7 @@ const Home: NextPage = () => {
             }
 
             <Pane width='100%' margin='auto' textAlign='center' paddingTop={majorScale(2)}>
-                <Button appearance='gbc-red'>
+                <Button size='lg'>
                     See all Upcoming Events
                 </Button>
             </Pane>

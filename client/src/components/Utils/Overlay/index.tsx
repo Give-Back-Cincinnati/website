@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './overlay.module.scss'
-import { debounce } from '../../utils'
+import { debounce } from '../../../utils'
 
 import {
     useSpring,

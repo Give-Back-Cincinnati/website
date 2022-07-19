@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useState } from "react"
-import { Overlay } from '../Overlay'
+import { Overlay } from '../Utils'
 
 import { MdOutlineMenu } from 'react-icons/md'
 import Logo from '../../../public/logos/half_circle.svg'
