@@ -1,0 +1,53 @@
+@use 'sass:color';
+@import '../styles/colors.scss';
+@import '../styles/fonts.scss';
+
+.missionContainer {
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+}
+
+.missionStatement {
+    background-color: $gbc-red;
+    background-image: url(../assets/city-skyline-red.svg), url(..//assets/bank-note.svg);
+    background-repeat: no-repeat, repeat;
+    background-size: contain, 50px 10px;
+    background-position: bottom;
+    min-height: 300px;
+    text-align: center;
+    padding: 18px;
+    font-family: $alt-goth;
+    font-size: 2rem;
+    color: $white;
+    line-height: 1.9rem;
+    width: 100%;
+    flex: 1.2;
+}
+
+.missionEvents {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+@media all and (max-width: 768px) {
+
+    .missionContainer {
+        flex-flow: column;
+    }
+
+    .missionEvents {
+        margin-left: 40px;
+        width: calc(100% - 40px);
+        border-left: 1px dashed $gbc-red;
+    }
+
+}
+
+.whatWeDoContainer {
+    background-color: $gbc-black;
+    padding: 0 40px;
+}

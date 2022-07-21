@@ -1,0 +1,29 @@
+@use 'sass:color';
+@import '../../styles/colors.scss';
+
+.container {
+    max-width: 300px;
+    margin-bottom: 30px;
+}
+
+.date {
+    margin-bottom: 2px;
+    display: inline-block;
+}
+
+.dateHasBorder {
+    padding: 5px 15px 8px;
+    position: relative;
+    left: -15px;
+    border: 1px solid $gbc-red;
+    border-radius: 50px;
+}
+
+.title {
+    color: $gbc-black;
+    margin-bottom: 10px;
+}
+
+.description {
+    color: color.adjust($color: $gbc-black, $alpha: -0.3)
+}

@@ -1,0 +1,20 @@
+.container {
+    width: 100%;
+    padding: 0 0 0 32px;
+    border-left: 1px dashed white;
+    color: white;
+    span {
+        // display: block;
+        &:before {
+            content: '';
+            display: block;
+            border-radius: 100px;
+            height: 10px;
+            width: 10px;
+            background: white;
+            position: relative;
+            left: -38px;
+            top: 15px;
+        }
+    }
+}

@@ -1,4 +1,5 @@
 @import './fonts.scss';
+@import './colors.scss';
 
 @font-face {
     font-family: AlternateGotNo3D;
@@ -46,6 +47,20 @@ a {
 
 .redUnderline {
   border-bottom: 2px solid #d03236;
+}
+
+/**********
+    TEXT DEFAULTS
+***********/
+h1, h2, h3, h4, h5, h6 {
+    color: $gbc-red;
+    padding: 0;
+    margin: 0;
+    font-family: $alt-goth;
+}
+
+p {
+    margin: 0;
 }
 
 .sm,.md,.lg,.xl,.xxl {
