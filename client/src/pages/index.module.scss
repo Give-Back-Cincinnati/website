@@ -50,4 +50,10 @@
 .whatWeDoContainer {
     background-color: $gbc-black;
     padding: 0 40px;
+    .whatWeDo {
+        color: $white;
+        font-size: 4rem;
+        font-family: $alt-goth;
+        text-align: center;
+    }
 }

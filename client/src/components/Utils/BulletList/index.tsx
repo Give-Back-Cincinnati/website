@@ -4,6 +4,8 @@ import styles from './index.module.scss'
 
 export interface BulletListProps {
     bullets: Array<string>
+    style?: Record<string, string | number>
+    className?: string
 }
 
 export const BulletList = ({ bullets, ...props }: BulletListProps) => {

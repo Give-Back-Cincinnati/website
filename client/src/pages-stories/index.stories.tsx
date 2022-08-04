@@ -13,6 +13,6 @@ const story = {
 
 export default story
 
-const Template: ComponentStory<typeof Index> = (args) => <Index />
+const Template: ComponentStory<typeof Index> = (args) => <Index {...args} />
 
 export const Primary = Template.bind({})

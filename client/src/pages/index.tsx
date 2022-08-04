@@ -97,13 +97,9 @@ const Home: NextPage = () => {
                 borderLeft='1px dashed white'
                 paddingTop={majorScale(4)}
             >
-                <Pane
-                    textAlign={'center'}
-                >
-                    <Text fontFamily='stylized' fontSize={majorScale(5)} color='white'>
-                        WHAT WE DO
-                    </Text>
-                </Pane>
+                <h3 className={styles.whatWeDo}>
+                    WHAT WE DO
+                </h3>
 
                 <Pane
                     borderRadius='100px'
