@@ -3,7 +3,7 @@ import React from 'react'
 import styles from './index.module.scss'
 
 export interface LeftDashedBorderProps {
-    children: JSX.Element,
+    children: JSX.Element | JSX.Element[],
     topOffset?: number
 }
 

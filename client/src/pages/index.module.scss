@@ -33,27 +33,70 @@
     justify-content: space-around;
 }
 
-@media all and (max-width: 768px) {
+.whatWeDoHeader {
+    color: $white;
+    font-size: 4rem;
+    font-family: $alt-goth;
+    text-align: center;
+    margin-bottom: 40px;
+}
 
+.whatWeDoContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.whatWeDoMainContent {
+    width: 45%;
+    margin-left: 12px;
+    padding-bottom: 20px;
+    .WhatWeDoSubtitle {
+        color: $white;
+        font-family: $alt-goth;
+        text-transform: uppercase;
+        font-size: 2rem;
+        span {
+            color: $gbc-red;
+        }
+    }
+    p {
+        color: color.adjust($color: $white, $alpha: -.2);
+    }
+}
+
+.whatWeDoList {
+    padding-bottom: 40px;
+    width: 45%;
+}
+
+@media all and (max-width: 768px) {
+    
     .missionContainer {
         flex-flow: column;
     }
-
+    
     .missionEvents {
         margin-left: 40px;
         width: calc(100% - 40px);
         border-left: 1px dashed $gbc-red;
     }
-
-}
-
-.whatWeDoContainer {
-    background-color: $gbc-black;
-    padding: 0 40px;
-    .whatWeDo {
-        color: $white;
-        font-size: 4rem;
-        font-family: $alt-goth;
-        text-align: center;
+    
+    .whatWeDoContainer {
+        flex-flow: column;
     }
+    
+    .whatWeDoMainContent {
+        width: 100%;
+    }
+    
+    .whatWeDoList {
+        padding-top: 20px;
+        width: 100%;
+        left: -20px;
+        border: 0;
+        position: relative;
+    }
+
 }
+

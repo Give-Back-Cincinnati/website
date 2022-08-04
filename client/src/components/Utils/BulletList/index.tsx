@@ -9,7 +9,7 @@ export interface BulletListProps {
 }
 
 export const BulletList = ({ bullets, ...props }: BulletListProps) => {
-    return <div className={styles.container} {...props}>
+    return <div {...props} className={`${props.className} ${styles.container}`}>
         { bullets.map(bullet => <span key={bullet}>{bullet}</span>) }
     </div>
 }

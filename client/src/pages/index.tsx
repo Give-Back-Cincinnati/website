@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import {majorScale, Pane, Text} from 'evergreen-ui'
 import { EventCard } from '../components/Events'
-import { Button, BulletList } from '../components/Utils'
+import { Button, BulletList, LeftDashedBorder } from '../components/Utils'
 
 import styles from './index.module.scss'
 
@@ -90,89 +90,33 @@ const Home: NextPage = () => {
         </div>
 
         {/*  WHAT WE DO  */}
-        <div
-            className={styles.whatWeDoContainer}
-        >
-            <Pane
-                borderLeft='1px dashed white'
-                paddingTop={majorScale(4)}
-            >
-                <h3 className={styles.whatWeDo}>
-                    WHAT WE DO
-                </h3>
-
-                <Pane
-                    borderRadius='100px'
-                    height='35px'
-                    width='35px'
-                    border='1px solid white'
-                    display='inline-block'
-                    position='relative'
-                    left={-19}
-                    top={30}
-                    is='span'
+        <LeftDashedBorder topOffset={115}>
+            <h3 className={styles.whatWeDoHeader}>
+                WHAT WE DO
+            </h3>
+            <div className={styles.whatWeDoContainer}>
+                <div className={styles.whatWeDoMainContent}>
+                    <div
+                        className={styles.WhatWeDoSubtitle}
+                    >
+                        WE AIM FOR COMMUNITY SERVICE WITH A SOCIAL
+                        <span> TWIST</span>.
+                    </div>
+                    <p>
+                        What does that mean? It means members can participate in as many or as few volunteer opportunities as they’d like, and at the end of the day, they celebrate new friendships. In fact, our turnkey events only require one thing – for members to show up! Here’s a snapshot of Give Back Cincinnati’s impact:
+                    </p>
+                </div>
+                <BulletList 
+                    bullets={[
+                        'More than 15,000 hours of service donated to-date',
+                        '500+ houses painted throughout the region',
+                        'The region\'s largest Thanksgiving meal',
+                        'International service in Ghana, Romania, Peru, and beyond'
+                    ]}
+                    className={styles.whatWeDoList}
                 />
-                <Pane className='what-we-do' textAlign='left' paddingLeft={majorScale(4)} display='flex' flexFlow='row-wrap' justifyContent='space-between'>
-                    <Pane className='xs sm'>
-                        <Text
-                            color='white'
-                            fontFamily='stylized'
-                            textTransform='uppercase'
-                            fontSize={majorScale(3)}
-                            is='div'
-                        >
-                            WE AIM FOR COMMUNITY SERVICE WITH A SOCIAL
-                            <Text
-                                fontFamily='stylized'
-                                textTransform='uppercase'
-                                fontSize={majorScale(3)}
-                                color='gbc-red'
-                            > TWIST</Text>.
-                        </Text>
-                        <Pane marginTop={majorScale(2)}>
-                            <Text
-                                color='gray300'
-                            >
-                                What does that mean? It means members can participate in as many or as few volunteer opportunities as they’d like, and at the end of the day, they celebrate new friendships. In fact, our turnkey events only require one thing – for members to show up! Here’s a snapshot of Give Back Cincinnati’s impact:
-                            </Text>
-                        </Pane>
-                    </Pane>
-                    <Pane className='md lg xl xxl' width='45%' maxWidth={400}>
-                        <Text
-                            color='white'
-                            fontFamily='stylized'
-                            textTransform='uppercase'
-                            fontSize={majorScale(3)}
-                            is='div'
-                        >
-                            WE AIM FOR COMMUNITY SERVICE WITH A SOCIAL
-                            <Text
-                                fontFamily='stylized'
-                                textTransform='uppercase'
-                                fontSize={majorScale(3)}
-                                color='gbc-red'
-                            > TWIST</Text>.
-                        </Text>
-                        <Pane marginTop={majorScale(2)}>
-                            <Text
-                                color='gray300'
-                            >
-                                What does that mean? It means members can participate in as many or as few volunteer opportunities as they’d like, and at the end of the day, they celebrate new friendships. In fact, our turnkey events only require one thing – for members to show up! Here’s a snapshot of Give Back Cincinnati’s impact:
-                            </Text>
-                        </Pane>
-                    </Pane>
-
-                    <BulletList 
-                        bullets={[
-                            'More than 15,000 hours of service donated to-date',
-                            '500+ houses painted throughout the region',
-                            'The region\'s largest Thanksgiving meal',
-                            'International service in Ghana, Romania, Peru, and beyond'
-                        ]}
-                    />
-                </Pane>
-            </Pane>
-        </div>
+            </div>
+        </LeftDashedBorder>
 
         {/*  WHO WE ARE  */}
         <Pane
