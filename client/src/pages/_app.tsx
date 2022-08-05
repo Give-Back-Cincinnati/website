@@ -2,7 +2,7 @@ import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-import { Navigation } from '@/components/Navigation/navigation'
+// import { Navigation } from '@/components/Navigation/navigation'
 import { Footer } from '@/components/Navigation/footer'
 
 const gbcColors = {
@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         
         </Head>
 
-        <Navigation />
+        {/* <Navigation /> */}
 
         <main style={{ paddingTop: 93, minHeight: 'calc(100vh - 93px)' }}>
             <Component {...pageProps} />
