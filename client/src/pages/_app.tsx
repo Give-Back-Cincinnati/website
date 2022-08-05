@@ -2,8 +2,8 @@ import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-// import { Navigation } from '@/components/Navigation/navigation'
-import { Footer } from '@/components/Navigation/footer'
+import Navigation from '@/components/Navigation/navigation'
+// import { Footer } from '@/components/Navigation/footer'
 
 const gbcColors = {
   red: '#d03236', // 208, 50, 54
@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
         </main>
 
-        <Footer />
+        {/* <Footer /> */}
     </>
 }
 
