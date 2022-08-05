@@ -4,7 +4,7 @@ import Head from 'next/head'
 import type { AppProps } from 'next/app'
 // import Navigation from '@/components/Navigation/navigation'
 import { Button } from '@/components/Utils'
-// import { Footer } from '@/components/Navigation/Footer'
+import { Footer } from '@/components/Navigation/Footer'
 
 
 const gbcColors = {
@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
         </main>
 
-        {/* <Footer /> */}
+        <Footer />
     </>
 }
 
