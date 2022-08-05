@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import { Footer } from './footer'
+import { Footer } from './Footer'
 
 const story = {
     title: 'Navigation/Footer',
