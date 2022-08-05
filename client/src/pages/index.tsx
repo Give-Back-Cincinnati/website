@@ -119,52 +119,26 @@ const Home: NextPage = () => {
         </LeftDashedBorder>
 
         {/*  WHO WE ARE  */}
-        <Pane
-            minHeight='300px'
-            display='flex'
-            flexFlow='row wrap'
-            justifyContent='space-around'
+        <div
+            className={styles.whoWeAreContainer}
         >
             {
                 whoWeAreTexts.map((text, i) => (
                     <React.Fragment key={i}>
                         {
                             i === 3
-                                ? <Pane width='100%' textAlign='center' marginY={majorScale(5)}>
-                                    <Text
-                                        color='gbc-red'
-                                        fontSize={majorScale(9)}
-                                        fontFamily='stylized'
-                                    >
+                                ? <h2 className={styles.whoWeAreTitle}>
                                         WHO WE ARE
-                                    </Text>
-                                </Pane>
+                                </h2>
                                 : ''
                         }
-                        <Pane width='100%' margin={majorScale(2)} lineHeight={2} className='xs sm' textAlign='center'>
-                            <Text
-                                textTransform='uppercase'
-                                color='gbc-black'
-                                fontFamily='stylized'
-                                fontSize={majorScale(3)}
-                            >
-                                {text}
-                            </Text>
-                        </Pane>
-                        <Pane width='33%' maxWidth={250} padding={majorScale(2)} lineHeight={2} className='md lg xl xxl'>
-                            <Text
-                                textTransform='uppercase'
-                                color='gbc-black'
-                                fontFamily='stylized'
-                                fontSize={majorScale(3)}
-                            >
-                                {text}
-                            </Text>
-                        </Pane>
+                        <div className={styles.whoWeAreItem}>
+                            {text}
+                        </div>
                     </React.Fragment>
                 ))
             }
-        </Pane>
+        </div>
 
 
     {/*    Upcoming Events   */}

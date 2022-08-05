@@ -70,6 +70,30 @@
     width: 45%;
 }
 
+.whoWeAreContainer {
+    min-height: 300px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    .whoWeAreTitle {
+        width: 100%;
+        text-align: center;
+        margin: 40px 0;
+        font-family: $alt-goth;
+        font-size: 5rem;
+        color: $gbc-red;
+    }
+    .whoWeAreItem {
+        width: 33%;
+        padding: 16px;
+        // line-height: 2;
+        font-size: 2rem;
+        color: $gbc-black;
+        font-family: $alt-goth;
+        text-transform: uppercase;
+    }
+}
+
 @media all and (max-width: 768px) {
     
     .missionContainer {
@@ -96,6 +120,14 @@
         left: -20px;
         border: 0;
         position: relative;
+    }
+
+    .whoWeAreContainer {
+        flex-flow: column;
+        .whoWeAreItem {
+            width: 100%;
+            text-align: center;
+        }
     }
 
 }
