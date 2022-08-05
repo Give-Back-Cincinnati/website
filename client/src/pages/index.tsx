@@ -1,8 +1,8 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { EventCard } from '../components/Events'
-import { Button, BulletList, LeftDashedBorder } from '../components/Utils'
+import { EventCard } from '@/components/Events'
+import { Button, BulletList, LeftDashedBorder } from '@/components/Utils'
 
 import styles from './index.module.scss'
 
