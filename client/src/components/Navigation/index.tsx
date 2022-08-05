@@ -5,7 +5,7 @@ import { Overlay } from '../Utils'
 
 import { MdOutlineMenu } from 'react-icons/md'
 import Logo from '../../../public/logos/half_circle.svg'
-import styles from './navigation.module.scss'
+import styles from './index.module.scss'
 
 const navigationRoutes = [
     {
