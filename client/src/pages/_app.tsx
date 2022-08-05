@@ -2,8 +2,7 @@ import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-// import { Navigation } from '@/components/Navigation'
-import { Button } from '@/components/Utils'
+import { Navigation, Footer } from '@/components/Navigation'
 
 const gbcColors = {
   red: '#d03236', // 208, 50, 54
@@ -21,14 +20,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         
         </Head>
 
-        <Button>Hello World</Button>
-        {/* <Navigation /> */}
+        <Navigation />
 
         <main style={{ paddingTop: 93, minHeight: 'calc(100vh - 93px)' }}>
             <Component {...pageProps} />
         </main>
 
-        {/* <Footer /> */}
+        <Footer />
     </>
 }
 
