@@ -2,7 +2,7 @@ import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-import { Navigation, Footer } from "../components/Navigation/index"
+import { Navigation, Footer } from "@/components/Navigation"
 
 const gbcColors = {
   red: '#d03236', // 208, 50, 54
