@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import { Navigation } from './navigation'
+import { Navigation } from '.'
 
 const story =  {
     title: 'Navigation/TopBar',

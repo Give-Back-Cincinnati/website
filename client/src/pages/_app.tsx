@@ -2,8 +2,7 @@ import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-// import Navigation from '@/components/Navigation/navigation'
-import { Button } from '@/components/Utils'
+import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 
 
@@ -23,8 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         
         </Head>
 
-        {/* <Navigation /> */}
-        <Button>Hello</Button>
+        <Navigation />
 
         <main style={{ paddingTop: 93, minHeight: 'calc(100vh - 93px)' }}>
             <Component {...pageProps} />
