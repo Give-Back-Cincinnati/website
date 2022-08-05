@@ -94,6 +94,62 @@
     }
 }
 
+.upcomingEventsContainer {
+    background: #E6E8F0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 40px;
+    .upcomingEventsTitle {
+        width: 100%;
+        text-align: center;
+        padding-bottom: 24px;
+        font-family: $alt-goth;
+        font-size: 3rem;
+        color: $gbc-black;
+    }
+    .seeAllEvents {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: auto;
+        padding-top: 16px;
+    }
+}
+
+.volunteerOpportunitiesContainer {
+    min-height: 300px;
+    text-align: center;
+    padding-top: 32px;
+    h3 {
+        color: $gbc-black;
+        font-size: 2.5rem;
+    }
+    .opportunityInnerContainer {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+    }
+    .opportunity {
+        padding-bottom: 40px;
+        max-width: 250px;
+        div {
+            min-height: 180px;
+            max-width: 120px;
+            margin: 32px auto 0 auto;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: bottom;
+        }
+        h4 {
+            font-size: 1.8rem;
+        }
+        p {
+            margin-top: 16px;
+        }
+    }
+}
+
 @media all and (max-width: 768px) {
     
     .missionContainer {

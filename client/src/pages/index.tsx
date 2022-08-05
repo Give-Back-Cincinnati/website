@@ -1,7 +1,6 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import {majorScale, Pane, Text} from 'evergreen-ui'
 import { EventCard } from '../components/Events'
 import { Button, BulletList, LeftDashedBorder } from '../components/Utils'
 
@@ -142,18 +141,12 @@ const Home: NextPage = () => {
 
 
     {/*    Upcoming Events   */}
-        <Pane
-            background={'gray300'}
-            display='flex'
-            flexFlow='row wrap'
-            justifyContent='space-around'
-            padding={majorScale(5)}
+        <div
+            className={styles.upcomingEventsContainer}
         >
-            <Pane width='100%' textAlign='center' paddingBottom={majorScale(3)}>
-                <Text fontFamily='stylized' fontSize={majorScale(5)} color='gbc-black'>
-                    Upcoming Events
-                </Text>
-            </Pane>
+            <h3 className={styles.upcomingEventsTitle} >
+                Upcoming Events
+            </h3>
 
             {
                 upcomingEvents.map(({ _id, date, title, description }) => <EventCard
@@ -163,58 +156,36 @@ const Home: NextPage = () => {
                     description={description}
                 />)
             }
-
-            <Pane width='100%' margin='auto' textAlign='center' paddingTop={majorScale(2)}>
+            <div className={styles.seeAllEvents}>
                 <Button size='lg'>
                     See all Upcoming Events
                 </Button>
-            </Pane>
-        </Pane>
+            </div>
+        </div>
 
     {/*    VOLUNTEER OPPORTUNITIES */}
-        <Pane
-            minHeight='300px'
-            backgroundColor='white'
-        >
-            <Pane
-                textAlign={'center'}
-                paddingTop={majorScale(4)}
+        <div className={styles.volunteerOpportunitiesContainer}>
+            <h3
+            // fontFamily='stylized' fontSize={majorScale(4)} color='gbc-black'
             >
-                <Text fontFamily='stylized' fontSize={majorScale(4)} color='gbc-black'>
-                    Volunteer Opportunities
-                </Text>
-            </Pane>
-            <Pane display='flex' flexFlow='row wrap' justifyContent='space-around'>
+                Volunteer Opportunities
+            </h3>
+            <div className={styles.opportunityInnerContainer}>
                 {
                     volunteerOpportunities.map(({ logo, title, description }) => (
-                        <Pane key={title} textAlign='center' paddingBottom={majorScale(5)} maxWidth={250}>
-                            <Pane
-                                display='block'
-                                minHeight={180}
-                                maxWidth={120}
-                                marginTop={majorScale(4)}
-                                marginX='auto'
-                                backgroundImage={`url(${logo})`}
-                                backgroundRepeat='no-repeat'
-                                backgroundSize='contain'
-                                backgroundPosition='bottom'
+                        <div className={styles.opportunity} key={title}>
+                            <div
+                                style={{ backgroundImage: `url(${logo})` } }
                             />
-                            <Text
-                                color='gbc-red'
-                                fontFamily='stylized'
-                                fontSize={majorScale(3)}
-                                display='block'
-                            >{title}</Text>
-                            <Pane paddingTop={majorScale(3)}>
-                                <Text display='block'>
-                                    {description}
-                                </Text>
-                            </Pane>
-                        </Pane>
+                            <h4>{title}</h4>
+                            <p>
+                                {description}
+                            </p>
+                        </div>
                     ))
                 }
-            </Pane>
-        </Pane>
+            </div>
+        </div>
 
     </div>
   )
