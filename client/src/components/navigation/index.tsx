@@ -1,2 +1,2 @@
-export * from '@/components/Navigation/navigation'
-export * from '@/components/Navigation/Footer'
+export * from './navigation'
+export * from './Footer'
