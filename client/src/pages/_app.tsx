@@ -2,7 +2,6 @@ import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-import { Pane, defaultTheme, ThemeProvider, mergeTheme } from "evergreen-ui"
 import { Navigation, Footer } from "../components/Navigation"
 
 const gbcColors = {
@@ -10,43 +9,8 @@ const gbcColors = {
   black: '#333333',
 }
 
-const customTheme = {
-  colors: {
-    'overlay': 'rgba(0, 0, 0, .65)',
-    'gbc-red': gbcColors.red,
-    'gbc-black': gbcColors.black,
-  },
-  fontFamilies: {
-    ...defaultTheme.fontFamilies,
-    ui: '"SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    stylized: 'AlternateGotNo3D, "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-  },
-  components: {
-    Button: {
-      appearances: {
-        'gbc-red': {
-          backgroundColor: gbcColors.red,
-          color: 'white',
-          _hover: {
-            backgroundColor: '#c03236',
-          },
-          _active: {
-            backgroundColor: '#c03236',
-          },
-          _focus: {
-            boxShadow: '0 0 0 2px #c03236',
-          },
-        },
-      },
-    },
-  },
-}
-
 function MyApp({ Component, pageProps }: AppProps) {
-  return <ThemeProvider value={mergeTheme(
-      defaultTheme,
-      customTheme,
-  )}>
+  return <>
     <Head>
       <title>Give Back Cincinnati</title>
       <meta name='description' content="Give Back Cincinnati's Website" />
@@ -58,12 +22,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     <Navigation />
 
-    <Pane paddingTop={93} minHeight={'calc(100vh - 93px)'} is={'main'}>
+    <main style={{ paddingTop: 93 }} 
+        // minHeight={'calc(100vh - 93px)'}
+    >
       <Component {...pageProps} />
-    </Pane>
+    </main>
 
     <Footer />
-  </ThemeProvider>
+  </>
 }
 
 export default MyApp
