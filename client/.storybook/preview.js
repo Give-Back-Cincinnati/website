@@ -1,5 +1,8 @@
+import React from 'react'
+import { Provider } from 'react-redux'
+import store from '../src/store'
+import { createServices } from '../src/services'
 import '../src/styles/globals.scss'
-
 import * as NextImage from "next/image";
 
 const OriginalNextImage = NextImage.default;
@@ -23,3 +26,12 @@ export const parameters = {
     },
   },
 }
+
+export const decorators = [
+    (Story) => {
+        createServices()
+        return <Provider store={store}>
+            <Story />
+        </Provider>
+    }
+]

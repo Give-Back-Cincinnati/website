@@ -5,6 +5,9 @@ import type { AppProps } from 'next/app'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 
+import { createServices } from 'services'
+import { Provider } from 'react-redux'
+import store from 'store'
 
 const gbcColors = {
   red: '#d03236', // 208, 50, 54
@@ -12,7 +15,9 @@ const gbcColors = {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-    return <>
+    createServices()
+    
+    return <Provider store={store}>
         <Head>
             <title>Give Back Cincinnati</title>
             <meta name='description' content="Give Back Cincinnati's Website" />
@@ -29,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </main>
 
         <Footer />
-    </>
+    </Provider>
 }
 
 export default MyApp
