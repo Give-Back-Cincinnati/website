@@ -1,0 +1,66 @@
+@use "sass:color";
+@import '../../../styles/colors.scss';
+
+.container {
+    position: fixed;
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 8px 15px 8px 18px;
+    margin: 0 auto;
+    top: 10px;
+    left: 0;
+    right: 0;
+    max-width: 560px;
+    display: flex;
+    flex-flow: row;
+}
+
+.icon {
+    margin-right: 18px;
+    font-size: 1.5rem;
+}
+
+.title {
+    flex: 1;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+}
+
+.body {
+    flex: 1;
+}
+
+.information {
+    .icon, .title {
+        color: $information;
+    }
+    border-color: $information;
+    background: color.adjust($information, $alpha: -.93);
+}
+
+.positive {
+    .icon, .title {
+        color: color.adjust($positive, $lightness: -30%);
+    }
+    border-color: $positive;
+    background: color.adjust($positive, $alpha: -.93);
+}
+
+.negative {
+    .icon, .title {
+        color: color.adjust($negative, $lightness: -10%);
+    }
+    border-color: $negative;
+    background: color.adjust($negative, $alpha: -.93);
+}
+
+.warning {
+    .icon {
+        color: $warning;
+    }
+    .title {
+        color: color.adjust($warning, $lightness: -20%);
+    }
+    border-color: $warning;
+    background: color.adjust($warning, $alpha: -.93);
+}
