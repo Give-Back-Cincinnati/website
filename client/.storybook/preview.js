@@ -5,6 +5,7 @@ import { ServiceSingleton } from '../src/services'
 import { ServicesContext } from '../src/contexts/Services'
 import '../src/styles/globals.scss'
 import * as NextImage from "next/image";
+import { RouterContext } from "next/dist/shared/lib/router-context"
 
 const OriginalNextImage = NextImage.default;
 
@@ -25,6 +26,9 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 }
 
