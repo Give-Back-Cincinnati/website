@@ -1,18 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { useServices } from "services"
-import { store } from 'store'
+import { useAppDispatch } from "store/hooks"
 import { fetchMe } from "./index"
 
 export const googleOauth20Callback = createAsyncThunk(
     'user/googleOauth20Callback',
     async (callbackUrl: string) => {
-        const { AxiosService } = useServices()
+        const { Axios } = useServices()
+        const dispatch = useAppDispatch()
         try {
-            const { status } = await axios.get(callbackUrl)
+            const { status } = await Axios.get(callbackUrl)
 
             if (status === 204) {
                 // toaster.success('Logged In!')
-                store.dispatch(fetchMe())
+                dispatch(fetchMe())
             }
 
             return status

@@ -4,9 +4,9 @@ import { useServices } from "services"
 export const fetchMe = createAsyncThunk(
     'user/fetchMe',
     async () => {
-        const { AxiosService } = useServices()
+        const { Axios } = useServices()
         try {
-            const  { data } = await AxiosService.get('/users/me')
+            const  { data } = await Axios.get('/users/me')
             return data
         } catch (e) {
             return

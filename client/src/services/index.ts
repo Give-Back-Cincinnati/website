@@ -1,16 +1,26 @@
-// TODO: ADD STORE AND STATEINTERFACE
 import { AxiosInstance } from 'axios'
 import { AxiosService } from './axiosService'
+import { ToasterService } from './toasterService'
 
-const services: Record<string, AxiosInstance> = {}
+export class Services {
+    
+    services: {
+        Axios: AxiosInstance,
+        Toaster: ToasterService
+    }
 
-export type ServicesInterface = typeof services
+    constructor () {
+        this.services = {
+            Axios: new AxiosService().Axios,
+            Toaster: new ToasterService()
+        }
+        return this
+    }
 
-export function createServices () {
-    services.AxiosService = new AxiosService().Axios
 }
+
+export const ServiceSingleton = new Services()
 
 export function useServices () {
-    return services
+    return ServiceSingleton.services
 }
-

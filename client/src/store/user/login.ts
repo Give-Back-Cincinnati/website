@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { store } from 'store'
+import { useAppDispatch } from "store/hooks"
 import { useServices } from "services"
 
 import { fetchMe } from "./fetchMe"
@@ -8,9 +8,10 @@ export const login = createAsyncThunk(
     'user/login',
     async ({ email, password }: { email: string, password: string } ) => {
         console.log('login')
-        const { AxiosService } = useServices()
+        const { Axios } = useServices()
+        const dispatch = useAppDispatch()
         try {
-            const { status } = await AxiosService.post('/auth/login', {
+            const { status } = await Axios.post('/auth/login', {
                 email,
                 password
             })
@@ -19,7 +20,7 @@ export const login = createAsyncThunk(
 
             if (status === 204) {
                 // toaster.success('Logged In!')
-                store.dispatch(fetchMe())
+                dispatch(fetchMe())
             }
 
             return status

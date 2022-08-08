@@ -4,9 +4,9 @@ import { useServices } from "services"
 export const logout = createAsyncThunk(
     'user/logout',
     async (): Promise<boolean | number> => {
-        const { AxiosService } = useServices()
+        const { Axios } = useServices()
         try {
-            const { status } = await AxiosService.get('/auth/logout')
+            const { status } = await Axios.get('/auth/logout')
             return status
         } catch (e) {
             return false

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from '../src/store'
-import { createServices } from '../src/services'
+import { ServiceSingleton } from '../src/services'
+import { ServicesContext } from '../src/contexts/Services'
 import '../src/styles/globals.scss'
 import * as NextImage from "next/image";
 
@@ -29,9 +30,10 @@ export const parameters = {
 
 export const decorators = [
     (Story) => {
-        createServices()
-        return <Provider store={store}>
-            <Story />
-        </Provider>
+        return <ServicesContext.Provider value={ServiceSingleton}>
+            <Provider store={store}>
+                <Story />
+            </Provider>
+        </ServicesContext.Provider>
     }
 ]
