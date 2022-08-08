@@ -1,0 +1,30 @@
+@import '../../../styles/fonts.scss';
+@import '../../../styles/colors.scss';
+
+.container {
+    background-color: $gbc-red;
+    min-height: 150px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../../../assets/endless-clouds.svg);
+    background-size: 56px 28px;
+    h1 {
+        color: $white;
+        font-family: $alt-goth;
+        font-size: 3rem;
+        padding-bottom: 12px;
+        font-weight: normal;
+        text-transform: uppercase;
+        letter-spacing: .35rem;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .container {
+        h1 {
+            font-size: 1.9rem;
+        }
+    } 
+}

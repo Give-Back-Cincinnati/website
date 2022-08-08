@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { BulletList } from '.'
 
 const story = {
-    title: 'Utils/BulletList',
+    title: 'Backgrounds/BulletList',
     component: BulletList,
     parameters: {
         backgrounds: {

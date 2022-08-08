@@ -8,22 +8,22 @@ import Logo from '../../../public/logos/half_circle.svg'
 import styles from './index.module.scss'
 
 const navigationRoutes = [
-    {
-        label: 'About Us',
-        href: '/about-us',
-    },
+    // {
+    //     label: 'About Us',
+    //     href: '/about-us',
+    // },
     {
         label: 'Upcoming Events',
-        href: '/about-us1',
+        href: '/events',
     },
-    {
-        label: 'Join GBC',
-        href: '/about-us2',
-    },
-    {
-        label: 'Support GBC',
-        href: '/about-us3',
-    },
+    // {
+    //     label: 'Join GBC',
+    //     href: '/about-us2',
+    // },
+    // {
+    //     label: 'Support GBC',
+    //     href: '/about-us3',
+    // },
 ]
 
 export const Navigation = () => {

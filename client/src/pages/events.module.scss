@@ -1,0 +1,36 @@
+@import '../styles/colors.scss';
+
+.container {
+    width: 90%;
+    min-height: calc(100vh - 93px);
+    margin: auto;
+    display: flex;
+    flex-flow: column;
+    padding: 0 1rem;
+    text-align: center;
+    .tagline {
+        width: 90%;
+        margin: 1rem auto;
+        h2 {
+            font-size: 2.5rem;
+            font-weight: normal;
+            margin-bottom: 1.5rem;
+        }
+    }
+    .eventsContainer {
+        margin-top: 3rem;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        justify-items: baseline;
+        text-align: left;
+        h2 {
+            font-size: 2.2rem;
+            display: inline-block;
+            text-transform: uppercase;
+            border-bottom: 2px solid $gbc-red;
+            color: $gbc-black;
+            margin-bottom: 1rem;
+        }
+    }
+}

@@ -5,7 +5,7 @@ import { LeftDashedBorder } from '.'
 import { BulletList } from '../BulletList'
 
 const story = {
-    title: 'Utils/LeftDashedBorder',
+    title: 'Backgrounds/LeftDashedBorder',
     component: LeftDashedBorder,
     parameters: {
         layout: {
