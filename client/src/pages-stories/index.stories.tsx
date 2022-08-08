@@ -7,7 +7,7 @@ const story = {
     title: 'Pages/index',
     component: Index,
     parameters: {
-        layout: 'fullscreen'
+        layout: 'fullscreen',
     }
 } as ComponentMeta<typeof Index>
 
