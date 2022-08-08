@@ -7,9 +7,6 @@ import { MdOutlineMenu } from 'react-icons/md'
 import Logo from '../../../public/logos/half_circle.svg'
 import styles from './index.module.scss'
 
-import { useAppDispatch } from "store/hooks"
-import { login } from "store/user"
-
 const navigationRoutes = [
     {
         label: 'About Us',
@@ -32,15 +29,10 @@ const navigationRoutes = [
 export const Navigation = () => {
     const router = useRouter()
     const [ isNavigationOpen, setNavigationOpen ] = useState(false)
-    const dispatch = useAppDispatch()
 
     return (
         <nav
             className={styles.nav}
-            onClick={() => {
-                console.log('hello world')
-                dispatch(login({ email: 'michael', password: 'onyx' }))
-            }}
         >
             <div className={styles.logo}>
                 <Image
