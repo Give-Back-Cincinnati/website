@@ -16,3 +16,9 @@ export default story
 const Template: ComponentStory<typeof EventHeader> = (args) => <EventHeader {...args} />
 
 export const Primary = Template.bind({})
+
+export const WithCategory = Template.bind({})
+WithCategory.args = {
+    title: 'Back to School',
+    category: 'Hands On'
+}

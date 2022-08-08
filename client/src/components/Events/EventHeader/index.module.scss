@@ -3,13 +3,23 @@
 
 .container {
     background-color: $gbc-red;
-    min-height: 150px;
+    min-height: 175px;
     text-align: center;
     display: flex;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
     background-image: url(../../../assets/endless-clouds.svg);
     background-size: 56px 28px;
+    h2 {
+        color: $white;
+        font-weight: normal;
+        letter-spacing: .1rem;
+        border: 1px solid $white;
+        border-radius: 25px;
+        padding: .25rem 1.25rem .5rem 1.25rem;
+        background-color: $gbc-red;
+    }
     h1 {
         color: $white;
         font-family: $alt-goth;
