@@ -3,7 +3,7 @@ import makeServiceWorkerEnv from "service-worker-mock"
 import { CreateRequestContext } from "../../router"
 import { Analytics } from "../../config/analytics"
 
-// jest.mock('../../config/analytics')
+// jest.mock('../../index/analytics')
 
 declare const global: any
 

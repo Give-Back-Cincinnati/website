@@ -4,7 +4,7 @@ class SegmentAnalytics {
   private readonly enabled: boolean
 
   constructor() {
-    this.enabled = true //config.NODE_ENV === 'production' // if not production, disable analytics.
+    this.enabled = true //index.NODE_ENV === 'production' // if not production, disable analytics.
   }
 
   createHeaders () {

@@ -1,7 +1,7 @@
 # Give Back Cincinnati Read Cache/API
 
 ### Environment Variables
-Add them to `wrangler.toml`, `jestconfig.json`, AND declare them in `src/config/index`.  Tests will fail if you don't.
+Add them to `wrangler.toml`, `jestconfig.json`, AND declare them in `src/index/index`.  Tests will fail if you don't.
 
 
 # ʕ •́؈•̀) `worker-typescript-template`
