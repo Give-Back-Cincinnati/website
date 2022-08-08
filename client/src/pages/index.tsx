@@ -16,10 +16,14 @@ const whoWeAreTexts = [
 ]
 
 const volunteerOpportunities = [
-    { logo: '/logos/civic-engagement.svg', title: 'Civic Engagement', description: 'Sounding off on local issues and taking a closer look at our community' },
-    { logo: '/logos/interactive.svg', title: 'Interactive', description: 'Sounding off on local issues and taking a closer look at our community' },
-    { logo: '/logos/hands-on.svg', title: 'Hands-On', description: 'Sounding off on local issues and taking a closer look at our community' },
-    { logo: '/logos/social.svg', title: 'Social', description: 'Sounding off on local issues and taking a closer look at our community' },
+    { logo: '/logos/civic-engagement.svg', title: 'Civic Engagement', description: 'Sounding off on local issues and taking a closer look at our community.' },
+    { logo: '/logos/interactive.svg', title: 'Interactive', description: 'From school-kids to senior citizens, we\'re engaged at all levels.' },
+    { logo: '/logos/hands-on.svg', title: 'Hands-On', description: 'We get our hands dirty at parks, in schools, and on city streets.' },
+    { logo: '/logos/social.svg', title: 'Social', description: 'We kick up our feet at social outings and make a buck for Give Back.' },
+    { logo: '/logos/fallfeast.svg', title: 'Fall Feast', description: 'Sharing hot meals and holiday memories with all members of our community.' },
+    { logo: '/logos/fuel.svg', title: 'Fuel Cincinnati', description: 'Fueling Young Professionals to Fuel Cincinnati™ through funding, connections, and mentorship.' },
+    { logo: '/logos/givebackbeyond-alt.svg', title: 'Give Back Beyond', description: 'Our international service missions know no borders.' },
+    { logo: '/logos/paintthetown-alt1.svg', title: 'Paint the Town', description: 'Rejuvenating homes and reviving spirits in local neighborhoods.' },
 ]
 
 const upcomingEvents = [

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { DateTime } from 'luxon'
 
 import styles from './EventCard.module.scss'
@@ -18,7 +19,14 @@ export const EventCard = ({
     description,
     opts = { dateHasBorder: false }
 }: EventCardProps) => {
-    return <div className={styles.container}>
+    const router = useRouter()
+
+    return <div
+        className={styles.container}
+        onClick={() => {
+            router.push(`/events/${encodeURIComponent(title)}`)
+        }}
+    >
         <h3 className={`${styles.date} ${opts.dateHasBorder ? styles.dateHasBorder : ''}`}>{DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}</h3>
         <h1 className={styles.title}>{title}</h1>
         {
