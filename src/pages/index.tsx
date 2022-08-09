@@ -200,10 +200,10 @@ const Home: NextPage<Props> = ({ events }: Props) => {
     )
 }
 
-Home.getInitialProps = async (): Promise<{ events: [] }> => {
-    const res = await fetch(`${process.env.REACT_APP_API_BASEURL}/events`)
-    const events = await res.json()
-    return { events }
-}
+// Home.getInitialProps = async (): Promise<{ events: [] }> => {
+//     // const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
+//     // const events = await res.json()
+//     return { events: [] }
+// }
 
 export default Home

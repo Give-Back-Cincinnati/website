@@ -1,11 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit"
-import user from './user/slice'
+import { user, UserState } from './user/slice'
 
-export const store = configureStore({
+export interface InitialState {
+    user?: Partial<UserState>
+}
+
+export const createStore = (initialState?: InitialState) => configureStore({
     reducer: {
-        user,
+        user: user(initialState?.user).reducer,
     }
 })
+
+export const store = createStore()
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

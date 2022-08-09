@@ -17,9 +17,9 @@ const initialState: UserState = {
     isAuthenticated: false
 }
 
-export const userSlice = createSlice({
+export const user = (state: Partial<UserState> = initialState) => createSlice({
     name: 'user',
-    initialState,
+    initialState: { ...initialState, ...state },
     reducers: {
         setUser: (state, action: PayloadAction<IUser>) => {
             state.me = action.payload
@@ -63,5 +63,3 @@ export const userSlice = createSlice({
         })
     }
 })
-
-export default userSlice.reducer

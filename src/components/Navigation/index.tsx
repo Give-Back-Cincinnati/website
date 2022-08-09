@@ -7,6 +7,8 @@ import { MdOutlineMenu } from 'react-icons/md'
 import Logo from '../../../public/logos/half_circle.svg'
 import styles from './index.module.scss'
 
+import { useAppSelector } from "@/store/hooks"
+
 const navigationRoutes = [
     // {
     //     label: 'About Us',
@@ -29,6 +31,7 @@ const navigationRoutes = [
 export const Navigation = () => {
     const router = useRouter()
     const [ isNavigationOpen, setNavigationOpen ] = useState(false)
+    const user = useAppSelector(state => state.user)
 
     return (
         <nav
@@ -61,6 +64,18 @@ export const Navigation = () => {
                             </span>
                         ))
                     }
+                    <span
+                        className={styles.navBarHorizontal}
+                        onClick={() => {
+                            void router.push('https://accounts.google.com/o/oauth2/v2/auth'
+                            + '?response_type=code'
+                            + `&redirect_uri=${encodeURIComponent(window.location.origin)}%2Fauth%2Fgoogle%2Fcallback`
+                            + '&scope=profile%20email'
+                            + `&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`)
+                        }}
+                    >
+                        Login
+                    </span>
                 </div>
             </div>
             <Overlay
@@ -82,8 +97,23 @@ export const Navigation = () => {
                             {label}
                         </div>
                     ))}
+                    <div
+                        onClick={() => {
+                            setNavigationOpen(false)
+                            void router.push('https://accounts.google.com/o/oauth2/v2/auth'
+                            + '?response_type=code'
+                            + `&redirect_uri=${encodeURIComponent(window.location.origin)}%2Fauth%2Fgoogle%2Fcallback`
+                            + '&scope=profile%20email'
+                            + `&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`)
+                        }}
+                    >
+                        Login
+                    </div>
                 </aside>
             </Overlay>
+            <div>
+                { JSON.stringify(user) }
+            </div>
         </nav>
     )
 }

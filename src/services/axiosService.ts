@@ -6,7 +6,7 @@ export class AxiosService {
 
     constructor () {
         this.Axios = Axios.create({
-            baseURL: process.env.REACT_APP_API_BASEURL
+            baseURL: process.env.NEXT_PUBLIC_API_BASE_URL
         })
 
         return this
