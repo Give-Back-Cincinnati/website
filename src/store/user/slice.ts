@@ -5,12 +5,7 @@ import { logout } from './logout'
 import { fetchMe } from './fetchMe'
 import { googleOauth20Callback } from "./googleOauth20Callback"
 
-export interface IUser {
-    _id: string
-    firstName: string
-    lastName: string
-    profilePicture?: string
-}
+import type { IUser } from '@/types/user'
 
 export interface UserState {
     me?: IUser
