@@ -6,6 +6,7 @@ import { fetchMe } from './fetchMe'
 import { googleOauth20Callback } from "./googleOauth20Callback"
 
 import type { IUser } from '@/types/user'
+import axios from "axios"
 
 export interface UserState {
     me?: IUser
@@ -56,7 +57,14 @@ export const user = (state: Partial<UserState> = initialState) => createSlice({
         })
 
         builder.addCase(googleOauth20Callback.fulfilled, (state, action) => {
-            switch (action.payload) {
+            if (axios.isAxiosError(action.payload)) {
+                console.log('error occurred')
+                return
+            }
+            if ('data' in action.payload) {
+                state.me = action.payload.data
+            }
+            switch (action.payload.status) {
                 case 204:
                     state.isAuthenticated = true
             }

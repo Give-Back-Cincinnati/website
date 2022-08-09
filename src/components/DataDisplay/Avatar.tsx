@@ -1,9 +1,9 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, ComponentPropsWithoutRef } from 'react'
 import styles from './Avatar.module.scss'
 
-export interface AvatarProps {
-    src?: string
+export interface AvatarProps extends ComponentPropsWithoutRef<"div"> {
     name: string
+    src?: string
 }
 
 function getInitials (name: string): string {
@@ -15,14 +15,14 @@ function getInitials (name: string): string {
         .toUpperCase()
 }
 
-export const Avatar = ({ src, name }: AvatarProps) => {
+export const Avatar = ({ src, name, className, ...props }: AvatarProps) => {
     const [ imageHasFailedLoading, setImageHasFailedLoading ] = useState(false)
     const onError = useCallback(() => setImageHasFailedLoading(true), [])
     const imageUnavailable = !src || imageHasFailedLoading
 
     const initials = useMemo(() => getInitials(name), [ name ])
 
-    return <div className={styles.container}>
+    return <div className={`${styles.container} ${className}`} {...props}>
         {
             imageUnavailable && (
                 <span>{initials}</span>

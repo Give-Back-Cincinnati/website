@@ -35,20 +35,33 @@
     }
 }
 
+.avatar {
+    margin-left: 12px;
+}
+
+.navBarHorizontalContainer {
+    display: flex;
+    flex-flow: row;
+}
+
 .navBarHorizontal {
     font-family: $alt-goth;
     font-size: 1.7rem;
     color: $gbc-red;
     margin-right: 1.7em;
+    min-height: 40px;
     cursor: pointer;
-    &:last-of-type {
-        margin-right: 0;
-    }
+}
+
+.login {
+    @extend .navBarHorizontal;
+    margin-right: 0;
 }
 
 .navigationLinks {
     margin-right: 32px;
     display: flex;
+    flex-flow: row;
     justify-content: center;
     align-items: center;
 }
@@ -57,4 +70,19 @@
     width: 2.5em;
     height: 2.5em;
     color: $gbc-black;
+    cursor: pointer;
+    display: none;
 }
+
+@media all and (max-width: 768px) {
+
+    .menuIcon {
+        display: block;
+        margin-left: 12px;
+    }
+
+    .navBarHorizontalContainer {
+        display: none;
+    }
+}
+

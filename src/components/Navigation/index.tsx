@@ -2,12 +2,14 @@ import React, { useState } from "react"
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Overlay } from '../Utils'
+import { Avatar } from "components/DataDisplay"
 
 import { MdOutlineMenu } from 'react-icons/md'
 import Logo from '../../../public/logos/half_circle.svg'
 import styles from './index.module.scss'
 
-import { useAppSelector } from "@/store/hooks"
+import { useAppSelector, useAppDispatch } from "@/store/hooks"
+import { login } from "@/store/user"
 
 const navigationRoutes = [
     // {
@@ -31,6 +33,7 @@ const navigationRoutes = [
 export const Navigation = () => {
     const router = useRouter()
     const [ isNavigationOpen, setNavigationOpen ] = useState(false)
+    const dispatch = useAppDispatch()
     const user = useAppSelector(state => state.user)
 
     return (
@@ -47,37 +50,44 @@ export const Navigation = () => {
                 />
             </div>
             <div className={styles.navigationLinks}>
-                <div className='xs'>
-                    <MdOutlineMenu className={styles.menuIcon} onClick={() => setNavigationOpen(true)} />
-                </div>
-                <div className='sm md lg xl xxl'>
+                <div className={styles.navBarHorizontalContainer}>
                     {
                         navigationRoutes.map(({ label, href }, idx) => (
-                            <span
-                                key={href}
-                                onClick={() => {
+                            <div
+                            key={href}
+                            onClick={() => {
                                     void router.push(href)
                                 }}
                                 className={styles.navBarHorizontal}
-                            >
+                                >
                                 { label }
-                            </span>
+                            </div>
                         ))
                     }
-                    <span
-                        className={styles.navBarHorizontal}
-                        onClick={() => {
-                            void router.push('https://accounts.google.com/o/oauth2/v2/auth'
-                            + '?response_type=code'
-                            + `&redirect_uri=${encodeURIComponent(window.location.origin)}%2Fauth%2Fgoogle%2Fcallback`
-                            + '&scope=profile%20email'
-                            + `&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`)
-                        }}
-                    >
-                        Login
-                    </span>
                 </div>
+                
+                {
+                    user.isAuthenticated
+                    ? <Avatar
+                        name={(user.me?.firstName + user.me?.lastName) || ''}
+                        // src={user.me?.profilePicture}
+                    />
+                    : <div
+                            className={styles.login}
+                            onClick={() => {
+                                    void router.push('https://accounts.google.com/o/oauth2/v2/auth'
+                                    + '?response_type=code'
+                                    + `&redirect_uri=${encodeURIComponent(window.location.origin)}%2Fauth%2Fgoogle%2Fcallback`
+                                    + '&scope=profile%20email'
+                                    + `&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`)
+                                }}
+                        >
+                            Login
+                        </div>
+                }
+                <MdOutlineMenu className={styles.menuIcon} onClick={() => setNavigationOpen(true)} />
             </div>
+
             <Overlay
                 isOpen={isNavigationOpen}
                 onRequestClose={() => setNavigationOpen(false)}
@@ -111,9 +121,6 @@ export const Navigation = () => {
                     </div>
                 </aside>
             </Overlay>
-            <div>
-                { JSON.stringify(user) }
-            </div>
         </nav>
     )
 }
