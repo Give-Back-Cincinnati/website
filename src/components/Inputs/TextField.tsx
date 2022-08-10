@@ -11,7 +11,7 @@ export interface TextFieldProps extends ComponentPropsWithoutRef<'input'> {
     label?: string
     fullWidth?: boolean
     error?: boolean
-    errorText: string
+    errorText?: string
 }
 
 const withValueStyle = {
@@ -36,17 +36,17 @@ export const TextField = ({
 }: TextFieldProps) => {
     const [labelStyles, api] = useSpring(() => value === '' ? nullStyle : withValueStyle)
     
-    useEffect(() => {
-        if (value !== '') {
-            api.start(withValueStyle)
-        } else {
-            api.start(nullStyle)
-        }
-    }, [ value, api ])
-
     const containerStyles = [styles.container]
     if (error) containerStyles.push(styles.errorState)
     if (fullWidth) containerStyles.push(styles.fullWidth)
+
+    function handleFocus () {
+        api.start(withValueStyle)
+    }
+
+    function handleBlur () {
+        value === '' && api.start(nullStyle)
+    }
 
     return <div className={containerStyles.join(' ')}>
             <animated.label
@@ -60,6 +60,8 @@ export const TextField = ({
                 name={name}
                 value={value}
                 onChange={onChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
             />
             <div className={styles.errorText}>
                 {errorText}
