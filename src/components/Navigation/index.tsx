@@ -70,7 +70,7 @@ export const Navigation = () => {
                     user.isAuthenticated
                     ? <Avatar
                         name={user.me?.firstName || ''}
-                        // src={user.me?.profilePicture}
+                        src={user.me?.profilePicture}
                     />
                     : <div
                             className={styles.login}
