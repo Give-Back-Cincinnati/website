@@ -1,8 +1,7 @@
-import React, { ComponentPropsWithoutRef, ChangeEventHandler, ChangeEvent } from 'react'
+import React, { ComponentPropsWithoutRef, ChangeEventHandler } from 'react'
 import { useSpring, animated } from '@react-spring/web'
 
 import styles from './TextField.module.scss'
-import { useEffect } from 'react'
 
 export interface TextFieldProps extends ComponentPropsWithoutRef<'input'> {
     name: string

@@ -1,0 +1,60 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/fonts.scss';
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    .circleContainer {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        span {
+            display: inline-block;
+            background: $gbc-red;
+            height: 10px;
+            width: 10px;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+    }
+    .title {
+        font-family: $alt-goth;
+        font-size: 2.7rem;
+        padding-bottom: 12px;
+        margin-right: 2.7rem;
+        margin-left: 2.7rem;
+    }
+    .circle {
+        display: block;
+        border-radius: 100%;
+        border: 1px solid $gbc-red;
+        height: 35px;
+        width: 35px;
+    }
+    .line {
+        flex: 1;
+        border-top: 1px dashed $gbc-red;
+    }
+}
+
+
+@media all and (max-width: 768px) {
+
+    .container {
+        flex-flow: column;
+        .circleContainer {
+            justify-content: center;
+        }
+        .circle {
+            display: none;
+        }
+        .line {
+            width: 100%;
+        }
+    }
+
+}
