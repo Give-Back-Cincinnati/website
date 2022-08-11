@@ -1,7 +1,22 @@
-.eventContainer {
-    width: 95%;
-    margin: auto;
+.detailsContainer {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
     display: flex;
     flex-flow: row wrap;
-    
+    justify-content: space-around;
+    .details {
+        max-width: 750px;
+    }
+}
+
+@media all and (max-width: 768px) {
+
+    .detailsContainer {
+        margin-top: 2rem;
+        .details {
+            margin-top: 4rem;
+            max-width: 80%;
+        }
+    }
+
 }

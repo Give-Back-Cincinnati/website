@@ -1,0 +1,22 @@
+@import '../../../styles/colors.scss';
+
+.container {
+    max-width: 300px;
+    h2 {
+        color: $gbc-black;
+        font-size: 1.8rem;
+        letter-spacing: .2rem;
+        margin-bottom: 1.5rem;
+    }
+    .detail {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        span {
+            &:first-child {
+                color: $gbc-red;
+                flex: 1;
+            }
+        }
+    }
+}
