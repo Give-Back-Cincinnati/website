@@ -1,0 +1,32 @@
+@import '../../styles/colors.scss';
+
+.container { 
+    width: 50px;
+    height: 50px;
+    overflow: visible;
+    // border: 1px solid black;
+
+    .primary {
+        stroke: $gbc-red;
+    }
+
+    .alt {
+        stroke: $gbc-black;
+    }
+
+    .warning {
+        stroke: $warning;
+    }
+    
+    .positive {
+        stroke: $positive;
+    }
+    
+    .negative {
+        stroke: $negative;
+    }
+    
+    .information {
+        stroke: $information;
+    }
+}
