@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ChangeEventHandler } from 'react'
+import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, MutableRefObject } from 'react'
 import { useSpring, animated } from '@react-spring/web'
 
 import styles from './TextField.module.scss'
@@ -34,10 +34,15 @@ export const TextField = ({
     ...props
 }: TextFieldProps) => {
     const [labelStyles, api] = useSpring(() => value === '' ? nullStyle : withValueStyle)
+    const inputEl = useRef<HTMLInputElement | null>(null)
     
     const containerStyles = [styles.container]
     if (error) containerStyles.push(styles.errorState)
     if (fullWidth) containerStyles.push(styles.fullWidth)
+
+    function handleLabelClick () {
+        inputEl.current?.focus()
+    }
 
     function handleFocus () {
         api.start(withValueStyle)
@@ -51,6 +56,7 @@ export const TextField = ({
             <animated.label
                 htmlFor={name}
                 style={labelStyles}
+                onClick={handleLabelClick}
             >
                 {label}{props.required ? '*' : ''}
             </animated.label>
@@ -61,6 +67,7 @@ export const TextField = ({
                 onChange={onChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                ref={inputEl}
             />
             <div className={styles.errorText}>
                 {errorText}
