@@ -1,0 +1,11 @@
+@import '../../styles/colors.scss';
+
+.description {
+    padding-top: 12px;
+    p {
+        padding-bottom: 2rem;
+    }
+    .highlight {
+        color: $gbc-red;
+    }
+}
