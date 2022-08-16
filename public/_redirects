@@ -1,2 +1,4 @@
 /api https://api.givebackcincinnati.org/api 301
 /docs https://api.givebackcincinnati.org/docs 301
+/give-back-cincinnati-events /events 302
+/events/* /events 302
