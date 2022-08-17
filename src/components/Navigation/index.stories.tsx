@@ -21,7 +21,7 @@ export const Primary = Template.bind({})
 export const Authenticated = Template.bind({})
 Authenticated.decorators = [
     (Story) => <MockStore state={{
-        user: {isAuthenticated: true}
+        auth: {isAuthenticated: true}
     }}>
         <Story />
     </MockStore>

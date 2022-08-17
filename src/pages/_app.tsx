@@ -2,6 +2,7 @@ import '../styles/globals.scss'
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
+import { Auth } from '@/components/Navigation/Auth'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 
@@ -26,6 +27,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/favicon-96x96.ico" sizes="96x96" />
             
             </Head>
+
+            <Auth />
 
             <Navigation />
 

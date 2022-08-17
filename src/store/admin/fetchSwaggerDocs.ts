@@ -2,20 +2,20 @@ import { createAsyncThunk, CaseReducer } from "@reduxjs/toolkit"
 import { AdminState } from "./slice"
 import { useServices } from "services"
 
-import type { Path, Schema} from '@/types/index'
+import type { Path, Schema } from '@/types/index'
 
 export const fetchSwaggerDocs = createAsyncThunk(
     'admin/fetchSwaggerDocs',
-    async (_, { rejectWithValue }) => {
+    async (): Promise<Error | { status: number, data: Record<string, unknown>}> => {
         const { Axios } = useServices()
         try {
             const { status, data } = await Axios.get('/docs/swagger.json')
             if (typeof data === 'object') {
                 return { status, data }
             }
-            return rejectWithValue('Failed to load administrative data')
+            return Promise.reject(new Error('Failed to load administrative data'))
         } catch (e) {
-            return rejectWithValue(e)
+            return Promise.reject(e as Error)
         }
     }
 )

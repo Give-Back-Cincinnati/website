@@ -1,10 +1,13 @@
+import { IUser } from "@/types/user"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { useServices } from "services"
 
 
 export const login = createAsyncThunk(
     'user/login',
-    async ({ email, password }: { email: string, password: string } ) => {
+    async (
+        { email, password }: { email: string, password: string }
+    ): Promise<Error | { status: number, data?: IUser }> => {
         const { Axios } = useServices()
         try {
             const { status } = await Axios.post('/auth/login', {
@@ -19,9 +22,7 @@ export const login = createAsyncThunk(
 
             return { status }
         } catch (e) {
-            console.error(e)
-            // toaster.danger('Incorrect Username/Password')
-            return 401
+            return Promise.reject(e as Error)
         }
     }
 )

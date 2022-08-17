@@ -8,8 +8,7 @@ import { MdOutlineMenu } from 'react-icons/md'
 import Logo from '../../../public/logos/half_circle.svg'
 import styles from './index.module.scss'
 
-import { useAppSelector, useAppDispatch } from "@/store/hooks"
-import { login } from "@/store/user"
+import { useAppSelector } from "@/store/hooks"
 
 const navigationRoutes = [
     // {
@@ -33,8 +32,7 @@ const navigationRoutes = [
 export const Navigation = () => {
     const router = useRouter()
     const [ isNavigationOpen, setNavigationOpen ] = useState(false)
-    const dispatch = useAppDispatch()
-    const user = useAppSelector(state => state.user)
+    const auth = useAppSelector(state => state.auth)
 
     return (
         <nav
@@ -67,10 +65,10 @@ export const Navigation = () => {
                 </div>
                 
                 {
-                    user.isAuthenticated
+                    auth.isAuthenticated
                     ? <Avatar
-                        name={user.me?.firstName || ''}
-                        src={user.me?.profilePicture}
+                        name={auth.me?.firstName || ''}
+                        src={auth.me?.profilePicture}
                     />
                     : <div
                             className={styles.login}
