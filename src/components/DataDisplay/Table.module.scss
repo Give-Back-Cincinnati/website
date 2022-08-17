@@ -1,0 +1,10 @@
+.container {
+    width: 100%;
+    text-align: center;
+    tr:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+    td {
+        border-top: 1px solid black;
+    }
+}
