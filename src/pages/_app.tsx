@@ -1,6 +1,7 @@
 import '../styles/globals.scss'
-import React from 'react'
+import React, { ReactElement, ReactNode} from 'react'
 import Head from 'next/head'
+import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { Auth } from '@/components/Navigation/Auth'
 import { Navigation } from '@/components/Navigation'
@@ -11,12 +12,17 @@ import { ServicesContext } from 'contexts/Services'
 import { Provider } from 'react-redux'
 import store from 'store'
 
-const gbcColors = {
-  red: '#d03236', // 208, 50, 54
-  black: '#333333',
-}
+export type NextPageWithLayout = NextPage & {
+    getLayout?: (page: ReactElement) => ReactNode
+  }
+  
+  type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout
+  }
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const getLayout = Component.getLayout ?? ((page) => page)
+
     return <ServicesContext.Provider value={ServiceSingleton}>
         <Provider store={store}>
             <Head>
@@ -33,7 +39,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Navigation />
 
             <main style={{ paddingTop: 93, minHeight: 'calc(100vh - 93px)' }}>
-                <Component {...pageProps} />
+                {
+                    getLayout(<Component {...pageProps} />)
+                }
             </main>
 
             <Footer />

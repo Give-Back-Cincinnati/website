@@ -3,7 +3,7 @@ import { useServices } from "services"
 import { IUser } from "@/types/user"
 
 export const googleOauth20Callback = createAsyncThunk(
-    'user/googleOauth20Callback',
+    'auth/googleOauth20Callback',
     async (callbackUrl: string): Promise<Error | { status: number, data?: IUser} | Error> => {
         const { Axios } = useServices()
         try {

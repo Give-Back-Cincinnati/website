@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { useServices } from "services"
 
 export const logout = createAsyncThunk(
-    'user/logout',
+    'auth/logout',
     async (): Promise<Error | number> => {
         const { Axios } = useServices()
         try {

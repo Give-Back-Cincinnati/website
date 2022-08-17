@@ -4,7 +4,7 @@ import { useServices } from "services"
 
 
 export const login = createAsyncThunk(
-    'user/login',
+    'auth/login',
     async (
         { email, password }: { email: string, password: string }
     ): Promise<Error | { status: number, data?: IUser }> => {

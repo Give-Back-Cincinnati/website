@@ -2,10 +2,10 @@ import { createSlice, PayloadAction, AnyAction } from "@reduxjs/toolkit"
 
 import { logout } from './logout'
 
-import type { IUser } from '@/types/user'
+import type { Me } from '@/types/index'
 
 export interface AuthState {
-    me?: IUser
+    me?: Me
     isAuthenticated: boolean
 }
 
@@ -15,10 +15,10 @@ const initialState: AuthState = {
 }
 
 export const auth = (state: Partial<AuthState> = initialState) => createSlice({
-    name: 'user',
+    name: 'auth',
     initialState: { ...initialState, ...state },
     reducers: {
-        setUser: (state, action: PayloadAction<IUser>) => {
+        setUser: (state, action: PayloadAction<Me>) => {
             state.me = action.payload
         }
     },
@@ -60,13 +60,14 @@ export const auth = (state: Partial<AuthState> = initialState) => createSlice({
                 action.meta
                 && 'requestStatus' in action.meta
                 && action.meta.requestStatus === 'fulfilled'
+                && action.type.includes('auth')
                 && !action.type.includes('logout')
             ) {
                 isMatch = true
             }
 
             return isMatch
-        }, (state, action: PayloadAction<{ status: number, data?: IUser }>) => {
+        }, (state, action: PayloadAction<{ status: number, data?: Me }>) => {
             const { status, data } = action.payload
 
             if (data) {

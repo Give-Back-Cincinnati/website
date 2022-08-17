@@ -1,0 +1,32 @@
+@use 'sass:color';
+@import '../styles/colors.scss';
+
+.container {
+    display: flex;
+    flex-flow: row;
+    height: 100%;
+}
+
+.adminNav {
+    height: 100%;
+    width: 100px;
+    background-color: color.adjust($gbc-black, $alpha: -0.9);
+    overflow: hidden;
+    .link {
+        display: block;
+        padding-left: .2rem;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        text-transform: capitalize;
+    }
+    .activePath {
+        background-color: $gbc-red;
+        color: $white;
+    }
+}
+
+.content {
+    flex: 1;
+    height: 100%;
+    margin-left: 1rem;
+}
