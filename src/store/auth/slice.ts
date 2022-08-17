@@ -67,7 +67,6 @@ export const auth = (state: Partial<AuthState> = initialState) => createSlice({
 
             return isMatch
         }, (state, action: PayloadAction<{ status: number, data?: IUser }>) => {
-            console.log(action)
             const { status, data } = action.payload
 
             if (data) {
