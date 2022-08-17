@@ -1,5 +1,5 @@
-import React, { ComponentPropsWithoutRef } from 'react'
-
+import React, { ComponentPropsWithoutRef, useRef } from 'react'
+import { MdKeyboardArrowDown } from 'react-icons/md'
 import styles from './Select.module.scss'
 
 export interface SelectOptions {
@@ -46,6 +46,7 @@ export const Select = ({
                     options.map(({ label, _id }) => <option key={_id} value={_id}>{label || _id}</option>)
                 }
             </select>
+            <MdKeyboardArrowDown className={styles.downArrow} />
             <div className={styles.errorText}>
                 {errorText}
             </div>

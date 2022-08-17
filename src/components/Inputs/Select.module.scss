@@ -4,7 +4,6 @@
 .container {
     display: inline-block;
     position: relative;
-    padding-top: 1rem;
     padding-left: 5px;
     border-radius: 3px 3px 0 0;
     border-bottom: 2px solid color.adjust($gbc-black, $alpha: -.4);
@@ -15,12 +14,26 @@
         font-size: 12px;
         top: 5px;
         left: 6px;
+        pointer-events: none;
     }
     select {
         width: 100%;
         font-size: .95rem;
         background-color: transparent;
+        appearance: none;
         border: 0;
+        padding-right: 1rem;
+        padding-top: 1rem;
+        &:focus {
+            outline: none;
+        }
+    }
+    .downArrow {
+        position: absolute;
+        right: .3rem;
+        bottom: .1rem;
+        width: 1rem;
+        pointer-events: none;
     }
 }
 
