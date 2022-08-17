@@ -2,11 +2,11 @@ import React, { ComponentPropsWithoutRef } from 'react'
 import { animated, useSpring } from '@react-spring/web'
 import styles from './Spinner.module.scss'
 
-export interface SpinnerProps {
+export interface SpinnerProps extends ComponentPropsWithoutRef<'div'> {
     color?: 'information' | 'positive' | 'negative' | 'warning' | 'alt' | 'primary'
 }
 
-export const Spinner = ({ color = 'primary' }: SpinnerProps) => {
+export const Spinner = ({ color = 'primary', ...props }: SpinnerProps) => {
     const animationStyles = useSpring({
         loop: { reverse: true },
         to: {
@@ -36,7 +36,13 @@ export const Spinner = ({ color = 'primary' }: SpinnerProps) => {
         information: styles.information
     }
 
-    return <div className={styles.container}>
+    const containerStyles = [styles.container]
+
+    if (props.className) {
+        containerStyles.push(props.className)
+    }
+
+    return <div className={containerStyles.join(' ')}>
         <animated.svg viewBox="-25 -25 50 50" width='100%' height='100%' style={rotationStyles}>
             <animated.circle
                 r={22}
