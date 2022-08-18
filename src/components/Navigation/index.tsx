@@ -8,8 +8,7 @@ import { MdOutlineMenu } from 'react-icons/md'
 import Logo from '../../../public/logos/half_circle.svg'
 import styles from './index.module.scss'
 
-import { useAppSelector, useAppDispatch } from "@/store/hooks"
-import { notify } from "@/store/toaster/notify"
+import { useAppSelector } from "@/store/hooks"
 
 const navigationRoutes = [
     // {
@@ -34,12 +33,10 @@ export const Navigation = () => {
     const router = useRouter()
     const [ isNavigationOpen, setNavigationOpen ] = useState(false)
     const auth = useAppSelector(state => state.auth)
-    const dispatch = useAppDispatch()
 
     return (
         <nav
             className={styles.nav}
-            onClick={() => dispatch(notify({title: 'Hello Kelsey!'}))}
         >
             <div className={styles.logo}>
                 <Image

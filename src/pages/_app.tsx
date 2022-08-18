@@ -8,10 +8,10 @@ import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { Toaster } from '@/components/DataDisplay/Toaster'
 
-import { ServiceSingleton } from 'services'
-import { ServicesContext } from 'contexts/Services'
+import { store, actions } from 'store'
 import { Provider } from 'react-redux'
-import store from 'store'
+import { createServices } from 'services'
+createServices(store, actions)
 
 export type NextPageWithLayout = NextPage & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -24,8 +24,7 @@ export type NextPageWithLayout = NextPage & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page) => page)
 
-    return <ServicesContext.Provider value={ServiceSingleton}>
-        <Provider store={store}>
+    return <Provider store={store}>
             <Head>
                 <title>Give Back Cincinnati</title>
                 <meta name='description' content="Give Back Cincinnati's Website" />
@@ -49,7 +48,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
             <Toaster />
         </Provider>
-    </ServicesContext.Provider>
 }
 
 export default MyApp

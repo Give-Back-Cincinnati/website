@@ -1,26 +1,16 @@
+import { EnhancedStore } from '@reduxjs/toolkit'
 import { AxiosInstance } from 'axios'
+import { RootState, Actions } from 'store'
+
 import { AxiosService } from './axiosService'
 import { ToasterService } from './toasterService'
 
-export class Services {
-    
-    services: {
-        Axios: AxiosInstance,
-        Toaster: ToasterService
-    }
+export const Services: Record<string, 
+    AxiosInstance
+    | ToasterService
+> = {}
 
-    constructor () {
-        this.services = {
-            Axios: new AxiosService().Axios,
-            Toaster: new ToasterService()
-        }
-        return this
-    }
-
-}
-
-export const ServiceSingleton = new Services()
-
-export function useServices () {
-    return ServiceSingleton.services
+export function createServices (store: EnhancedStore<RootState>, actions: Actions) {
+    Services.Axios = new AxiosService().Axios
+    Services.Toaster = new ToasterService(store, actions)
 }

@@ -1,13 +1,13 @@
 import { createAsyncThunk, CaseReducer } from "@reduxjs/toolkit"
 import { AdminState } from "./slice"
-import { useServices } from "services"
+import { Services } from 'services'
 
 import type { Path, Schema } from '@/types/index'
 
 export const fetchSwaggerDocs = createAsyncThunk(
     'admin/fetchSwaggerDocs',
     async (): Promise<Error | { status: number, data: Record<string, unknown>}> => {
-        const { Axios } = useServices()
+        const { Axios } = Services
         try {
             const { status, data } = await Axios.get('/docs/swagger.json')
             if (typeof data === 'object') {

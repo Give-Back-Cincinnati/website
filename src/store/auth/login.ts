@@ -1,6 +1,6 @@
 import { IUser } from "@/types/user"
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { useServices } from "services"
+import { Services } from "services"
 
 
 export const login = createAsyncThunk(
@@ -8,7 +8,7 @@ export const login = createAsyncThunk(
     async (
         { email, password }: { email: string, password: string }
     ): Promise<Error | { status: number, data?: IUser }> => {
-        const { Axios } = useServices()
+        const { Axios } = Services
         try {
             const { status } = await Axios.post('/auth/login', {
                 email,

@@ -1,28 +1,26 @@
-import type { Store } from "@reduxjs/toolkit"
-import { AppDispatch } from "store"
+import { AlertProps } from "@/components/Utils"
+import { EnhancedStore } from "@reduxjs/toolkit"
+import { AppDispatch, RootState, Actions } from "store"
 
 export interface IToasterService {
-    notify (title: string, body?: string): void
+    notify ({ title, body, intent }: AlertProps): void
 }
 
 export class ToasterService implements IToasterService {
+    private actions: Actions
+    private dispatch: AppDispatch
 
-    // private store: Store
-    // private dispatch: AppDispatch
-
-    constructor () {
-        // this.store = store
-        // this.dispatch = store.dispatch
+    constructor (store: EnhancedStore<RootState>, actions: Actions) {
+        this.actions = actions
+        this.dispatch = store.dispatch as AppDispatch
         return this
     }
-    // constructor (store: Store) {
-    //     // this.store = store
-    //     // this.dispatch = store.dispatch
-    //     return this
-    // }
 
-    notify (title: string, body: string) {
-        // this.dispatch()
+    notify (alertProps: AlertProps) {
+        this.dispatch(this.actions.toaster.notify(alertProps))
+        setTimeout(() => {
+            this.dispatch(this.actions.toaster.remove())
+        }, 5000)
     }
 
 }

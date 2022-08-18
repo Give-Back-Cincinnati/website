@@ -4,6 +4,7 @@ import styles from './index.module.scss'
 import { MdInfo, MdInfoOutline, MdWarning, MdCheckCircleOutline } from 'react-icons/md'
 
 export interface AlertProps {
+    key: string
     title: string
     intent?: 'information' | 'positive' | 'negative' | 'warning'
     body?: string

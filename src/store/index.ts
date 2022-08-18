@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import { auth, AuthState } from '@/store/auth/slice'
 import { admin, AdminState } from '@/store/admin/slice'
 import { events, EventsState } from "@/store/events/slice"
-import { toaster, ToasterState } from "./toaster"
+import { toaster, ToasterState } from "@/store/toaster/slice"
 
 export interface InitialState {
     auth?: Partial<AuthState>
@@ -11,17 +11,33 @@ export interface InitialState {
     toaster?: Partial<ToasterState>
 }
 
-export const createStore = (initialState?: InitialState) => configureStore({
-    reducer: {
-        auth: auth(initialState?.auth).reducer,
-        admin: admin(initialState?.admin).reducer,
-        events: events(initialState?.events).reducer,
-        toaster: toaster(initialState?.toaster).reducer
-    }
-})
+export const createStore = (initialState?: InitialState) => {
+    let authSlice = auth(initialState?.auth)
+    let adminSlice = admin(initialState?.admin)
+    let eventsSlice = events(initialState?.events)
+    let toasterSlice = toaster(initialState?.toaster)
 
-export const store = createStore()
+    return {
+        actions: {
+            auth: authSlice.actions,
+            admin: adminSlice.actions,
+            events: eventsSlice.actions,
+            toaster: toasterSlice.actions
+        },
+        store: configureStore({
+            reducer: {
+                auth: authSlice.reducer,
+                admin: adminSlice.reducer,
+                events: eventsSlice.reducer,
+                toaster: toasterSlice.reducer
+            }
+        }
+    )}
+}
 
+export const { store, actions } = createStore()
+
+export type Actions = typeof actions
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AlertProps } from '@/components/Utils'
-import { notify, notifyFulfilled } from './notify'
 
 export interface ToasterState {
     notifications: AlertProps[]
@@ -16,12 +15,9 @@ export const toaster = (state: Partial<ToasterState> = initialState) => createSl
     reducers: {
         notify: (state, action: PayloadAction<AlertProps>) => {
             state.notifications.push(action.payload)
-            window.setTimeout(() => {
-                state.notifications.shift()
-            }, 5000)
+        },
+        remove: (state) => {
+            state.notifications.shift()
         }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(notify.fulfilled, notifyFulfilled)
     }
 })

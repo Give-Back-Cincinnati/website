@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { googleOauth20Callback } from '@/store/auth'
-import { fetchMe } from '@/store/auth'
 import { useRouter } from 'next/router'
 
 export default function GoogleAuthCallBack () {
@@ -13,7 +12,7 @@ export default function GoogleAuthCallBack () {
         const { pathname, search } = window.location
         const reconstructedUrl = `${pathname}${search}`
         dispatch(googleOauth20Callback(reconstructedUrl))
-        router.push('/')
+        // router.push('/')
     }, [dispatch, router])
 
     return <div>
