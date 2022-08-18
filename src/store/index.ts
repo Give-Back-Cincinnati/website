@@ -4,6 +4,8 @@ import { admin, AdminState } from '@/store/admin/slice'
 import { events, EventsState } from "@/store/events/slice"
 import { toaster, ToasterState } from "@/store/toaster/slice"
 
+import { apiSlice } from "./api/apiSlice"
+
 export interface InitialState {
     auth?: Partial<AuthState>
     admin?: Partial<AdminState>
@@ -29,8 +31,11 @@ export const createStore = (initialState?: InitialState) => {
                 auth: authSlice.reducer,
                 admin: adminSlice.reducer,
                 events: eventsSlice.reducer,
-                toaster: toasterSlice.reducer
-            }
+                toaster: toasterSlice.reducer,
+                [apiSlice.reducerPath]: apiSlice.reducer
+            },
+            middleware: getDefaultMiddleware => 
+                getDefaultMiddleware().concat(apiSlice.middleware)
         }
     )}
 }

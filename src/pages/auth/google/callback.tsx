@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react'
-import { useAppDispatch } from '@/store/hooks'
-import { googleOauth20Callback } from '@/store/auth'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { Spinner } from '@/components/DataDisplay'
 
+import { useGoogleOauthCallBackQuery } from '@/store/api/apiSlice'
+
 export default function GoogleAuthCallBack () {
-    const dispatch = useAppDispatch()
     const router = useRouter()
 
-    useEffect(() => {
-        const reconstructedUrl = router.asPath
-        dispatch(googleOauth20Callback(reconstructedUrl))
-        router.push('/')
-    }, [ dispatch, router ])
+    const reconstructedUrl = router.asPath
+    const {
+        isError,
+        isLoading,
+        isSuccess,
+        data,
+    } = useGoogleOauthCallBackQuery(reconstructedUrl)
+
+    router.push('/')
 
     return <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ height: 50, width: 50 }}>
             <Spinner />
-        </div>        
+        </div>
+        <div>
+            { JSON.stringify({ data, isError, isLoading, isSuccess }) }
+        </div>
     </div> 
 }
