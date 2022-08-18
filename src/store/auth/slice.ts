@@ -49,7 +49,7 @@ export const auth = (state: Partial<AuthState> = initialState) => createSlice({
         }, (state) => {
             state.me = undefined
             state.isAuthenticated = false
-            window.localStorage.removeItem('isLoggedIn')
+            if (window) window.localStorage.removeItem('isLoggedIn')
         })
 
         // handles all fulfilled actions for login, fetchMe, and googleOauth20Callback
@@ -77,15 +77,15 @@ export const auth = (state: Partial<AuthState> = initialState) => createSlice({
             switch (status) {
                 case 200:
                     state.isAuthenticated = true
-                    window.localStorage.setItem('isLoggedIn', 'true')
+                    if (window) window.localStorage.setItem('isLoggedIn', 'true')
                     break;
                 case 204:
-                        state.isAuthenticated = true
-                        window.localStorage.setItem('isLoggedIn', 'true')
+                    state.isAuthenticated = true
+                    if (window) window.localStorage.setItem('isLoggedIn', 'true')
                     break;
                 default:
                     state.isAuthenticated = false
-                    window.localStorage.setItem('isLoggedIn', 'false')
+                    if (window) window.localStorage.setItem('isLoggedIn', 'false')
             }
         })
 
