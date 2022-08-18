@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app'
 import { Auth } from '@/components/Navigation/Auth'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
+import { Toaster } from '@/components/DataDisplay/Toaster'
 
 import { ServiceSingleton } from 'services'
 import { ServicesContext } from 'contexts/Services'
@@ -45,6 +46,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             </main>
 
             <Footer />
+
+            <Toaster />
         </Provider>
     </ServicesContext.Provider>
 }

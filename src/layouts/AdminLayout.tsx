@@ -1,11 +1,14 @@
-import { useMemo, ReactElement } from "react"
-import { useAppSelector } from "@/store/hooks"
+import { useEffect, useMemo, ReactElement } from "react"
+import { useAppSelector, useAppDispatch } from "@/store/hooks"
 import styles from './AdminLayout.module.scss'
 import Link from "next/link"
 import { useRouter } from "next/router"
 
+import { fetchSwaggerDocs } from "@/store/admin"
+
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
     const router = useRouter()
+    const dispatch = useAppDispatch()
     const auth = useAppSelector(state => state.auth)
 
     const permissionGroups = useMemo(() => {
@@ -19,6 +22,10 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
 
         return Array.from(permissionGroups).sort() as string[]
     }, [auth.me])
+
+    useEffect(() => {
+        dispatch(fetchSwaggerDocs())
+    }, [dispatch])
 
     return <div className={styles.container}>
 

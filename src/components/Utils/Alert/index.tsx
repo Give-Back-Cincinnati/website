@@ -1,8 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styles from './index.module.scss'
-
-import { ServicesContext } from 'contexts/Services'
-import { IToasterService } from 'services/toasterService'
 
 import { MdInfo, MdInfoOutline, MdWarning, MdCheckCircleOutline } from 'react-icons/md'
 
@@ -32,16 +29,15 @@ const intents = {
 }
 
 export const Alert = ({ title, body, intent = 'information' }: AlertProps) => {
-    const { services } = useContext(ServicesContext)
-    const { Toaster } = services
-
-    return <div className={`${styles.container} ${intents[intent].style}`}>
-        <div className={styles.icon}>
-            { intents[intent].icon }
-        </div>
-        <div>
-            <p className={styles.title}>{title}</p>
-            <p className={styles.body}>{body}</p>
+    return <div className={styles.background}>
+        <div className={`${styles.container} ${intents[intent].style}`}>
+            <div className={styles.icon}>
+                { intents[intent].icon }
+            </div>
+            <div>
+                <p className={styles.title}>{title}</p>
+                <p className={styles.body}>{body}</p>
+            </div>
         </div>
     </div>
 }
