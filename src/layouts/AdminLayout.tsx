@@ -1,54 +1,69 @@
-import { useEffect, useMemo, ReactElement } from "react"
-import { useAppSelector, useAppDispatch } from "@/store/hooks"
+import { useMemo, useState, useEffect, ReactElement } from "react"
 import styles from './AdminLayout.module.scss'
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-import { fetchSwaggerDocs } from "@/store/admin"
+import { useGetMeQuery } from "@/store/api/openApi"
 
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
     const router = useRouter()
-    const dispatch = useAppDispatch()
-    const auth = useAppSelector(state => state.auth)
+    const [currentRoute, setCurrentRoute] = useState<string>(router.pathname)
+
+    useEffect(() => {
+        router.events.on('routeChangeComplete', (shallow) => {
+            setCurrentRoute(shallow)
+        })
+    }, [router])
+
+    const {
+        data: me,
+        isError, isSuccess
+    } = useGetMeQuery()
+
+    if (isError) {
+        router.push('/')
+    }
 
     const permissionGroups = useMemo(() => {
         const permissionGroups = new Set()
         
-        if (auth.me && auth.me.role) {
-            auth.me?.role.permissions.forEach(permission => {
+        if (me && me.role) {
+            me?.role.permissions.forEach(permission => {
                 permissionGroups.add(permission.group)
             })
         }
 
         return Array.from(permissionGroups).sort() as string[]
-    }, [auth.me])
+    }, [me])
 
-    useEffect(() => {
-        dispatch(fetchSwaggerDocs())
-    }, [dispatch])
+
+    let content: ReactElement | ReactElement[] = <div />
+    
+    if (isSuccess) {
+        content = permissionGroups.map(permission => {
+            const linkStyles = [styles.link]
+            const permissionPath = `/admin/${permission}`
+
+            if (currentRoute === permissionPath) {
+                linkStyles.push(styles.activePath)
+            }
+
+            return <Link
+                key={permission}
+                href={permissionPath}
+            >
+                <a className={linkStyles.join(' ')}>
+                    {permission}
+                </a>
+            </Link>
+        })
+    }
 
     return <div className={styles.container}>
 
         <div className={styles.adminNav}>
             {
-                permissionGroups.map(permission => {
-                    const linkStyles = [styles.link]
-                    const permissionPath = `/admin/${permission}`
-
-                    if (router.pathname === permissionPath) {
-                        linkStyles.push(styles.activePath)
-                    }
-
-                    return <Link
-                        key={permission}
-                        href={permissionPath}
-                        
-                    >
-                        <a className={linkStyles.join(' ')}>
-                            {permission}
-                        </a>
-                    </Link>
-                })
+                content
             }
         </div>
 

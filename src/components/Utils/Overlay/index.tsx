@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import styles from './overlay.module.scss'
 import { debounce } from '../../../utils'
 
@@ -14,7 +14,7 @@ export interface OverlayProps {
     isOpen: boolean
     configPreset?: 'default' | 'gentle' | 'wobbly' | 'stiff' | 'slow' | 'molasses'
     onRequestClose: Function
-    children: JSX.Element
+    children: ReactElement
 }
 
 export const Overlay = ({
@@ -44,10 +44,24 @@ export const Overlay = ({
         isOpen ? [.1, 0] : [0, 0.4]
     )
 
-    return <animated.div style={display}>
+/**
+    *   Prevent the body from scrolling when overlay isOpen
+    *   We DON'T need a cleanup because overlay WILL close before cleanup runs
+*/ 
+    useEffect(() => {
+        let bodyClasses = document.body.className
+        if (isOpen) {
+            bodyClasses += styles.noScroll
+        } else {
+            bodyClasses.replace(styles.noScroll, '')
+        }
+        document.body.className = bodyClasses
+    }, [isOpen])
+
+    return <animated.div style={display} className={styles.container}>
         <animated.div
             style={opacity}
-            className={styles.container}
+            className={styles.overlay}
             onClick={debounce(onRequestClose, { ms: 500, leading: true })}
         />
         <animated.div style={opacity} className={styles.child}>

@@ -3,7 +3,6 @@ import React, { ReactElement, ReactNode} from 'react'
 import Head from 'next/head'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import { Auth } from '@/components/Navigation/Auth'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { Toaster } from '@/components/DataDisplay/Toaster'
@@ -33,8 +32,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 <link rel="icon" href="/favicon-96x96.ico" sizes="96x96" />
             
             </Head>
-
-            <Auth />
 
             <Navigation />
 

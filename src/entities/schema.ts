@@ -1,4 +1,4 @@
-interface EntitySchema {
+export interface EntitySchema {
     type: string
     required: string[]
     properties: Record<string, { type: string, format?: string, example?: string, minLength?: number, maxLength?: number }>

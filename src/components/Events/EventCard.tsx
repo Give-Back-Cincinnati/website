@@ -3,19 +3,17 @@ import { useRouter } from 'next/router'
 import { DateTime } from 'luxon'
 
 import styles from './EventCard.module.scss'
+import { Events } from '@/store/api/openApi'
 
-export interface EventCardProps {
-    date: string
-    title: string
-    description?: string
+export interface EventCardProps extends Events {
     opts?: {
         dateHasBorder: boolean
     }
 }
 
 export const EventCard = ({
-    date,
-    title,
+    startTime,
+    name,
     description,
     opts = { dateHasBorder: false }
 }: EventCardProps) => {
@@ -24,11 +22,11 @@ export const EventCard = ({
     return <div
         className={styles.container}
         onClick={() => {
-            router.push(`/events/${encodeURIComponent(title)}`)
+            router.push(`/events/${encodeURIComponent(name)}`)
         }}
     >
-        <h3 className={`${styles.date} ${opts.dateHasBorder ? styles.dateHasBorder : ''}`}>{DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}</h3>
-        <h1 className={styles.title}>{title}</h1>
+        <h3 className={`${styles.date} ${opts.dateHasBorder ? styles.dateHasBorder : ''}`}>{DateTime.fromISO(startTime || '').toLocaleString(DateTime.DATE_MED)}</h3>
+        <h1 className={styles.title}>{name}</h1>
         {
             description
                 ? <p className={styles.description}>{description}</p>

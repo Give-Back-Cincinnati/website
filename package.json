@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn generate-rtk && next build",
+    "export": "next export",
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "generate-rtk": "npx @rtk-query/codegen-openapi ./src/store/api/openapi-config.js"
   },
   "dependencies": {
     "@react-spring/web": "^9.5.0",

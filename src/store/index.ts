@@ -1,37 +1,32 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { auth, AuthState } from '@/store/auth/slice'
-import { admin, AdminState } from '@/store/admin/slice'
-import { events, EventsState } from "@/store/events/slice"
+import { myPermissions, myPermissionsState } from '@/store/myPermissions/slice'
 import { toaster, ToasterState } from "@/store/toaster/slice"
+import { apiSpec, APISpecState } from "@/store/apiSpec/slice"
 
 import { apiSlice } from "./api/apiSlice"
 
 export interface InitialState {
-    auth?: Partial<AuthState>
-    admin?: Partial<AdminState>
-    events?: Partial<EventsState>
+    myPermissions?: Partial<myPermissionsState>
     toaster?: Partial<ToasterState>
+    apiSpec?: Partial<APISpecState>
 }
 
 export const createStore = (initialState?: InitialState) => {
-    let authSlice = auth(initialState?.auth)
-    let adminSlice = admin(initialState?.admin)
-    let eventsSlice = events(initialState?.events)
+    let myPermissionsSlice = myPermissions(initialState?.myPermissions)
     let toasterSlice = toaster(initialState?.toaster)
+    let apiSpecSlice = apiSpec(initialState?.apiSpec)
 
     return {
         actions: {
-            auth: authSlice.actions,
-            admin: adminSlice.actions,
-            events: eventsSlice.actions,
-            toaster: toasterSlice.actions
+            myPermissions: myPermissionsSlice.actions,
+            toaster: toasterSlice.actions,
+            apiSpec: apiSpecSlice.actions
         },
         store: configureStore({
             reducer: {
-                auth: authSlice.reducer,
-                admin: adminSlice.reducer,
-                events: eventsSlice.reducer,
+                myPermissions: myPermissionsSlice.reducer,
                 toaster: toasterSlice.reducer,
+                apiSpec: apiSpecSlice.reducer,
                 [apiSlice.reducerPath]: apiSlice.reducer
             },
             middleware: getDefaultMiddleware => 

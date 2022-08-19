@@ -1,10 +1,10 @@
-import { ComponentPropsWithoutRef } from "react"
+import React, { ComponentPropsWithoutRef } from "react"
 
 import styles from './Table.module.scss'
 
 export interface TableProps extends ComponentPropsWithoutRef<'table'> {
     keys: string[]
-    data: Record<string, string | JSX.Element>[]
+    data: Record<string, unknown>[]
     className?: string
 }
 
@@ -29,9 +29,12 @@ export const Table = ({ keys, data, className, ...props }: TableProps) => {
                     return <tr key={idx}>
                         {
                             keys.map(key => {
-                                return <td key={key}>
-                                    { row[key] }
-                                </td>
+                                const val = row[key]
+                                if (typeof val === 'string') {
+                                    return <td key={key}>
+                                        { val }
+                                    </td>
+                                }
                             })
                         }
                     </tr>

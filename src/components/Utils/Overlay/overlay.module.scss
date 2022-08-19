@@ -1,12 +1,28 @@
 .container {
-    background-color: rgba(0, 0, 0, 0.65);
-    height: 100vh;
-    width: 100vw;
     position: fixed;
     top: 0;
     right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+.noScroll {
+    overflow: hidden;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    z-index: 1001;
 }
 
 .child {
-    background-color: aqua;
+    z-index: 1002;
 }

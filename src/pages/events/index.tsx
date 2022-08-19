@@ -1,80 +1,34 @@
 import React, { useMemo } from 'react'
-import { useRouter } from 'next/router'
+import { NextPage } from 'next'
 import styles from './index.module.scss'
 
 import { EventHeader, EventCard } from '@/components/Events'
 
-const upcomingEvents = [
-    {
-        _id: '1',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event with a much much longer title',
-        description: 'short description about the event... like a single sentence',
-        category: 'Social'
-    },
-    {
-        _id: '2',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'Second Event',
-        description: 'short description about the event... like a single sentence',
-        category: 'Hands On'
-    },
-    {
-        _id: '3',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence',
-        category: 'Interactive'
-    },
-    {
-        _id: '4',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence',
-        category: 'Fuel Cincinnati'
-    },
-    {
-        _id: '5',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence',
-        category: 'Civic Engagement'
-    },
-    {
-        _id: '6',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence',
-        category: 'Hands On'
-    },
-]
+import type { SearchEventsApiResponse } from '@/store/api/openApi'
 
-interface Event {
-    _id: string
-    date: string
-    title: string
-    description: string
-    category: string
+interface Props { 
+    events: SearchEventsApiResponse
 }
 
-export const Events = () => {
-    const router = useRouter()
+export const Events: NextPage<Props> = ({ events }: Props) => {
 
-    const { events, categories } = useMemo(() => {
-        const eventMap: Record<string, Event[]> = {}
+    const { eventMap, categories } = useMemo(() => {
+        const eventMap: Record<string, SearchEventsApiResponse> = {}
         const categories: string[] = []
 
-        upcomingEvents.forEach(event => {
-            if (eventMap[event.category]) {
-                eventMap[event.category].push(event)
-            } else {
-                eventMap[event.category] = [event]
-                categories.push(event.category)
+        events.forEach(event => {
+            if (event.category) {
+                if (eventMap[event.category]) {
+                    eventMap[event.category].push(event)
+                } else {
+                    eventMap[event.category] = [event]
+                    categories.push(event.category)
+                }
             }
         })
 
-        return { events: eventMap, categories: categories.sort() }
-    }, [])
+        return { eventMap, categories: categories.sort() }
+    }, [events])
 
 
     return (
@@ -95,7 +49,7 @@ export const Events = () => {
                             <div key={category}>
                                 <h2>{ category }</h2>
                                 {
-                                    events[category].map(event => <EventCard
+                                    eventMap[category].map(event => <EventCard
                                         key={event._id}
                                         { ...event }
                                         opts={{ dateHasBorder: true }}
@@ -109,6 +63,12 @@ export const Events = () => {
 
         </>
     )
+}
+
+Events.getInitialProps = async (): Promise<{ events: [] }> => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
+    const events = await res.json()
+    return { events }
 }
 
 export default Events

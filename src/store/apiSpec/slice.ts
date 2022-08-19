@@ -1,20 +1,22 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { fetchSwaggerDocs, fetchSwaggerDocsFulfilled, fetchSwaggerDocsRejected } from './fetchSwaggerDocs'
-import axios from 'axios'
 
 import type { Path, Schema } from '@/types/index'
 
-export interface AdminState {
+export interface APISpecState {
     paths: Record<string, Path>
     components: Schema
 }
 
 const initialState = {
     paths: {},
-    components: {}
+    components: {
+        schemas: {},
+        paths: {}
+    }
 }
 
-export const admin = (state: Partial<AdminState> = initialState) => createSlice({
+export const apiSpec = (state: Partial<APISpecState> = initialState) => createSlice({
     name: 'admin',
     initialState: { ...initialState, ...state},
     reducers: {},

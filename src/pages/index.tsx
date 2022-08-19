@@ -6,6 +6,7 @@ import { Button } from '@/components/Utils'
 import { BulletList, LeftDashedBorder } from '@/components/Backgrounds'
 
 import styles from './index.module.scss'
+import { SearchEventsApiResponse } from '@/store/api/openApi'
 
 const whoWeAreTexts = [
     <React.Fragment key={0}>A <span className='redUnderline'>Diverse</span> group of young professionals</React.Fragment>,
@@ -26,47 +27,8 @@ const volunteerOpportunities = [
     { logo: '/logos/paintthetown-alt1.svg', title: 'Paint the Town', description: 'Rejuvenating homes and reviving spirits in local neighborhoods.' },
 ]
 
-const upcomingEvents = [
-    {
-        _id: '1',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event with a much much longer title',
-        description: 'short description about the event... like a single sentence'
-    },
-    {
-        _id: '2',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'Second Event',
-        description: 'short description about the event... like a single sentence'
-    },
-    {
-        _id: '3',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence'
-    },
-    {
-        _id: '4',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence'
-    },
-    {
-        _id: '5',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence'
-    },
-    {
-        _id: '6',
-        date: '2022-08-03T04:00:00.000Z',
-        title: 'First Event',
-        description: 'short description about the event... like a single sentence'
-    },
-]
-
 interface Props {
-    events: []
+    events: SearchEventsApiResponse
 }
 
 const Home: NextPage<Props> = ({ events }: Props) => {
@@ -84,12 +46,12 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                 </div>
                 <div className={`sm md lg xl xxl ${styles.missionEvents}`}>
                     <div>
-                        <h1 style={{ textAlign: 'center', marginBottom: 30 }}>Our Next Event{upcomingEvents.length > 1 ? 's' : ''}</h1>
+                        <h1 style={{ textAlign: 'center', marginBottom: 30 }}>Our Next Event{events.length > 1 ? 's' : ''}</h1>
                         {
-                            upcomingEvents.slice(0, 2).map(({ _id, date, title, description }) => <EventCard
+                            events.slice(0, 2).map(({ _id, startTime, name, description }) => <EventCard
                                 key={_id}
-                                date={date}
-                                title={title}
+                                startTime={startTime}
+                                name={name}
                                 description={description}
                             />)
                         }
@@ -158,10 +120,10 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                 </h3>
 
                 {
-                    upcomingEvents.map(({ _id, date, title, description }) => <EventCard
+                    events.map(({ _id, startTime, name, description }) => <EventCard
                         key={_id}
-                        date={date}
-                        title={title}
+                        startTime={startTime}
+                        name={name}
                         description={description}
                     />)
                 }
@@ -200,10 +162,10 @@ const Home: NextPage<Props> = ({ events }: Props) => {
     )
 }
 
-// Home.getInitialProps = async (): Promise<{ events: [] }> => {
-//     // const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
-//     // const events = await res.json()
-//     return { events: [] }
-// }
+Home.getInitialProps = async (): Promise<{ events: [] }> => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
+    const events = await res.json()
+    return { events }
+}
 
 export default Home
