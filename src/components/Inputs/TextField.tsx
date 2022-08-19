@@ -2,6 +2,7 @@ import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, MutableRef
 import { useSpring, animated } from '@react-spring/web'
 
 import styles from './TextField.module.scss'
+import { useMemo } from 'react'
 
 export interface TextFieldProps extends ComponentPropsWithoutRef<'input'> {
     name: string
@@ -51,6 +52,9 @@ export const TextField = ({
     function handleBlur () {
         value === '' && api.start(nullStyle)
     }
+    const formattedLabel = useMemo(() => {
+        return (label || name).replace(/([A-Z])/g, ' $1')
+    }, [label, name])
 
     return <div className={containerStyles.join(' ')}>
             <animated.label
@@ -58,7 +62,7 @@ export const TextField = ({
                 style={labelStyles}
                 onClick={handleLabelClick}
             >
-                {label}{props.required ? '*' : ''}
+                {formattedLabel}{props.required ? '*' : ''}
             </animated.label>
             <input
                 {...props}
