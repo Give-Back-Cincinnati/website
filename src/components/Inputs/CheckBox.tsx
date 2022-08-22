@@ -14,7 +14,6 @@ export interface CheckBoxProps extends ComponentPropsWithoutRef<'input'> {
 
 export const CheckBox = ({
     name,
-    checked,
     label = '',
     fullWidth = false,
     error = false,
@@ -30,8 +29,8 @@ export const CheckBox = ({
     }, [label, name])
 
     return <div className={styles.container}>
-        <input type='checkbox' id={name} name={name} {...props} />
         <label htmlFor={name}>
+            <input type='checkbox' id={name} name={name} {...props} />
             { formattedLabel }{ props.required ? '*' : '' }
         </label>
         <div className={styles.errorText}>
