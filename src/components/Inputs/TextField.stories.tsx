@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import { TextField } from './TextField'
@@ -13,13 +13,18 @@ const story = {
 
 export default story
 
-const Template: ComponentStory<typeof TextField> = (args) => <TextField {...args} />
+const Template: ComponentStory<typeof TextField> = (args) => {
+    const [ value, setValue ] = useState(args.value)
+
+    args.onChange = (e) => setValue(e.target.value)
+    args.value = value
+    return <TextField {...args} />
+}
 
 export const Primary = Template.bind({})
 Primary.args = {
     name: 'firstName',
     label: 'First Name',
-    value: '',
     required: true,
     error: false
 }
@@ -42,4 +47,11 @@ Errored.args = {
     value: 'Clark',
     errorText: 'Display information about the error',
     error: true
+}
+
+export const WithPattern = Template.bind({})
+WithPattern.args = {
+    ...Primary.args,
+    value: 'not an email',
+    pattern: '^.+\@.+\.[a-zA-Z]{2,}$'
 }
