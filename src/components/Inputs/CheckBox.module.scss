@@ -4,13 +4,16 @@
 .container {
     display: flex;
     align-items: center;
+    label {
+        text-transform: capitalize;
+    }
     input {
         appearance: none;
         background-color: transparent;
         margin: 0;
         width: .8rem;
         height: .8rem;
-        border-radius: 2px;
+        border-radius: 1px;
         margin-right: 1rem;
         outline: 2px solid $gbc-black;
         outline-offset: 2px;

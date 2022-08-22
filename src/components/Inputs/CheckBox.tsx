@@ -1,11 +1,11 @@
-import { ComponentPropsWithoutRef } from 'react'
-import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md"
-
+import { useMemo, ComponentPropsWithoutRef, ChangeEventHandler } from 'react'
+import { DateTime } from 'luxon'
 import styles from './CheckBox.module.scss'
 
 export interface CheckBoxProps extends ComponentPropsWithoutRef<'input'> {
     name: string
-    value: string
+    checked: boolean
+    onChange: ChangeEventHandler
     label?: string
     fullWidth?: boolean
     error?: boolean
@@ -14,7 +14,7 @@ export interface CheckBoxProps extends ComponentPropsWithoutRef<'input'> {
 
 export const CheckBox = ({
     name,
-    value,
+    checked,
     label = '',
     fullWidth = false,
     error = false,
@@ -25,10 +25,14 @@ export const CheckBox = ({
     if (error) containerStyles.push(styles.errorState)
     if (fullWidth) containerStyles.push(styles.fullWidth)
 
+    const formattedLabel = useMemo(() => {
+        return (label || name).replace(/([A-Z])/g, ' $1')
+    }, [label, name])
+
     return <div className={styles.container}>
         <input type='checkbox' id={name} name={name} {...props} />
         <label htmlFor={name}>
-            { label }{ props.required ? '*' : '' }
+            { formattedLabel }{ props.required ? '*' : '' }
         </label>
         <div className={styles.errorText}>
             {errorText}

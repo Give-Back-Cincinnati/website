@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, useRef } from 'react'
+import React, { ComponentPropsWithoutRef, useMemo } from 'react'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import styles from './Select.module.scss'
 
@@ -33,8 +33,12 @@ export const Select = ({
     if (error) containerStyles.push(styles.errorState)
     if (fullWidth) containerStyles.push(styles.fullWidth)
 
+    const formattedLabel = useMemo(() => {
+        return (label || name).replace(/([A-Z])/g, ' $1')
+    }, [label, name])
+
     return <div className={containerStyles.join(' ')}>
-            <label htmlFor={name}>{ label }{ props.required ? '*' : '' }</label>
+            <label htmlFor={name}>{ formattedLabel }{ props.required ? '*' : '' }</label>
             <select 
                 {...props}
                 name={name}

@@ -1,6 +1,6 @@
-import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, MutableRefObject } from 'react'
+import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, useMemo } from 'react'
 import { useSpring, animated } from '@react-spring/web'
-
+import { DateTime } from 'luxon'
 import styles from './DateTimePicker.module.scss'
 
 export interface DateTimePickerProps extends ComponentPropsWithoutRef<'input'> {
@@ -52,13 +52,17 @@ export const DateTimePicker = ({
         value === '' && api.start(nullStyle)
     }
 
+    const formattedLabel = useMemo(() => {
+        return (label || name).replace(/([A-Z])/g, ' $1')
+    }, [label, name])
+
     return <div className={containerStyles.join(' ')}>
             <animated.label
                 htmlFor={name}
                 style={labelStyles}
                 onClick={handleLabelClick}
             >
-                {label}{props.required ? '*' : ''}
+                {formattedLabel}{props.required ? '*' : ''}
             </animated.label>
             <input
                 {...props}
@@ -69,6 +73,8 @@ export const DateTimePicker = ({
                 onBlur={handleBlur}
                 ref={inputEl}
                 type='datetime-local'
+                min={DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm")}
+                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
             />
             <div className={styles.errorText}>
                 {errorText}
