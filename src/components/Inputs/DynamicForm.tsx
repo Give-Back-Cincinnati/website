@@ -8,6 +8,7 @@ import {
     DateTimePicker,
     Select,
     TextField,
+    TextArea,
 } from "./index"
 import { Button } from "../Utils"
 import { DateTime } from "luxon"
@@ -120,6 +121,17 @@ export const DynamicForm = ({ entity, submit }: DynamicFormProps) => {
                             />
                             break;
                         }
+
+                        if (property.maxLength && property.maxLength > 40) {
+                            content = <TextArea
+                                value={formValue as string}
+                                name={propertyKey}
+                                onChange={handleChangeEvent}
+                                required={isRequired}
+                                {...property}
+                            />
+                            break;
+                        }
                         // Generic text field 
                         content =  <TextField
                             value={formValue as string}
@@ -127,6 +139,7 @@ export const DynamicForm = ({ entity, submit }: DynamicFormProps) => {
                             label={propertyKey}
                             onChange={handleChangeEvent}
                             required={isRequired}
+                            {...property}
                         />
                         break;
                     default:
