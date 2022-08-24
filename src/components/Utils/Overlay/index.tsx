@@ -56,6 +56,12 @@ export const Overlay = ({
             bodyClasses.replace(styles.noScroll, '')
         }
         document.body.className = bodyClasses
+
+        return () => {
+            // make sure to remove the no scroll class from body on unmount, regardless of render status
+            bodyClasses.replace(styles.noScroll, '')
+            document.body.className = bodyClasses
+        }
     }, [isOpen])
 
     return <animated.div style={display} className={styles.container}>
