@@ -1,5 +1,5 @@
 const config = {
-    schemaFile: 'http://localhost:3001/docs/swagger.json',
+    schemaFile: `${process.env.NEXT_PUBLIC_API_BASE_URL}/docs/swagger.json`,
     apiFile: './apiSlice.ts',
     apiImport: 'apiSlice',
     outputFile: './openApi.ts',
