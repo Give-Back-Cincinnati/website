@@ -24,5 +24,8 @@
 }
 
 .child {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
     z-index: 1002;
 }

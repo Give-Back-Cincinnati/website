@@ -14,6 +14,5 @@ export const useGetSchema = (schemaName: string | any | undefined): EntitySchema
     }, [schemas, dispatch])
 
     if (!schemaName && typeof schemaName !== 'string') return undefined
-    const transformedSchemaName = schemaName.replace(/./, schemaName[0].toUpperCase())
-    return (schemas as Record<string, EntitySchema>)[transformedSchemaName]
+    return (schemas as Record<string, EntitySchema>)[schemaName]
 }

@@ -9,9 +9,8 @@
 
 .adminNav {
     height: 100%;
-    width: 100px;
+    min-width: 100px;
     background-color: color.adjust($gbc-black, $alpha: -0.9);
-    overflow: hidden;
     .link {
         display: block;
         padding-left: .2rem;

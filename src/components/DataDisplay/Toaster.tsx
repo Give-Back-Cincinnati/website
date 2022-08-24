@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { Alert, AlertProps } from '@/components/Utils'
 import { useAppSelector } from '@/store/hooks'
+import { store, actions } from '@/store/index'
 import styles from './Toaster.module.scss'
 
 import { animated, useSpring, config } from '@react-spring/web'
@@ -29,4 +30,12 @@ export const Toaster = () => {
             notifications.map(({key, ...alertProps}) => <AlertWrapper key={key} {...alertProps} />)
         }
     </div>
+}
+
+export const Notify = (alertDetails: { title: AlertProps["title"], body?: AlertProps['body'], intent: AlertProps['intent'] }) => {
+    const key = Math.random().toString()
+    store.dispatch(actions.toaster.notify({ key, ...alertDetails}))
+    window.setTimeout(() => {
+        store.dispatch(actions.toaster.remove())
+    }, 5000)
 }

@@ -15,10 +15,11 @@ import { DateTime } from "luxon"
 
 export interface DynamicFormProps {
     entity: EntitySchema
-    submit: (state: Record<string, unknown>) => void
+    onSubmit: (state: Record<string, unknown>) => void
+    isLoading?: boolean
 }
 
-export const DynamicForm = ({ entity, submit }: DynamicFormProps) => {
+export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicFormProps) => {
     // Derive the initial and empty states so they can be used in the created inputs
     const { initialState } = useMemo(() => {
         const { properties } = entity
@@ -35,7 +36,7 @@ export const DynamicForm = ({ entity, submit }: DynamicFormProps) => {
                     case 'string':
                         // select
                         if ('enum' in property && Array.isArray(property.enum)) {
-                            emptyState[propertyKey] = ''
+                            emptyState[propertyKey] = property.enum[0]
                             break
                         }
                         // date
@@ -73,8 +74,8 @@ export const DynamicForm = ({ entity, submit }: DynamicFormProps) => {
     }, [formState])
 
     const handleSubmit = useCallback(() => {
-        submit(formState)
-    }, [ formState, submit ])
+        onSubmit(formState)
+    }, [ formState, onSubmit ])
 
     const inputs = useMemo(() => {
         const { required, properties } = entity
@@ -160,6 +161,6 @@ export const DynamicForm = ({ entity, submit }: DynamicFormProps) => {
     
     return <div className={styles.container}>
         { inputs }
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} isLoading={isLoading}>Submit</Button>
     </div>
 }

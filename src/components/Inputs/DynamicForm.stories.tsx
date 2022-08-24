@@ -24,7 +24,7 @@ const story = {
         }
     },
     argTypes: {
-        submit: { action: 'submit' }
+        onSubmit: { action: 'onSubmit' }
     }
 } as ComponentMeta<typeof DynamicForm>
 

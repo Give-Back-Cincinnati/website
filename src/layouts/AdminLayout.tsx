@@ -3,67 +3,48 @@ import styles from './AdminLayout.module.scss'
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-import { useGetMeQuery } from "@/store/api/openApi"
+const adminRoutes = [
+    'Events',
+    'Users',
+]
 
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
     const router = useRouter()
-    const [currentRoute, setCurrentRoute] = useState<string>(router.pathname)
+    const [currentRoute, setCurrentRoute] = useState<string>(router.asPath)
 
     useEffect(() => {
-        router.events.on('routeChangeComplete', (shallow) => {
+        const handleRouteChange = (shallow: string) => {
             setCurrentRoute(shallow)
-        })
-    }, [router])
-
-    const {
-        data: me,
-        isError, isSuccess
-    } = useGetMeQuery()
-
-    if (isError) {
-        router.push('/')
-    }
-
-    const permissionGroups = useMemo(() => {
-        const permissionGroups = new Set()
-        
-        if (me && me.role) {
-            me?.role.permissions.forEach(permission => {
-                permissionGroups.add(permission.group)
-            })
         }
 
-        return Array.from(permissionGroups).sort() as string[]
-    }, [me])
-
-
-    let content: ReactElement | ReactElement[] = <div />
-    
-    if (isSuccess) {
-        content = permissionGroups.map(permission => {
-            const linkStyles = [styles.link]
-            const permissionPath = `/admin/${permission}`
-
-            if (currentRoute === permissionPath) {
-                linkStyles.push(styles.activePath)
-            }
-
-            return <Link
-                key={permission}
-                href={permissionPath}
-            >
-                <a className={linkStyles.join(' ')}>
-                    {permission}
-                </a>
-            </Link>
-        })
-    }
+        router.events.on('routeChangeComplete', handleRouteChange)
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange)
+        }
+    }, [router])
 
     return <div className={styles.container}>
 
         <div className={styles.adminNav}>
             {
-                content
+                adminRoutes.map(permission => {
+                    const linkStyles = [styles.link]
+                    const permissionPath = `/admin/${permission}`
+        
+                    // need to include router.asPath, if first page load it has not registered correctly [name]
+                    if (currentRoute === permissionPath || router.asPath === permissionPath) {
+                        linkStyles.push(styles.activePath)
+                    }
+        
+                    return <Link
+                        key={permission}
+                        href={permissionPath}
+                    >
+                        <a className={linkStyles.join(' ')}>
+                            {permission}
+                        </a>
+                    </Link>
+                })
             }
         </div>
 

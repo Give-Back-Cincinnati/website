@@ -2,16 +2,14 @@
 
 .modalContainer {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 .childContainer {
+    width: fit-content;
+    height: fit-content;
     background-color: $white;
     padding: 1.5rem;
     border-radius: 3px;

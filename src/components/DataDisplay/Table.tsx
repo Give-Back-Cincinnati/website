@@ -35,6 +35,7 @@ export const Table = ({ keys, data, className, ...props }: TableProps) => {
                                         { val }
                                     </td>
                                 }
+                                return <td key={key} />
                             })
                         }
                     </tr>
