@@ -14,7 +14,7 @@ export const toaster = (state: Partial<ToasterState> = initialState) => createSl
     initialState: {...initialState, ...state},
     reducers: {
         notify: (state, action: PayloadAction<AlertProps>) => {
-            state.notifications.push(action.payload)
+            state.notifications = [...state.notifications, action.payload]
         },
         remove: (state) => {
             state.notifications.shift()

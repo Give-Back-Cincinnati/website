@@ -48,11 +48,9 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                     <div>
                         <h1 style={{ textAlign: 'center', marginBottom: 30 }}>Our Next Event{events.length > 1 ? 's' : ''}</h1>
                         {
-                            events.slice(0, 2).map(({ _id, startTime, name, description }) => <EventCard
+                            events.slice(0, 2).map(({ _id, ...eventDetails }) => <EventCard
                                 key={_id}
-                                startTime={startTime}
-                                name={name}
-                                description={description}
+                                {...eventDetails}
                             />)
                         }
                     </div>
@@ -120,11 +118,9 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                 </h3>
 
                 {
-                    events.map(({ _id, startTime, name, description }) => <EventCard
+                    events.map(({ _id, ...eventDetails }) => <EventCard
                         key={_id}
-                        startTime={startTime}
-                        name={name}
-                        description={description}
+                        {...eventDetails}
                     />)
                 }
                 <div className={styles.seeAllEvents}>

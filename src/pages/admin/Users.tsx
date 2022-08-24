@@ -22,7 +22,7 @@ const UsersAdmin: NextPageWithLayout = () => {
             Users
         </h2>
         {
-            isSuccess && canSeeUsers
+            isSuccess && canSeeUsers && data
                 ? <Table
                     keys={['firstName', 'lastName', 'email']}
                     data={data}

@@ -1,5 +1,5 @@
 const config = {
-    schemaFile: `${process.env.NEXT_PUBLIC_API_BASE_URL}/docs/swagger.json`,
+    schemaFile: `https://api.givebackcincinnati.org/docs/swagger.json`,
     apiFile: './apiSlice.ts',
     apiImport: 'apiSlice',
     outputFile: './openApi.ts',
