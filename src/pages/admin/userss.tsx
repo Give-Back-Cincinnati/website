@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react' 
 import { NextPageWithLayout } from 'pages/_app'
 import { Table } from '@/components/DataDisplay'
 import { AdminLayout } from 'layouts/AdminLayout'
