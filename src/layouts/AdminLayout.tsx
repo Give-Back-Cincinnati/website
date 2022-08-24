@@ -4,8 +4,9 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 
 const adminRoutes = [
-    'Events',
-    'Users',
+    '',
+    'events',
+    'users',
 ]
 
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
@@ -29,7 +30,7 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
             {
                 adminRoutes.map(permission => {
                     const linkStyles = [styles.link]
-                    const permissionPath = `/admin/${permission}`
+                    const permissionPath = permission ? `/admin/${permission}` : '/admin'
         
                     // need to include router.asPath, if first page load it has not registered correctly [name]
                     if (currentRoute === permissionPath || router.asPath === permissionPath) {
@@ -41,7 +42,7 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
                         href={permissionPath}
                     >
                         <a className={linkStyles.join(' ')}>
-                            {permission}
+                            {permission || 'Admin'}
                         </a>
                     </Link>
                 })

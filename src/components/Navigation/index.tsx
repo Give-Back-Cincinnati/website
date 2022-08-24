@@ -71,7 +71,7 @@ export const Navigation = () => {
                 <Image
                     src={Logo}
                     width={144}
-                    height={107}
+                    height={93}
                     alt='logo'
                     onClick={() => void router.push('/')}
                 />

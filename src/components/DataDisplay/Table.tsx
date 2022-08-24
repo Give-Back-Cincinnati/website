@@ -30,12 +30,20 @@ export const Table = ({ keys, data, className, ...props }: TableProps) => {
                         {
                             keys.map(key => {
                                 const val = row[key]
-                                if (typeof val === 'string') {
-                                    return <td key={key}>
-                                        { val }
-                                    </td>
+                                switch (typeof val) {
+                                    case "string":
+                                        return <td key={key}>
+                                            { val }
+                                        </td>
+                                    case "object":
+                                        if (React.isValidElement(val)) {
+                                            return <td key={key}>
+                                                { val }
+                                            </td>
+                                        }
+                                    default:
+                                        return <td key={key} />
                                 }
-                                return <td key={key} />
                             })
                         }
                     </tr>
