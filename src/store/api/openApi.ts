@@ -2,7 +2,15 @@ import { apiSlice as api } from "./apiSlice";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     searchEvents: build.query<SearchEventsApiResponse, SearchEventsApiArg>({
-      query: () => ({ url: `/events` }),
+      query: (queryArg) => ({
+        url: `/events`,
+        params: {
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          sort: queryArg.sort,
+          order: queryArg.order,
+        },
+      }),
     }),
     createEvents: build.mutation<CreateEventsApiResponse, CreateEventsApiArg>({
       query: (queryArg) => ({
@@ -24,7 +32,15 @@ const injectedRtkApi = api.injectEndpoints({
       }),
     }),
     searchFilters: build.query<SearchFiltersApiResponse, SearchFiltersApiArg>({
-      query: () => ({ url: `/filters` }),
+      query: (queryArg) => ({
+        url: `/filters`,
+        params: {
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          sort: queryArg.sort,
+          order: queryArg.order,
+        },
+      }),
     }),
     createFilters: build.mutation<
       CreateFiltersApiResponse,
@@ -64,7 +80,15 @@ const injectedRtkApi = api.injectEndpoints({
       SearchPermissionsApiResponse,
       SearchPermissionsApiArg
     >({
-      query: () => ({ url: `/permissions` }),
+      query: (queryArg) => ({
+        url: `/permissions`,
+        params: {
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          sort: queryArg.sort,
+          order: queryArg.order,
+        },
+      }),
     }),
     createPermission: build.mutation<
       CreatePermissionApiResponse,
@@ -98,7 +122,15 @@ const injectedRtkApi = api.injectEndpoints({
       }),
     }),
     searchRoles: build.query<SearchRolesApiResponse, SearchRolesApiArg>({
-      query: () => ({ url: `/roles` }),
+      query: (queryArg) => ({
+        url: `/roles`,
+        params: {
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          sort: queryArg.sort,
+          order: queryArg.order,
+        },
+      }),
     }),
     createRole: build.mutation<CreateRoleApiResponse, CreateRoleApiArg>({
       query: (queryArg) => ({
@@ -117,7 +149,15 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({ url: `/roles/${queryArg.id}`, method: "DELETE" }),
     }),
     searchUsers: build.query<SearchUsersApiResponse, SearchUsersApiArg>({
-      query: () => ({ url: `/users` }),
+      query: (queryArg) => ({
+        url: `/users`,
+        params: {
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          sort: queryArg.sort,
+          order: queryArg.order,
+        },
+      }),
     }),
     createUser: build.mutation<CreateUserApiResponse, CreateUserApiArg>({
       query: (queryArg) => ({
@@ -165,7 +205,12 @@ const injectedRtkApi = api.injectEndpoints({
 });
 export { injectedRtkApi as openApi };
 export type SearchEventsApiResponse = /** status 200 undefined */ Events[];
-export type SearchEventsApiArg = void;
+export type SearchEventsApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?: "name" | "category" | "startTime" | "endTime";
+  order?: "asc" | "desc";
+};
 export type CreateEventsApiResponse = /** status 201 undefined */ Events;
 export type CreateEventsApiArg = {
   events: Events;
@@ -183,7 +228,12 @@ export type DeleteEventsApiArg = {
   id?: any;
 };
 export type SearchFiltersApiResponse = /** status 200 undefined */ Filters[];
-export type SearchFiltersApiArg = void;
+export type SearchFiltersApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?;
+  order?: "asc" | "desc";
+};
 export type CreateFiltersApiResponse = /** status 201 undefined */ Filters;
 export type CreateFiltersApiArg = {
   filters: Filters;
@@ -204,7 +254,12 @@ export type PingApiResponse = unknown;
 export type PingApiArg = void;
 export type SearchPermissionsApiResponse =
   /** status 200 undefined */ Permissions[];
-export type SearchPermissionsApiArg = void;
+export type SearchPermissionsApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?;
+  order?: "asc" | "desc";
+};
 export type CreatePermissionApiResponse =
   /** status 201 undefined */ Permissions;
 export type CreatePermissionApiArg = {
@@ -223,7 +278,12 @@ export type DeletePermissionApiArg = {
   id?: any;
 };
 export type SearchRolesApiResponse = /** status 200 undefined */ Roles[];
-export type SearchRolesApiArg = void;
+export type SearchRolesApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?;
+  order?: "asc" | "desc";
+};
 export type CreateRoleApiResponse = /** status 201 undefined */ Roles;
 export type CreateRoleApiArg = {
   roles: Roles;
@@ -241,7 +301,12 @@ export type DeleteRoleApiArg = {
   id?: any;
 };
 export type SearchUsersApiResponse = /** status 200 undefined */ Users[];
-export type SearchUsersApiArg = void;
+export type SearchUsersApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?;
+  order?: "asc" | "desc";
+};
 export type CreateUserApiResponse = /** status 201 undefined */ Users;
 export type CreateUserApiArg = {
   users: Users;
