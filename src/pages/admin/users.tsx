@@ -1,4 +1,4 @@
-import { useState } from 'react' 
+import { useState } from 'react'
 import { NextPageWithLayout } from 'pages/_app'
 import { Table } from '@/components/DataDisplay'
 import { AdminLayout } from 'layouts/AdminLayout'
@@ -14,7 +14,7 @@ const UsersAdmin: NextPageWithLayout = () => {
     const {
         isSuccess,
         data
-    } = useSearchUsersQuery()
+    } = useSearchUsersQuery({})
     const canSeeUsers = useUserHasPermission('users.get')
 
     return <div>
