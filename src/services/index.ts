@@ -5,10 +5,12 @@ import { RootState, Actions } from 'store'
 import { AxiosService } from './axiosService'
 import { ToasterService } from './toasterService'
 
-export const Services: Record<string, 
-    AxiosInstance
-    | ToasterService
-> = {}
+export type IServices<T> = 
+    T extends "Axios" ? AxiosInstance :
+    T extends "Toaster" ? ToasterService :
+    never;
+
+export const Services: Record<string, unknown> = {}
 
 export function createServices (store: EnhancedStore<RootState>, actions: Actions) {
     Services.Axios = new AxiosService().Axios
