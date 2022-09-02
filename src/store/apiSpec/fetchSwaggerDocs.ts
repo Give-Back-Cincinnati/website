@@ -3,7 +3,7 @@ import { APISpecState } from "./slice"
 import { Services } from "services"
 import { AxiosInstance } from "axios"
 
-import type { Path, Schema } from '@/types/index'
+import type { Path, Components } from '@/types/index'
 import { ToasterService } from "services/toasterService"
 
 export const fetchSwaggerDocs = createAsyncThunk(
@@ -27,7 +27,7 @@ export const fetchSwaggerDocs = createAsyncThunk(
 export const fetchSwaggerDocsFulfilled: CaseReducer = (state: APISpecState, action) => {
     if ('data' in action.payload) {
         state.paths = action.payload.data.paths as Record<string, Path>
-        state.components = action.payload.data.components as Schema
+        state.components = action.payload.data.components as Components
     }
 }
 

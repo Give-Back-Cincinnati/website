@@ -13,7 +13,13 @@ export interface EntitySchema {
     }>
 }
 
-export interface Schema {
-    securitySchemas?: Record<string, unknown>
-    schemas?: Record<string, EntitySchema>
+export interface $Ref {
+    $ref: string
+}
+
+export type Schema = EntitySchema | $Ref | Record<'allOf', (EntitySchema | $Ref)[]>
+
+export interface Components {
+    securitySchemas: Record<string, unknown>
+    schemas: Record<string, Schema>
 }

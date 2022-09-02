@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchSwaggerDocs, fetchSwaggerDocsFulfilled, fetchSwaggerDocsRejected } from './fetchSwaggerDocs'
 
-import type { Path, Schema } from '@/types/index'
+import type { Path, Components } from '@/types/index'
 
 export interface APISpecState {
     paths: Record<string, Path>
-    components: Schema
+    components: Components
 }
 
 const initialState = {
     paths: {},
     components: {
         schemas: {},
-        paths: {}
+        securitySchemas: {}
     }
 }
 
