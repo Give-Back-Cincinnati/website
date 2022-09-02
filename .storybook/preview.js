@@ -1,9 +1,14 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import store from '../src/store'
+import { store, actions } from '../src/store'
 import '../src/styles/globals.scss'
 import * as NextImage from "next/image";
 import { RouterContext } from "next/dist/shared/lib/router-context"
+import { ErrorBoundary } from '@/components/Utils/ErrorBoundary'
+import { Toaster } from '@/components/DataDisplay/Toaster'
+
+import { createServices } from 'services'
+createServices(store, actions)
 
 const OriginalNextImage = NextImage.default;
 
@@ -33,7 +38,10 @@ export const parameters = {
 export const decorators = [
     (Story) => {
         return <Provider store={store}>
-            <Story />
+            <ErrorBoundary>
+                <Story />
+                <Toaster />
+            </ErrorBoundary>
         </Provider>
     }
 ]
