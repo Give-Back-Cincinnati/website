@@ -10,12 +10,16 @@
     }
     .detail {
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: row;
         justify-content: space-between;
+        gap: 1rem;
         span {
             &:first-child {
                 color: $gbc-red;
                 flex: 1;
+            }
+            &:last-child {
+                text-align: right;
             }
         }
     }
