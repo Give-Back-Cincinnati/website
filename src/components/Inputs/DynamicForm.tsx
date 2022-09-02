@@ -93,6 +93,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
                         if (typeof formState[propertyKey] === 'boolean') {
                             content = <CheckBox
                                 name={propertyKey}
+                                label={property.name}
                                 checked={formValue as boolean} // this is created as a boolean in initialState construction
                                 onChange={handleChangeEvent}
                             />
@@ -106,7 +107,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
                                 value={formValue as string}
                                 options={selectOptions}
                                 name={propertyKey}
-                                label={propertyKey}
+                                label={property.name}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
                             />
@@ -116,6 +117,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
                         if ('format' in property && property.format === 'date-time') {
                             content = <DateTimePicker
                                 name={propertyKey}
+                                label={property.name}
                                 value={formValue as string}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
@@ -127,6 +129,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
                             content = <TextArea
                                 value={formValue as string}
                                 name={propertyKey}
+                                label={property.name}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
                                 {...property}
@@ -137,7 +140,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
                         content =  <TextField
                             value={formValue as string}
                             name={propertyKey}
-                            label={propertyKey}
+                            label={property.name}
                             onChange={handleChangeEvent}
                             required={isRequired}
                             {...property}
@@ -147,7 +150,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
                         content = <TextField
                             value={formValue as string}
                             name={propertyKey}
-                            label={propertyKey}
+                            label={property.name}
                             onChange={handleChangeEvent}
                             required={isRequired}
                         />

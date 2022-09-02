@@ -1,36 +1,6 @@
 import { apiSlice as api } from "./apiSlice";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    searchEvents: build.query<SearchEventsApiResponse, SearchEventsApiArg>({
-      query: (queryArg) => ({
-        url: `/events`,
-        params: {
-          limit: queryArg.limit,
-          offset: queryArg.offset,
-          sort: queryArg.sort,
-          order: queryArg.order,
-        },
-      }),
-    }),
-    createEvents: build.mutation<CreateEventsApiResponse, CreateEventsApiArg>({
-      query: (queryArg) => ({
-        url: `/events`,
-        method: "POST",
-        body: queryArg.events,
-      }),
-    }),
-    getEvents: build.query<GetEventsApiResponse, GetEventsApiArg>({
-      query: (queryArg) => ({ url: `/events/${queryArg.id}` }),
-    }),
-    updateEvents: build.mutation<UpdateEventsApiResponse, UpdateEventsApiArg>({
-      query: (queryArg) => ({ url: `/events/${queryArg.id}`, method: "PATCH" }),
-    }),
-    deleteEvents: build.mutation<DeleteEventsApiResponse, DeleteEventsApiArg>({
-      query: (queryArg) => ({
-        url: `/events/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
     searchFilters: build.query<SearchFiltersApiResponse, SearchFiltersApiArg>({
       query: (queryArg) => ({
         url: `/filters`,
@@ -200,33 +170,68 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
+    searchEvents: build.query<SearchEventsApiResponse, SearchEventsApiArg>({
+      query: (queryArg) => ({
+        url: `/events`,
+        params: {
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          sort: queryArg.sort,
+          order: queryArg.order,
+          name: queryArg.name,
+          category: queryArg.category,
+          startTime: queryArg.startTime,
+          endTime: queryArg.endTime,
+        },
+      }),
+    }),
+    createEvents: build.mutation<CreateEventsApiResponse, CreateEventsApiArg>({
+      query: (queryArg) => ({
+        url: `/events`,
+        method: "POST",
+        body: queryArg.events,
+      }),
+    }),
+    getEvents: build.query<GetEventsApiResponse, GetEventsApiArg>({
+      query: (queryArg) => ({ url: `/events/${queryArg.id}` }),
+    }),
+    updateEvents: build.mutation<UpdateEventsApiResponse, UpdateEventsApiArg>({
+      query: (queryArg) => ({ url: `/events/${queryArg.id}`, method: "PATCH" }),
+    }),
+    deleteEvents: build.mutation<DeleteEventsApiResponse, DeleteEventsApiArg>({
+      query: (queryArg) => ({
+        url: `/events/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getEventsByEventIdRegister: build.query<
+      GetEventsByEventIdRegisterApiResponse,
+      GetEventsByEventIdRegisterApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/events/${queryArg.eventId}/register`,
+        params: {
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          sort: queryArg.sort,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    postEventsByEventIdRegister: build.mutation<
+      PostEventsByEventIdRegisterApiResponse,
+      PostEventsByEventIdRegisterApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/events/${queryArg.eventId}/register`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 export { injectedRtkApi as openApi };
-export type SearchEventsApiResponse = /** status 200 undefined */ Events[];
-export type SearchEventsApiArg = {
-  limit?: number;
-  offset?: number;
-  sort?: "name" | "category" | "startTime" | "endTime";
-  order?: "asc" | "desc";
-};
-export type CreateEventsApiResponse = /** status 201 undefined */ Events;
-export type CreateEventsApiArg = {
-  events: Events;
-};
-export type GetEventsApiResponse = /** status 200 Success */ Events;
-export type GetEventsApiArg = {
-  id?: any;
-};
-export type UpdateEventsApiResponse = /** status 200 Success */ Events;
-export type UpdateEventsApiArg = {
-  id?: any;
-};
-export type DeleteEventsApiResponse = unknown;
-export type DeleteEventsApiArg = {
-  id?: any;
-};
 export type SearchFiltersApiResponse = /** status 200 undefined */ Filters[];
 export type SearchFiltersApiArg = {
   limit?: number;
@@ -345,24 +350,46 @@ export type AuthGoogleCallbackApiArg = {
   /** whether to prompt the user */
   prompt: string;
 };
-export type Events = {
-  _id?: string;
-  name: string;
-  description: string;
-  category:
-    | "Hands-On"
-    | "Social"
-    | "Interactive"
-    | "Civic Engagement"
-    | "New Member"
-    | "Cincy YP"
-    | "Leadership"
-    | "Fall Feast"
-    | "Paint the Town"
-    | "Give Back Beyond Cincinnati";
-  address: string;
-  startTime: string;
-  endTime: string;
+export type SearchEventsApiResponse = /** status 200 undefined */ Events[];
+export type SearchEventsApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?: "name" | "category" | "startTime" | "endTime";
+  order?: "asc" | "desc";
+  name?: any;
+  category?: EventCategories;
+  startTime?: string;
+  endTime?: string;
+};
+export type CreateEventsApiResponse = /** status 201 undefined */ Events;
+export type CreateEventsApiArg = {
+  events: Events;
+};
+export type GetEventsApiResponse = /** status 200 Success */ Events;
+export type GetEventsApiArg = {
+  id?: any;
+};
+export type UpdateEventsApiResponse = /** status 200 Success */ Events;
+export type UpdateEventsApiArg = {
+  id?: any;
+};
+export type DeleteEventsApiResponse = unknown;
+export type DeleteEventsApiArg = {
+  id?: any;
+};
+export type GetEventsByEventIdRegisterApiResponse =
+  /** status 200 undefined */ (UserRegistration | GuestRegistration)[];
+export type GetEventsByEventIdRegisterApiArg = {
+  eventId?: any;
+  limit?: number;
+  offset?: number;
+  sort?: "name" | "category" | "startTime" | "endTime";
+  order?: "asc" | "desc";
+};
+export type PostEventsByEventIdRegisterApiResponse = unknown;
+export type PostEventsByEventIdRegisterApiArg = {
+  eventId?: any;
+  body: UserRegistration | GuestRegistration;
 };
 export type Filters = {
   _id?: string;
@@ -399,14 +426,44 @@ export type UsersMe = {
   lastName: string;
   email: string;
   profilePicture?: string;
-  role: RolesMe;
+  role?: RolesMe;
 };
+export type Events = {
+  _id?: string;
+  name: string;
+  description: string;
+  category: any;
+  address: string;
+  startTime: string;
+  endTime: string;
+};
+export type EventCategories =
+  | "Hands-On"
+  | "Social"
+  | "Interactive"
+  | "Civic Engagement"
+  | "New Member"
+  | "Cincy YP"
+  | "Leadership"
+  | "Fall Feast"
+  | "Paint the Town"
+  | "Give Back Beyond Cincinnati";
+export type BasicRegistration = {
+  _id?: string;
+  phone: string;
+  dateOfBirth: string;
+  hasAgreedToTerms: boolean;
+  checkedIn?: boolean;
+};
+export type UserRegistration = BasicRegistration & {
+  user?: Users | string;
+};
+export type GuestRegistration = {
+  firstName: string;
+  lastName: string;
+  email: string;
+} & BasicRegistration;
 export const {
-  useSearchEventsQuery,
-  useCreateEventsMutation,
-  useGetEventsQuery,
-  useUpdateEventsMutation,
-  useDeleteEventsMutation,
   useSearchFiltersQuery,
   useCreateFiltersMutation,
   useGetFiltersQuery,
@@ -431,4 +488,11 @@ export const {
   useDeleteUserMutation,
   useLoginMutation,
   useAuthGoogleCallbackQuery,
+  useSearchEventsQuery,
+  useCreateEventsMutation,
+  useGetEventsQuery,
+  useUpdateEventsMutation,
+  useDeleteEventsMutation,
+  useGetEventsByEventIdRegisterQuery,
+  usePostEventsByEventIdRegisterMutation,
 } = injectedRtkApi;

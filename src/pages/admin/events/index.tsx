@@ -18,7 +18,7 @@ const EventsAdmin: NextPageWithLayout = () => {
         isSuccess,
         data,
         refetch,
-    } = useSearchEventsQuery()
+    } = useSearchEventsQuery({})
     const canSeeEvents = useUserHasPermission('events.get')
     const canCreateEvent = useUserHasPermission('events.post')
     const canDeleteEvent = useUserHasPermission('events.id.delete')

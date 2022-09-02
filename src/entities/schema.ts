@@ -3,6 +3,7 @@ export interface EntitySchema {
     required: string[]
     properties: Record<string, {
         type: string,
+        name?: string,
         enum?: string[],
         format?: string,
         example?: string,
