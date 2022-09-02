@@ -22,13 +22,15 @@ export const Navigation = () => {
     // a user is considered an admin if they can post an event
     const isAdmin = useMemo(() => {
         let createEventPermissionFound = false
-        user?.role.permissions.forEach((permission: Permissions) => {
-            if (permission.name === 'events.post') {
-                createEventPermissionFound = true
-            }
-        })
+        if (user && user.role && user.role.permissions) {
+            user.role.permissions.forEach((permission: Permissions) => {
+                if (permission.name === 'events.post') {
+                    createEventPermissionFound = true
+                }
+            })
+        }
         return createEventPermissionFound
-    }, [user?.role.permissions])
+    }, [user])
 
     const navigationRoutes = [
         // {

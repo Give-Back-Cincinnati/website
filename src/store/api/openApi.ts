@@ -236,7 +236,7 @@ export type SearchFiltersApiResponse = /** status 200 undefined */ Filters[];
 export type SearchFiltersApiArg = {
   limit?: number;
   offset?: number;
-  sort?;
+  sort?: "name";
   order?: "asc" | "desc";
 };
 export type CreateFiltersApiResponse = /** status 201 undefined */ Filters;
@@ -262,7 +262,7 @@ export type SearchPermissionsApiResponse =
 export type SearchPermissionsApiArg = {
   limit?: number;
   offset?: number;
-  sort?;
+  sort?: "name" | "group";
   order?: "asc" | "desc";
 };
 export type CreatePermissionApiResponse =
@@ -286,7 +286,7 @@ export type SearchRolesApiResponse = /** status 200 undefined */ Roles[];
 export type SearchRolesApiArg = {
   limit?: number;
   offset?: number;
-  sort?;
+  sort?: "name";
   order?: "asc" | "desc";
 };
 export type CreateRoleApiResponse = /** status 201 undefined */ Roles;
@@ -309,7 +309,7 @@ export type SearchUsersApiResponse = /** status 200 undefined */ Users[];
 export type SearchUsersApiArg = {
   limit?: number;
   offset?: number;
-  sort?;
+  sort?: "firstName" | "lastName" | "email";
   order?: "asc" | "desc";
 };
 export type CreateUserApiResponse = /** status 201 undefined */ Users;
@@ -383,7 +383,7 @@ export type GetEventsByEventIdRegisterApiArg = {
   eventId?: any;
   limit?: number;
   offset?: number;
-  sort?: "name" | "category" | "startTime" | "endTime";
+  sort?: "firstName" | "lastName";
   order?: "asc" | "desc";
 };
 export type PostEventsByEventIdRegisterApiResponse = unknown;
