@@ -78,7 +78,7 @@ const EventsAdmin: NextPageWithLayout = () => {
             startTime: DateTime.fromISO(obj.startTime).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY),
             endTime: DateTime.fromISO(obj.endTime).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY),
             actions: <div>
-                <Link href={`/admin/Events/${obj._id}`}>
+                <Link href={`/admin/events/${obj._id}`}>
                     <a>
                         <Button variant='outlined'>
                             See Details

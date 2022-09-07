@@ -41,6 +41,12 @@ export const Table = ({ keys, data, className, ...props }: TableProps) => {
                                                 { val }
                                             </td>
                                         }
+                                    case "boolean":
+                                        if (typeof val === 'boolean') {
+                                            return <td key={key}>
+                                                { val.toString() }
+                                            </td>
+                                        }
                                     default:
                                         return <td key={key} />
                                 }
