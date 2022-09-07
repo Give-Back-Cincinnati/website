@@ -2,14 +2,15 @@ import { useMemo } from 'react'
 import { NextPageWithLayout } from 'pages/_app'
 import { Table } from '@/components/DataDisplay'
 import { AdminLayout } from 'layouts/AdminLayout'
-import { useGetSchema, useUserHasPermission } from 'hooks'
+import { useUserHasPermission } from 'hooks'
+import { useRouter } from 'next/router'
 
 import { Button } from '@/components/Utils'
-import { Modal } from '@/components/Utils'
 
 import { useSearchRolesQuery, useSearchUsersQuery } from '@/store/api/openApi'
 
 const UsersAdmin: NextPageWithLayout = () => {
+    const router = useRouter()
     const {
         isSuccess,
         data
@@ -18,15 +19,22 @@ const UsersAdmin: NextPageWithLayout = () => {
         data: roles
     } = useSearchRolesQuery({})
     const canSeeUsers = useUserHasPermission('users.get')
+    const canUpdateUsers = useUserHasPermission('users.id.patch')
 
     const formattedData = useMemo(() => {
         if (!data || !roles) return []
         return data.map(user => ({
             ...user,
             role: roles[roles.findIndex(role => role._id === user.role)].name,
-            actions: <Button>Edit</Button>
+            actions: <Button onClick={() => router.push(`/admin/users/${user._id}`)}>Edit</Button>
         }))
-    }, [data, roles])
+    }, [data, roles, router])
+
+    const keys = ['firstName', 'lastName', 'email', 'role']
+
+    if (canUpdateUsers) {
+        keys.push('actions')
+    }
 
     return <div>
         <h2>
@@ -35,9 +43,7 @@ const UsersAdmin: NextPageWithLayout = () => {
         {
             isSuccess && canSeeUsers && data
                 ? <Table
-                    keys={['firstName', 'lastName', 'email', 'role',
-                    //  'actions'
-                    ]}
+                    keys={keys}
                     data={formattedData}
                 />
                 : ''

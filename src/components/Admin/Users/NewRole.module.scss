@@ -1,0 +1,16 @@
+.container {
+    max-width: 250px;
+    h3 {
+        margin-bottom: 1rem;
+    }
+}
+
+.formContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.button {
+    margin-top: 1rem;
+}

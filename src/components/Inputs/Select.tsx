@@ -41,6 +41,7 @@ export const Select = ({
             <label htmlFor={name}>{ formattedLabel }{ props.required ? '*' : '' }</label>
             <select 
                 {...props}
+                value={value}
                 name={name}
             >
                 {

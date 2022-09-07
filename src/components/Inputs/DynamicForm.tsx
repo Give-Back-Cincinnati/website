@@ -16,10 +16,12 @@ import { DateTime } from "luxon"
 export interface DynamicFormProps {
     entity: EntitySchema
     onSubmit: (state: Record<string, unknown>) => void
+    values?: Record<string, unknown>
+    hiddenFields?: string[]
     isLoading?: boolean
 }
 
-export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicFormProps) => {
+export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], isLoading = false }: DynamicFormProps) => {
     // Derive the initial and empty states so they can be used in the created inputs
     const { initialState } = useMemo(() => {
         const { properties } = entity
@@ -27,35 +29,35 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
         Object.keys(properties)
             .forEach(propertyKey => {
                 const property = properties[propertyKey]
-                if (property.readonly) return
+                if (property.readonly || hiddenFields.includes(propertyKey)) return
 
                 switch (property.type) {
                     case 'number':
-                        emptyState[propertyKey] = 0
+                        emptyState[propertyKey] = values[propertyKey] || 0
                         break
                     case 'string':
                         // select
                         if ('enum' in property && Array.isArray(property.enum)) {
-                            emptyState[propertyKey] = property.enum[0]
+                            emptyState[propertyKey] = values[propertyKey] || property.enum[0]
                             break
                         }
                         // date
                         if ('format' in property && property.format === 'date-time') {
-                            emptyState[propertyKey] = DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm")
+                            emptyState[propertyKey] = (DateTime.fromISO(values[propertyKey] as string) || DateTime.now()).toFormat("yyyy-MM-dd'T'HH:mm")
                             break
                         }
-                        emptyState[propertyKey] = ''
+                        emptyState[propertyKey] = values[propertyKey] || ''
                         break
                         // string
                     case 'boolean':
-                        emptyState[propertyKey] = false
+                        emptyState[propertyKey] = values[propertyKey] || false
                         break;
                     default:
-                        emptyState[propertyKey] = ''
+                        emptyState[propertyKey] = values[propertyKey] || ''
                 }
             })
         return { initialState: emptyState }
-    }, [entity])
+    }, [entity, values, hiddenFields])
 
     const [formState, setFormState] = useState(initialState)
 
@@ -83,7 +85,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
             .map(propertyKey => {
                 const property = properties[propertyKey]
                 // if property is read only, we don't want the user to see it presented in the form
-                if (property.readonly) return ''
+                if (property.readonly || hiddenFields.includes(propertyKey)) return ''
                 const isRequired = required.includes(propertyKey)
                 const formValue = formState[propertyKey]
 
@@ -160,7 +162,7 @@ export const DynamicForm = ({ entity, onSubmit, isLoading = false }: DynamicForm
                     { content }
                 </div>
             })
-    }, [entity, handleChangeEvent, formState])
+    }, [entity, handleChangeEvent, formState, hiddenFields])
     
     return <div className={styles.container}>
         { inputs }

@@ -143,7 +143,11 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
     }),
     updateUser: build.mutation<UpdateUserApiResponse, UpdateUserApiArg>({
-      query: (queryArg) => ({ url: `/users/${queryArg.id}`, method: "PATCH" }),
+      query: (queryArg) => ({
+        url: `/users/${queryArg.id}`,
+        method: "PATCH",
+        body: queryArg.body,
+      }),
     }),
     deleteUser: build.mutation<DeleteUserApiResponse, DeleteUserApiArg>({
       query: (queryArg) => ({ url: `/users/${queryArg.id}`, method: "DELETE" }),
@@ -325,6 +329,10 @@ export type GetUserApiArg = {
 export type UpdateUserApiResponse = /** status 200 Success */ Users;
 export type UpdateUserApiArg = {
   id?: any;
+  body: Users & {
+    profilePicture?: any | null;
+    role?: any | null;
+  };
 };
 export type DeleteUserApiResponse = unknown;
 export type DeleteUserApiArg = {
@@ -420,12 +428,7 @@ export type RolesMe = {
   permissions: Permissions[];
   filters?: Filters[];
 };
-export type UsersMe = {
-  _id?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  profilePicture?: string;
+export type UsersMe = Users & {
   role?: RolesMe;
 };
 export type Events = {
