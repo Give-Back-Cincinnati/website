@@ -5,14 +5,13 @@ import { NextPageWithLayout } from "pages/_app"
 import { useGetSchema, useServices } from 'hooks'
 import { NewRole } from '@/components/Admin/Users/NewRole'
 
-import { Users, useUpdateUserMutation, useLazyGetUserQuery, useSearchRolesQuery } from '@/store/api/openApi'
+import { Users, useUpdateUserMutation, useLazyGetUserQuery } from '@/store/api/openApi'
 import { DynamicForm } from '@/components/Inputs'
 
 import styles from './[_id].module.scss'
 
 const AdminEditUser: NextPageWithLayout = () => {
     const {query, isReady} = useRouter()
-    const { data: roles } = useSearchRolesQuery({})
     const [ trigger, { data, isSuccess } ] = useLazyGetUserQuery()
     const [ updateUserTrigger, updateUserResult ] = useUpdateUserMutation()
     const Toaster = useServices('Toaster')
