@@ -10,6 +10,12 @@ interface Props {
     events: SearchEventsApiResponse
 }
 
+export async function getStaticProps(): Promise<{ events: [] }> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
+    const events = await res.json()
+    return { events }
+}
+
 export const Events: NextPage<Props> = ({ events }: Props) => {
 
     const { eventMap, categories } = useMemo(() => {
@@ -63,12 +69,6 @@ export const Events: NextPage<Props> = ({ events }: Props) => {
 
         </>
     )
-}
-
-Events.getInitialProps = async (): Promise<{ events: [] }> => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
-    const events = await res.json()
-    return { events }
 }
 
 export default Events
