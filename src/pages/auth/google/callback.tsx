@@ -25,7 +25,7 @@ export default function GoogleAuthCallBack () {
                     router.push('/')
                 }
             } catch (e) {
-                if (axios.isAxiosError(e)) {
+                if (axios.isAxiosError(e) && e.message !== 'canceled') {
                     Toaster.notify({ key: Math.random().toString(), title: e.response?.statusText || 'Unknown Error', body: 'Please try again in a few minutes', intent: 'negative' })
                 }
             }
