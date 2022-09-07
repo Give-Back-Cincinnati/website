@@ -1,9 +1,9 @@
-import React, { ComponentPropsWithoutRef } from 'react'
+import React, { ComponentPropsWithoutRef, ReactElement } from 'react'
 
 import styles from './index.module.scss'
 
 export interface HorizontalBreakProps extends ComponentPropsWithoutRef<'div'> {
-    children: string
+    children: ReactElement | string
 }
 
 export const HorizontalBreak = ({ children, ...props }: HorizontalBreakProps) => {

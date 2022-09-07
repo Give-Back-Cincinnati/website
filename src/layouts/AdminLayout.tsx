@@ -1,17 +1,20 @@
-import { useMemo, useState, useEffect, ReactElement } from "react"
+import { useState, useEffect, ReactElement } from "react"
 import styles from './AdminLayout.module.scss'
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useUserHasPermission } from "hooks"
 
-const adminRoutes = [
-    '',
-    'events',
-    'users',
-]
 
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
+    const adminRoutes = [
+        '',
+        'events',
+        'users',
+    ]
     const router = useRouter()
     const [currentRoute, setCurrentRoute] = useState<string>(router.asPath)
+    const canSeeRoles = useUserHasPermission('roles.get')
+    const canSeePermissions = useUserHasPermission('permissions.get')
 
     useEffect(() => {
         const handleRouteChange = (shallow: string) => {
@@ -23,6 +26,9 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
             router.events.off('routeChangeComplete', handleRouteChange)
         }
     }, [router])
+
+    if (canSeeRoles) { adminRoutes.push('roles') }
+    if (canSeePermissions) { adminRoutes.push('permissions') }
 
     return <div className={styles.container}>
 

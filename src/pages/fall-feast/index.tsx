@@ -6,7 +6,7 @@ import { HorizontalBreak, LeftDashedBorder } from '@/components/Backgrounds'
 const FallFeast: NextPage = () => {
     return <div>
         <HorizontalBreak style={{ marginBottom: '2rem', marginTop: '2rem' }}>
-                Fall Feast
+                <h1>Fall Feast</h1>
         </HorizontalBreak>
         <LeftDashedBorder>
             <div className={styles.description}>
