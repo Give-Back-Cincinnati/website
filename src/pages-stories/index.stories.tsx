@@ -8,6 +8,9 @@ const story = {
     component: Index,
     parameters: {
         layout: 'fullscreen',
+    },
+    args: {
+        events: []
     }
 } as ComponentMeta<typeof Index>
 

@@ -5,4 +5,27 @@
     min-height: 100px;
     width: 100%;
     color: $white;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding-bottom: .2rem;
+    h2 {
+        color: $white;
+    }
+}
+
+.gbc {
+    max-width: 250px;
+}
+
+.programs {
+    ul {
+        margin: 0;
+        padding-left: 1rem;
+    }
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
 }
