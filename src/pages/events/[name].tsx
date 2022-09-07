@@ -11,7 +11,7 @@ export async function getStaticPaths () {
     // Add $gt endTime filter once the server can handle it
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
     const events: Events[] = await res.json()
-    const mapped = events.map(event => ({ params: event }))
+    const mapped = events.map(event => ({ params: { name: encodeURIComponent(event.name)} }))
     return {
         paths: mapped,
         fallback: false
