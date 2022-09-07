@@ -3,9 +3,11 @@ import { useRouter } from 'next/router'
 import { Spinner } from '@/components/DataDisplay'
 import { useServices } from 'hooks'
 import axios from 'axios'
+import { useLazyGetMeQuery } from '@/store/api/openApi'
 
 export default function GoogleAuthCallBack () {
     const router = useRouter()
+    const [triggerGetMe] = useLazyGetMeQuery()
     const Axios = useServices('Axios')
     const Toaster = useServices('Toaster')
     const query = router.query
@@ -22,6 +24,7 @@ export default function GoogleAuthCallBack () {
                 
                 if (response.status === 204) {
                     Toaster.notify({ key: Math.random().toString(), title: 'Successful Log In', intent: 'positive' })
+                    triggerGetMe()
                     router.push('/')
                 }
             } catch (e) {
@@ -36,7 +39,7 @@ export default function GoogleAuthCallBack () {
         return () => {
             controller.abort()
         }
-    }, [ query, Axios, Toaster, router ])
+    }, [ query, Axios, Toaster, router, triggerGetMe ])
 
     return <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ height: 50, width: 50 }}>

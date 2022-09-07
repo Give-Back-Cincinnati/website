@@ -4,7 +4,7 @@ const config = {
     apiImport: 'apiSlice',
     outputFile: './openApi.ts',
     exportName: 'openApi',
-    hooks: true
+    hooks: { queries: true, lazyQueries: true, mutations: true }
 }
 
 module.exports = config
