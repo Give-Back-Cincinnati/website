@@ -200,7 +200,11 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({ url: `/events/${queryArg.id}` }),
     }),
     updateEvents: build.mutation<UpdateEventsApiResponse, UpdateEventsApiArg>({
-      query: (queryArg) => ({ url: `/events/${queryArg.id}`, method: "PATCH" }),
+      query: (queryArg) => ({
+        url: `/events/${queryArg.id}`,
+        method: "PATCH",
+        body: queryArg.events,
+      }),
     }),
     deleteEvents: build.mutation<DeleteEventsApiResponse, DeleteEventsApiArg>({
       query: (queryArg) => ({
@@ -380,6 +384,7 @@ export type GetEventsApiArg = {
 export type UpdateEventsApiResponse = /** status 200 Success */ Events;
 export type UpdateEventsApiArg = {
   id?: any;
+  events: Events;
 };
 export type DeleteEventsApiResponse = unknown;
 export type DeleteEventsApiArg = {
