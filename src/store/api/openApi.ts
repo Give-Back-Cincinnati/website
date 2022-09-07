@@ -309,7 +309,7 @@ export type SearchUsersApiResponse = /** status 200 undefined */ Users[];
 export type SearchUsersApiArg = {
   limit?: number;
   offset?: number;
-  sort?: "firstName" | "lastName" | "email";
+  sort?: "firstName" | "lastName" | "email" | "role";
   order?: "asc" | "desc";
 };
 export type CreateUserApiResponse = /** status 201 undefined */ Users;
@@ -383,7 +383,7 @@ export type GetEventsByEventIdRegisterApiArg = {
   eventId?: any;
   limit?: number;
   offset?: number;
-  sort?: "firstName" | "lastName";
+  sort?: "name" | "category" | "startTime" | "endTime";
   order?: "asc" | "desc";
 };
 export type PostEventsByEventIdRegisterApiResponse = unknown;

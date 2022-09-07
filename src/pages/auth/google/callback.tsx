@@ -22,13 +22,12 @@ export default function GoogleAuthCallBack () {
                 
                 if (response.status === 204) {
                     Toaster.notify({ key: Math.random().toString(), title: 'Successful Log In', intent: 'positive' })
+                    router.push('/')
                 }
             } catch (e) {
                 if (axios.isAxiosError(e)) {
                     Toaster.notify({ key: Math.random().toString(), title: e.response?.statusText || 'Unknown Error', body: 'Please try again in a few minutes', intent: 'negative' })
                 }
-            } finally {
-                router.push('/')
             }
         }
 
