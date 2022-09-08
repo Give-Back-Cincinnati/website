@@ -4,7 +4,7 @@ import { EventHeader, EventDetails } from "@/components/Events"
 import { HorizontalBreak } from '@/components/Backgrounds'
 import { DynamicForm } from '@/components/Inputs/DynamicForm'
 import { Spinner, Notify } from '@/components/DataDisplay'
-import { Events, usePostEventsByEventIdRegisterMutation, GuestRegistration } from '@/store/api/openApi'
+import { Events, useGetMeQuery, usePostEventsByEventIdRegisterMutation, GuestRegistration } from '@/store/api/openApi'
 import { useGetSchema } from 'hooks'
 
 export async function getStaticPaths () {
@@ -30,7 +30,9 @@ export async function getStaticProps (context: { params: Events }) {
 
 export const Event = ({ event }: { event: Events }) => {
     // TODO: ADD LOGGED IN REGISTRATION IF USER IS LOGGED IN
+    const userRegistrationSchema = useGetSchema('UserRegistration')
     const guestRegistrationSchema = useGetSchema('GuestRegistration')
+    const { data: me } = useGetMeQuery()
 
     const [submitRegistration, { status, error, reset, isSuccess }] = usePostEventsByEventIdRegisterMutation()
 
@@ -65,16 +67,18 @@ export const Event = ({ event }: { event: Events }) => {
         <HorizontalBreak>Registration</HorizontalBreak>
 
         {
-            guestRegistrationSchema && !isSuccess
+            guestRegistrationSchema && userRegistrationSchema && !isSuccess
                 ? <DynamicForm
-                    entity={guestRegistrationSchema}
+                    entity={me ? userRegistrationSchema : guestRegistrationSchema}
                     onSubmit={handleRegistrationSubmit}
+                    values={me} // if we add new fields in the future, autopopulate them for logged in users
+                    hiddenFields={['user']}
                     isLoading={status === 'pending'}
                 />
                 : ''
         }
         {
-            !guestRegistrationSchema
+            !guestRegistrationSchema || !userRegistrationSchema
                 ? <Spinner />
                 : ''
         }

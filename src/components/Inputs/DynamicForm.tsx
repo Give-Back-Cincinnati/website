@@ -98,6 +98,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                                 label={property.name}
                                 checked={formValue as boolean} // this is created as a boolean in initialState construction
                                 onChange={handleChangeEvent}
+                                required={isRequired}
                             />
                         }
                         break;
