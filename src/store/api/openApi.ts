@@ -236,6 +236,25 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.body,
       }),
     }),
+    updateRegistration: build.mutation<
+      UpdateRegistrationApiResponse,
+      UpdateRegistrationApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/events/${queryArg.eventId}/register/${queryArg.registrationId}`,
+        method: "PATCH",
+        body: queryArg.body,
+      }),
+    }),
+    deleteRegistration: build.mutation<
+      DeleteRegistrationApiResponse,
+      DeleteRegistrationApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/events/${queryArg.eventId}/register/${queryArg.registrationId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -404,6 +423,19 @@ export type PostEventsByEventIdRegisterApiArg = {
   eventId?: any;
   body: UserRegistration | GuestRegistration;
 };
+export type UpdateRegistrationApiResponse = /** status 200 Success */
+  | UserRegistration
+  | GuestRegistration;
+export type UpdateRegistrationApiArg = {
+  eventId?: any;
+  registrationId?: any;
+  body: UserRegistration | GuestRegistration;
+};
+export type DeleteRegistrationApiResponse = unknown;
+export type DeleteRegistrationApiArg = {
+  eventId?: any;
+  registrationId?: any;
+};
 export type Filters = {
   _id?: string;
   name: string;
@@ -517,4 +549,6 @@ export const {
   useGetEventsByEventIdRegisterQuery,
   useLazyGetEventsByEventIdRegisterQuery,
   usePostEventsByEventIdRegisterMutation,
+  useUpdateRegistrationMutation,
+  useDeleteRegistrationMutation,
 } = injectedRtkApi;

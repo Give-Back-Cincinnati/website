@@ -1,11 +1,12 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { NextPageWithLayout } from "pages/_app"
 import { AdminLayout } from 'layouts/AdminLayout'
 import { useRouter } from "next/router"
-import { Events, useLazyGetEventsByEventIdRegisterQuery, useLazyGetEventsQuery, useUpdateEventsMutation } from "@/store/api/openApi"
+import { Events, useLazyGetEventsQuery, useUpdateEventsMutation } from "@/store/api/openApi"
 import { DynamicForm } from "@/components/Inputs"
 import { useGetSchema, useServices } from "hooks"
-import { Table } from "@/components/DataDisplay"
+
+import { AdminEventRegistrations } from "@/components/Admin/Events/Registrations"
 
 import styles from './[_id].module.scss'
 
@@ -13,16 +14,15 @@ export const AdminEventDetails: NextPageWithLayout = () => {
     const { isReady, query } = useRouter()
     const [ getEventsTrigger, { data: eventData, isSuccess }] = useLazyGetEventsQuery()
     const [ updateEventTrigger, updateEventResult] = useUpdateEventsMutation()
-    const [ getEventRegistrations, { data: eventRegistrations }] = useLazyGetEventsByEventIdRegisterQuery()
+    
     const Toaster = useServices('Toaster')
     const eventSchema = useGetSchema('Events')
 
     useEffect(() => {
         if (isReady) {
             getEventsTrigger({ id: query._id })
-            getEventRegistrations({ eventId: query._id })
         }
-    }, [isReady, query, getEventsTrigger, getEventRegistrations])
+    }, [isReady, query, getEventsTrigger])
 
     useEffect(() => {
         if (updateEventResult.status === 'fulfilled') {
@@ -49,16 +49,10 @@ export const AdminEventDetails: NextPageWithLayout = () => {
                 : ''
             }
         </div>
-        <div>
-            <h2>Registrations: {eventRegistrations?.length || 0}</h2>
-            {
-                eventRegistrations &&
-                <Table
-                    keys={['firstName', 'lastName', 'phone', 'email', 'dateOfBirth', 'checkedIn', 'hasAgreedToTerms']}
-                    data={eventRegistrations}
-                />
-            }
-        </div>
+        {
+            query._id && typeof query._id === 'string' &&
+                <AdminEventRegistrations eventId={query._id} />
+        }
     </div>
 }
 
