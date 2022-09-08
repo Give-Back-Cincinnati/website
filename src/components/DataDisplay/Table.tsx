@@ -6,9 +6,10 @@ export interface TableProps extends ComponentPropsWithoutRef<'table'> {
     keys: string[]
     data: Record<string, unknown>[]
     className?: string
+    formatFunctions?: Record<string, (val: any) => string>
 }
 
-export const Table = ({ keys, data, className, ...props }: TableProps) => {
+export const Table = ({ keys, data, className, formatFunctions, ...props }: TableProps) => {
     const containerStyles = [styles.container]
     
     if (className) {
@@ -30,6 +31,13 @@ export const Table = ({ keys, data, className, ...props }: TableProps) => {
                         {
                             keys.map(key => {
                                 const val = row[key]
+
+                                if (formatFunctions[key]) {
+                                    return <td key={key}>
+                                        { formatFunctions[key](val) }
+                                    </td>
+                                }
+
                                 switch (typeof val) {
                                     case "string":
                                         return <td key={key}>
