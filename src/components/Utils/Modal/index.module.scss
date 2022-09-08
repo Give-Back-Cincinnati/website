@@ -10,7 +10,10 @@
 .childContainer {
     width: fit-content;
     height: fit-content;
+    max-height: 99vh;
+    max-width: 99vw;
     background-color: $white;
     padding: 1.5rem;
     border-radius: 3px;
+    overflow-y: scroll;
 }

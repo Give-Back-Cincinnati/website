@@ -4,19 +4,19 @@ import styles from './index.module.scss'
 
 import { EventHeader, EventCard } from '@/components/Events'
 
-import type { SearchEventsApiResponse } from '@/store/api/openApi'
+import type { Events, SearchEventsApiResponse } from '@/store/api/openApi'
 
 interface Props { 
     events: SearchEventsApiResponse
 }
 
-export async function getStaticProps(): Promise<{ events: [] }> {
+export async function getStaticProps(): Promise<{ props: { events: Events[] } }> {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
-    const events = await res.json()
-    return { events }
+    const events = await res.json() as Events[]
+    return { props: { events } }
 }
 
-export const Events: NextPage<Props> = ({ events }: Props) => {
+export const EventsPage: NextPage<Props> = ({ events }: Props) => {
 
     const { eventMap, categories } = useMemo(() => {
         const eventMap: Record<string, SearchEventsApiResponse> = {}
@@ -71,4 +71,4 @@ export const Events: NextPage<Props> = ({ events }: Props) => {
     )
 }
 
-export default Events
+export default EventsPage
