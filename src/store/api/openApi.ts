@@ -1,263 +1,326 @@
 import { apiSlice as api } from "./apiSlice";
-const injectedRtkApi = api.injectEndpoints({
-  endpoints: (build) => ({
-    searchFilters: build.query<SearchFiltersApiResponse, SearchFiltersApiArg>({
-      query: (queryArg) => ({
-        url: `/filters`,
-        params: {
-          limit: queryArg.limit,
-          offset: queryArg.offset,
-          sort: queryArg.sort,
-          order: queryArg.order,
-        },
+export const addTagTypes = [
+  "filters",
+  "permissions",
+  "roles",
+  "users",
+  "auth",
+  "events",
+] as const;
+const injectedRtkApi = api
+  .enhanceEndpoints({
+    addTagTypes,
+  })
+  .injectEndpoints({
+    endpoints: (build) => ({
+      searchFilters: build.query<SearchFiltersApiResponse, SearchFiltersApiArg>(
+        {
+          query: (queryArg) => ({
+            url: `/filters`,
+            params: {
+              limit: queryArg.limit,
+              offset: queryArg.offset,
+              sort: queryArg.sort,
+              order: queryArg.order,
+            },
+          }),
+          providesTags: ["filters"],
+        }
+      ),
+      createFilters: build.mutation<
+        CreateFiltersApiResponse,
+        CreateFiltersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/filters`,
+          method: "POST",
+          body: queryArg.filters,
+        }),
+        invalidatesTags: ["filters"],
+      }),
+      getFilters: build.query<GetFiltersApiResponse, GetFiltersApiArg>({
+        query: (queryArg) => ({ url: `/filters/${queryArg.id}` }),
+        providesTags: ["filters"],
+      }),
+      updateFilters: build.mutation<
+        UpdateFiltersApiResponse,
+        UpdateFiltersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/filters/${queryArg.id}`,
+          method: "PATCH",
+        }),
+        invalidatesTags: ["filters"],
+      }),
+      deleteFilters: build.mutation<
+        DeleteFiltersApiResponse,
+        DeleteFiltersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/filters/${queryArg.id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["filters"],
+      }),
+      ping: build.query<PingApiResponse, PingApiArg>({
+        query: () => ({ url: `/ping` }),
+      }),
+      searchPermissions: build.query<
+        SearchPermissionsApiResponse,
+        SearchPermissionsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/permissions`,
+          params: {
+            limit: queryArg.limit,
+            offset: queryArg.offset,
+            sort: queryArg.sort,
+            order: queryArg.order,
+          },
+        }),
+        providesTags: ["permissions"],
+      }),
+      createPermission: build.mutation<
+        CreatePermissionApiResponse,
+        CreatePermissionApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/permissions`,
+          method: "POST",
+          body: queryArg.permissions,
+        }),
+        invalidatesTags: ["permissions"],
+      }),
+      getPermission: build.query<GetPermissionApiResponse, GetPermissionApiArg>(
+        {
+          query: (queryArg) => ({ url: `/permissions/${queryArg.id}` }),
+          providesTags: ["permissions"],
+        }
+      ),
+      updatePermission: build.mutation<
+        UpdatePermissionApiResponse,
+        UpdatePermissionApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/permissions/${queryArg.id}`,
+          method: "PATCH",
+        }),
+        invalidatesTags: ["permissions"],
+      }),
+      deletePermission: build.mutation<
+        DeletePermissionApiResponse,
+        DeletePermissionApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/permissions/${queryArg.id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["permissions"],
+      }),
+      searchRoles: build.query<SearchRolesApiResponse, SearchRolesApiArg>({
+        query: (queryArg) => ({
+          url: `/roles`,
+          params: {
+            limit: queryArg.limit,
+            offset: queryArg.offset,
+            sort: queryArg.sort,
+            order: queryArg.order,
+          },
+        }),
+        providesTags: ["roles"],
+      }),
+      createRole: build.mutation<CreateRoleApiResponse, CreateRoleApiArg>({
+        query: (queryArg) => ({
+          url: `/roles`,
+          method: "POST",
+          body: queryArg.roles,
+        }),
+        invalidatesTags: ["roles"],
+      }),
+      getRole: build.query<GetRoleApiResponse, GetRoleApiArg>({
+        query: (queryArg) => ({ url: `/roles/${queryArg.id}` }),
+        providesTags: ["roles"],
+      }),
+      updateRole: build.mutation<UpdateRoleApiResponse, UpdateRoleApiArg>({
+        query: (queryArg) => ({
+          url: `/roles/${queryArg.id}`,
+          method: "PATCH",
+        }),
+        invalidatesTags: ["roles"],
+      }),
+      deleteRole: build.mutation<DeleteRoleApiResponse, DeleteRoleApiArg>({
+        query: (queryArg) => ({
+          url: `/roles/${queryArg.id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["roles"],
+      }),
+      searchUsers: build.query<SearchUsersApiResponse, SearchUsersApiArg>({
+        query: (queryArg) => ({
+          url: `/users`,
+          params: {
+            limit: queryArg.limit,
+            offset: queryArg.offset,
+            sort: queryArg.sort,
+            order: queryArg.order,
+          },
+        }),
+        providesTags: ["users"],
+      }),
+      createUser: build.mutation<CreateUserApiResponse, CreateUserApiArg>({
+        query: (queryArg) => ({
+          url: `/users`,
+          method: "POST",
+          body: queryArg.users,
+        }),
+        invalidatesTags: ["users"],
+      }),
+      getMe: build.query<GetMeApiResponse, GetMeApiArg>({
+        query: () => ({ url: `/users/me` }),
+        providesTags: ["users"],
+      }),
+      getUser: build.query<GetUserApiResponse, GetUserApiArg>({
+        query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
+        providesTags: ["users"],
+      }),
+      updateUser: build.mutation<UpdateUserApiResponse, UpdateUserApiArg>({
+        query: (queryArg) => ({
+          url: `/users/${queryArg.id}`,
+          method: "PATCH",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["users"],
+      }),
+      deleteUser: build.mutation<DeleteUserApiResponse, DeleteUserApiArg>({
+        query: (queryArg) => ({
+          url: `/users/${queryArg.id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["users"],
+      }),
+      login: build.mutation<LoginApiResponse, LoginApiArg>({
+        query: (queryArg) => ({
+          url: `/auth/login`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["auth"],
+      }),
+      authGoogleCallback: build.query<
+        AuthGoogleCallbackApiResponse,
+        AuthGoogleCallbackApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/auth/google/callback`,
+          params: {
+            code: queryArg.code,
+            scope: queryArg.scope,
+            authuser: queryArg.authuser,
+            hd: queryArg.hd,
+            prompt: queryArg.prompt,
+          },
+        }),
+        providesTags: ["auth"],
+      }),
+      searchEvents: build.query<SearchEventsApiResponse, SearchEventsApiArg>({
+        query: (queryArg) => ({
+          url: `/events`,
+          params: {
+            limit: queryArg.limit,
+            offset: queryArg.offset,
+            sort: queryArg.sort,
+            order: queryArg.order,
+            name: queryArg.name,
+            category: queryArg.category,
+            startTime: queryArg.startTime,
+            endTime: queryArg.endTime,
+          },
+        }),
+        providesTags: ["events"],
+      }),
+      createEvents: build.mutation<CreateEventsApiResponse, CreateEventsApiArg>(
+        {
+          query: (queryArg) => ({
+            url: `/events`,
+            method: "POST",
+            body: queryArg.events,
+          }),
+          invalidatesTags: ["events"],
+        }
+      ),
+      getEvents: build.query<GetEventsApiResponse, GetEventsApiArg>({
+        query: (queryArg) => ({ url: `/events/${queryArg.id}` }),
+        providesTags: ["events"],
+      }),
+      updateEvents: build.mutation<UpdateEventsApiResponse, UpdateEventsApiArg>(
+        {
+          query: (queryArg) => ({
+            url: `/events/${queryArg.id}`,
+            method: "PATCH",
+            body: queryArg.events,
+          }),
+          invalidatesTags: ["events"],
+        }
+      ),
+      deleteEvents: build.mutation<DeleteEventsApiResponse, DeleteEventsApiArg>(
+        {
+          query: (queryArg) => ({
+            url: `/events/${queryArg.id}`,
+            method: "DELETE",
+          }),
+          invalidatesTags: ["events"],
+        }
+      ),
+      getEventsByEventIdRegister: build.query<
+        GetEventsByEventIdRegisterApiResponse,
+        GetEventsByEventIdRegisterApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/events/${queryArg.eventId}/register`,
+          params: {
+            limit: queryArg.limit,
+            offset: queryArg.offset,
+            sort: queryArg.sort,
+            order: queryArg.order,
+          },
+        }),
+        providesTags: ["events"],
+      }),
+      postEventsByEventIdRegister: build.mutation<
+        PostEventsByEventIdRegisterApiResponse,
+        PostEventsByEventIdRegisterApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/events/${queryArg.eventId}/register`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["events"],
+      }),
+      updateRegistration: build.mutation<
+        UpdateRegistrationApiResponse,
+        UpdateRegistrationApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/events/${queryArg.eventId}/register/${queryArg.registrationId}`,
+          method: "PATCH",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["events"],
+      }),
+      deleteRegistration: build.mutation<
+        DeleteRegistrationApiResponse,
+        DeleteRegistrationApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/events/${queryArg.eventId}/register/${queryArg.registrationId}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["events"],
       }),
     }),
-    createFilters: build.mutation<
-      CreateFiltersApiResponse,
-      CreateFiltersApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/filters`,
-        method: "POST",
-        body: queryArg.filters,
-      }),
-    }),
-    getFilters: build.query<GetFiltersApiResponse, GetFiltersApiArg>({
-      query: (queryArg) => ({ url: `/filters/${queryArg.id}` }),
-    }),
-    updateFilters: build.mutation<
-      UpdateFiltersApiResponse,
-      UpdateFiltersApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/filters/${queryArg.id}`,
-        method: "PATCH",
-      }),
-    }),
-    deleteFilters: build.mutation<
-      DeleteFiltersApiResponse,
-      DeleteFiltersApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/filters/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    ping: build.query<PingApiResponse, PingApiArg>({
-      query: () => ({ url: `/ping` }),
-    }),
-    searchPermissions: build.query<
-      SearchPermissionsApiResponse,
-      SearchPermissionsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/permissions`,
-        params: {
-          limit: queryArg.limit,
-          offset: queryArg.offset,
-          sort: queryArg.sort,
-          order: queryArg.order,
-        },
-      }),
-    }),
-    createPermission: build.mutation<
-      CreatePermissionApiResponse,
-      CreatePermissionApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/permissions`,
-        method: "POST",
-        body: queryArg.permissions,
-      }),
-    }),
-    getPermission: build.query<GetPermissionApiResponse, GetPermissionApiArg>({
-      query: (queryArg) => ({ url: `/permissions/${queryArg.id}` }),
-    }),
-    updatePermission: build.mutation<
-      UpdatePermissionApiResponse,
-      UpdatePermissionApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/permissions/${queryArg.id}`,
-        method: "PATCH",
-      }),
-    }),
-    deletePermission: build.mutation<
-      DeletePermissionApiResponse,
-      DeletePermissionApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/permissions/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    searchRoles: build.query<SearchRolesApiResponse, SearchRolesApiArg>({
-      query: (queryArg) => ({
-        url: `/roles`,
-        params: {
-          limit: queryArg.limit,
-          offset: queryArg.offset,
-          sort: queryArg.sort,
-          order: queryArg.order,
-        },
-      }),
-    }),
-    createRole: build.mutation<CreateRoleApiResponse, CreateRoleApiArg>({
-      query: (queryArg) => ({
-        url: `/roles`,
-        method: "POST",
-        body: queryArg.roles,
-      }),
-    }),
-    getRole: build.query<GetRoleApiResponse, GetRoleApiArg>({
-      query: (queryArg) => ({ url: `/roles/${queryArg.id}` }),
-    }),
-    updateRole: build.mutation<UpdateRoleApiResponse, UpdateRoleApiArg>({
-      query: (queryArg) => ({ url: `/roles/${queryArg.id}`, method: "PATCH" }),
-    }),
-    deleteRole: build.mutation<DeleteRoleApiResponse, DeleteRoleApiArg>({
-      query: (queryArg) => ({ url: `/roles/${queryArg.id}`, method: "DELETE" }),
-    }),
-    searchUsers: build.query<SearchUsersApiResponse, SearchUsersApiArg>({
-      query: (queryArg) => ({
-        url: `/users`,
-        params: {
-          limit: queryArg.limit,
-          offset: queryArg.offset,
-          sort: queryArg.sort,
-          order: queryArg.order,
-        },
-      }),
-    }),
-    createUser: build.mutation<CreateUserApiResponse, CreateUserApiArg>({
-      query: (queryArg) => ({
-        url: `/users`,
-        method: "POST",
-        body: queryArg.users,
-      }),
-    }),
-    getMe: build.query<GetMeApiResponse, GetMeApiArg>({
-      query: () => ({ url: `/users/me` }),
-    }),
-    getUser: build.query<GetUserApiResponse, GetUserApiArg>({
-      query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
-    }),
-    updateUser: build.mutation<UpdateUserApiResponse, UpdateUserApiArg>({
-      query: (queryArg) => ({
-        url: `/users/${queryArg.id}`,
-        method: "PATCH",
-        body: queryArg.body,
-      }),
-    }),
-    deleteUser: build.mutation<DeleteUserApiResponse, DeleteUserApiArg>({
-      query: (queryArg) => ({ url: `/users/${queryArg.id}`, method: "DELETE" }),
-    }),
-    login: build.mutation<LoginApiResponse, LoginApiArg>({
-      query: (queryArg) => ({
-        url: `/auth/login`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    authGoogleCallback: build.query<
-      AuthGoogleCallbackApiResponse,
-      AuthGoogleCallbackApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/auth/google/callback`,
-        params: {
-          code: queryArg.code,
-          scope: queryArg.scope,
-          authuser: queryArg.authuser,
-          hd: queryArg.hd,
-          prompt: queryArg.prompt,
-        },
-      }),
-    }),
-    searchEvents: build.query<SearchEventsApiResponse, SearchEventsApiArg>({
-      query: (queryArg) => ({
-        url: `/events`,
-        params: {
-          limit: queryArg.limit,
-          offset: queryArg.offset,
-          sort: queryArg.sort,
-          order: queryArg.order,
-          name: queryArg.name,
-          category: queryArg.category,
-          startTime: queryArg.startTime,
-          endTime: queryArg.endTime,
-        },
-      }),
-    }),
-    createEvents: build.mutation<CreateEventsApiResponse, CreateEventsApiArg>({
-      query: (queryArg) => ({
-        url: `/events`,
-        method: "POST",
-        body: queryArg.events,
-      }),
-    }),
-    getEvents: build.query<GetEventsApiResponse, GetEventsApiArg>({
-      query: (queryArg) => ({ url: `/events/${queryArg.id}` }),
-    }),
-    updateEvents: build.mutation<UpdateEventsApiResponse, UpdateEventsApiArg>({
-      query: (queryArg) => ({
-        url: `/events/${queryArg.id}`,
-        method: "PATCH",
-        body: queryArg.events,
-      }),
-    }),
-    deleteEvents: build.mutation<DeleteEventsApiResponse, DeleteEventsApiArg>({
-      query: (queryArg) => ({
-        url: `/events/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    getEventsByEventIdRegister: build.query<
-      GetEventsByEventIdRegisterApiResponse,
-      GetEventsByEventIdRegisterApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/events/${queryArg.eventId}/register`,
-        params: {
-          limit: queryArg.limit,
-          offset: queryArg.offset,
-          sort: queryArg.sort,
-          order: queryArg.order,
-        },
-      }),
-    }),
-    postEventsByEventIdRegister: build.mutation<
-      PostEventsByEventIdRegisterApiResponse,
-      PostEventsByEventIdRegisterApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/events/${queryArg.eventId}/register`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    updateRegistration: build.mutation<
-      UpdateRegistrationApiResponse,
-      UpdateRegistrationApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/events/${queryArg.eventId}/register/${queryArg.registrationId}`,
-        method: "PATCH",
-        body: queryArg.body,
-      }),
-    }),
-    deleteRegistration: build.mutation<
-      DeleteRegistrationApiResponse,
-      DeleteRegistrationApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/events/${queryArg.eventId}/register/${queryArg.registrationId}`,
-        method: "DELETE",
-      }),
-    }),
-  }),
-  overrideExisting: false,
-});
+    overrideExisting: false,
+  });
 export { injectedRtkApi as openApi };
 export type SearchFiltersApiResponse = /** status 200 undefined */ Filters[];
 export type SearchFiltersApiArg = {
