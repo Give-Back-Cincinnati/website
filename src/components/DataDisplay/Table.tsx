@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef } from "react"
+import React, { ComponentPropsWithoutRef, ReactElement } from "react"
 
 import styles from './Table.module.scss'
 
@@ -6,7 +6,7 @@ export interface TableProps extends ComponentPropsWithoutRef<'table'> {
     keys: string[]
     data: Record<string, unknown>[]
     className?: string
-    formatFunctions?: Record<string, (val: any) => string>
+    formatFunctions?: Record<string, (val: any) => string | ReactElement>
 }
 
 export const Table = ({ keys, data, className, formatFunctions, ...props }: TableProps) => {
@@ -32,7 +32,7 @@ export const Table = ({ keys, data, className, formatFunctions, ...props }: Tabl
                             keys.map(key => {
                                 const val = row[key]
 
-                                if (formatFunctions[key]) {
+                                if (formatFunctions && formatFunctions[key]) {
                                     return <td key={key}>
                                         { formatFunctions[key](val) }
                                     </td>
