@@ -1,10 +1,3 @@
-import { IRoles } from "./roles"
+import { Users } from 'store/api/openApi'
 
-export interface IUser {
-    _id: string
-    firstName: string
-    lastName: string
-    email: string
-    profilePicture: string
-    role: string | IRoles
-}
+export interface IUser extends Users {}

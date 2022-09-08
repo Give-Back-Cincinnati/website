@@ -1,9 +1,3 @@
-import { IPermission } from "./permission"
-import { IFilter } from "./filter"
+import { Roles } from "@/store/api/openApi"
 
-export interface IRoles {
-    _id: string,
-    name: string,
-    permissions:  IPermission[],
-    filters: IFilter[],
-}
+export interface IRoles extends Roles {}

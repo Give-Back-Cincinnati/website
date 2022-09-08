@@ -1,11 +1,3 @@
-import { DateTime } from "luxon"
+import { Events } from 'store/api/openApi'
 
-export interface IEvent {
-    _id?: string
-    name: string
-    description: string
-    category: string
-    address: string
-    startTime: string | DateTime
-    endTime: string | DateTime
-}
+export interface IEvent extends Events{}

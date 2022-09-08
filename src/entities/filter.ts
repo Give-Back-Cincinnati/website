@@ -1,5 +1,3 @@
-export interface IFilter {
-    _id: string,
-    name: string,
-    filter: Record<string, unknown>
-}
+import { Filters } from "@/store/api/openApi"
+
+export interface IFilter extends Filters {}

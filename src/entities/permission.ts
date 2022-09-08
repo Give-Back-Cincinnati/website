@@ -1,5 +1,3 @@
-export interface IPermission {
-    _id: string,
-    name: string,
-    group: string,
-}
+import { Permissions } from "@/store/api/openApi";
+
+export interface IPermission extends Permissions {}
