@@ -7,7 +7,13 @@ import { useGetSchema, useUserHasPermission } from 'hooks'
 import { Notify } from '@/components/DataDisplay'
 import { Button, Modal, Confirm } from '@/components/Utils'
 
-import { useSearchEventsQuery, useCreateEventsMutation, useDeleteEventsMutation, Events } from '@/store/api/openApi'
+import {
+    useSearchEventsQuery,
+    useSearchRegistrationsQuery,
+    useCreateEventsMutation,
+    useDeleteEventsMutation, 
+    Events
+} from '@/store/api/openApi'
 import { DynamicForm } from '@/components/Inputs/DynamicForm'
 import { DateTime } from 'luxon'
 
@@ -19,11 +25,22 @@ const EventsAdmin: NextPageWithLayout = () => {
         data,
         refetch,
     } = useSearchEventsQuery({})
+    const {
+        data: registrationInformation
+    } = useSearchRegistrationsQuery()
     const canSeeEvents = useUserHasPermission('events.get')
     const canCreateEvent = useUserHasPermission('events.post')
     const canDeleteEvent = useUserHasPermission('events.id.delete')
     const [addEvent, { status, error, reset }] = useCreateEventsMutation()
     const [deleteEvent, { status: deleteStatus, error: deleteError, reset: deleteReset}] = useDeleteEventsMutation()
+
+    const formattedEventRegistrations = useMemo(() => {
+        if (!registrationInformation) return {}
+        return registrationInformation.reduce((acc: Record<string, number>, { _id, numRegistrations }) => {
+            acc[_id] = numRegistrations
+            return acc
+        }, {})
+    }, [registrationInformation])
 
     useEffect(() => {
         if (status === 'fulfilled') {
@@ -77,6 +94,7 @@ const EventsAdmin: NextPageWithLayout = () => {
             ...obj,
             startTime: DateTime.fromISO(obj.startTime).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY),
             endTime: DateTime.fromISO(obj.endTime).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY),
+            registrations: (obj._id && typeof formattedEventRegistrations[obj._id] === 'number' ? formattedEventRegistrations[obj._id] : 0).toString(),
             actions: <div>
                 <Link href={`/admin/events/${obj._id}`}>
                     <a>
@@ -92,7 +110,7 @@ const EventsAdmin: NextPageWithLayout = () => {
                 }
             </div>
         }))
-    }, [data, canDeleteEvent, deleteEvent])
+    }, [data, canDeleteEvent, deleteEvent, formattedEventRegistrations])
 
     return <div>
         <h2>
@@ -115,7 +133,7 @@ const EventsAdmin: NextPageWithLayout = () => {
         {
             isSuccess && canSeeEvents
                 ? <Table
-                    keys={['name', 'category', 'startTime', 'endTime', 'actions']}
+                    keys={['name', 'category', 'startTime', 'endTime', 'registrations', 'actions']}
                     data={formattedData}
                 />
                 : ''

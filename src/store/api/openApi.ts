@@ -2,6 +2,7 @@ import { apiSlice as api } from "./apiSlice";
 export const addTagTypes = [
   "filters",
   "permissions",
+  "registrations",
   "roles",
   "users",
   "auth",
@@ -116,6 +117,13 @@ const injectedRtkApi = api
           method: "DELETE",
         }),
         invalidatesTags: ["permissions"],
+      }),
+      searchRegistrations: build.query<
+        SearchRegistrationsApiResponse,
+        SearchRegistrationsApiArg
+      >({
+        query: () => ({ url: `/registrations` }),
+        providesTags: ["registrations"],
       }),
       searchRoles: build.query<SearchRolesApiResponse, SearchRolesApiArg>({
         query: (queryArg) => ({
@@ -284,7 +292,7 @@ const injectedRtkApi = api
             order: queryArg.order,
           },
         }),
-        providesTags: ["events"],
+        providesTags: ["registrations"],
       }),
       postEventsByEventIdRegister: build.mutation<
         PostEventsByEventIdRegisterApiResponse,
@@ -295,7 +303,7 @@ const injectedRtkApi = api
           method: "POST",
           body: queryArg.body,
         }),
-        invalidatesTags: ["events"],
+        invalidatesTags: ["registrations"],
       }),
       updateRegistration: build.mutation<
         UpdateRegistrationApiResponse,
@@ -306,7 +314,7 @@ const injectedRtkApi = api
           method: "PATCH",
           body: queryArg.body,
         }),
-        invalidatesTags: ["events"],
+        invalidatesTags: ["registrations"],
       }),
       deleteRegistration: build.mutation<
         DeleteRegistrationApiResponse,
@@ -316,7 +324,7 @@ const injectedRtkApi = api
           url: `/events/${queryArg.eventId}/register/${queryArg.registrationId}`,
           method: "DELETE",
         }),
-        invalidatesTags: ["events"],
+        invalidatesTags: ["registrations"],
       }),
     }),
     overrideExisting: false,
@@ -372,6 +380,11 @@ export type DeletePermissionApiResponse = unknown;
 export type DeletePermissionApiArg = {
   id?: any;
 };
+export type SearchRegistrationsApiResponse = /** status 200 undefined */ {
+  _id: string;
+  numRegistrations: number;
+}[];
+export type SearchRegistrationsApiArg = void;
 export type SearchRolesApiResponse = /** status 200 undefined */ Roles[];
 export type SearchRolesApiArg = {
   limit?: number;
@@ -583,6 +596,8 @@ export const {
   useLazyGetPermissionQuery,
   useUpdatePermissionMutation,
   useDeletePermissionMutation,
+  useSearchRegistrationsQuery,
+  useLazySearchRegistrationsQuery,
   useSearchRolesQuery,
   useLazySearchRolesQuery,
   useCreateRoleMutation,
