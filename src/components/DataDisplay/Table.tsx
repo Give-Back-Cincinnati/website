@@ -2,8 +2,13 @@ import React, { ComponentPropsWithoutRef, ReactElement } from "react"
 
 import styles from './Table.module.scss'
 
+type TableKey = {
+    key: string
+    hasSearch: boolean
+}
+
 export interface TableProps extends ComponentPropsWithoutRef<'table'> {
-    keys: string[]
+    keys: (string | TableKey)[]
     data: Record<string, unknown>[]
     className?: string
     formatFunctions?: Record<string, (val: any) => string | ReactElement>
@@ -16,11 +21,15 @@ export const Table = ({ keys, data, className, formatFunctions, ...props }: Tabl
         containerStyles.push(className)
     }
 
+    function getKey (key: string | TableKey): string {
+        return typeof key === 'object' ? key.key : key
+    }
+
     return <table {...props} className={containerStyles.join(' ')}>
         <thead>
             <tr>
                 {
-                    keys.map(key => <th key={key}>{ key }</th>)
+                    keys.map(key => <th key={getKey(key)}>{ getKey(key) }</th>)
                 }
             </tr>
         </thead>
@@ -30,33 +39,34 @@ export const Table = ({ keys, data, className, formatFunctions, ...props }: Tabl
                     return <tr key={idx}>
                         {
                             keys.map(key => {
-                                const val = row[key]
+                                const foundKey = getKey(key)
+                                const val = row[foundKey]
 
-                                if (formatFunctions && formatFunctions[key]) {
-                                    return <td key={key}>
-                                        { formatFunctions[key](val) }
+                                if (formatFunctions && formatFunctions[foundKey]) {
+                                    return <td key={foundKey}>
+                                        { formatFunctions[foundKey](val) }
                                     </td>
                                 }
 
                                 switch (typeof val) {
                                     case "string":
-                                        return <td key={key}>
+                                        return <td key={foundKey}>
                                             { val }
                                         </td>
                                     case "object":
                                         if (React.isValidElement(val)) {
-                                            return <td key={key}>
+                                            return <td key={foundKey}>
                                                 { val }
                                             </td>
                                         }
                                     case "boolean":
                                         if (typeof val === 'boolean') {
-                                            return <td key={key}>
+                                            return <td key={foundKey}>
                                                 { val.toString() }
                                             </td>
                                         }
                                     default:
-                                        return <td key={key} />
+                                        return <td key={foundKey} />
                                 }
                             })
                         }
