@@ -4,6 +4,7 @@ import { EventHeader, EventDetails } from "@/components/Events"
 import { HorizontalBreak } from '@/components/Backgrounds'
 import { DynamicForm } from '@/components/Inputs/DynamicForm'
 import { Spinner, Notify } from '@/components/DataDisplay'
+import { Alert } from '@/components/Utils'
 import { Events, useGetMeQuery, usePostEventsByEventIdRegisterMutation, GuestRegistration } from '@/store/api/openApi'
 import { useGetSchema } from 'hooks'
 
@@ -65,6 +66,11 @@ export const Event = ({ event }: { event: Events }) => {
         </div>
 
         <HorizontalBreak>Registration</HorizontalBreak>
+
+        {
+            isSuccess &&
+            <Alert key="registrationSuccess" title="You have successfully registered for this event" intent="positive" />
+        }
 
         {
             guestRegistrationSchema && userRegistrationSchema && !isSuccess
