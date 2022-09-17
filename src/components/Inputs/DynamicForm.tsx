@@ -46,6 +46,10 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                             emptyState[propertyKey] = (DateTime.fromISO(values[propertyKey] as string) || DateTime.now()).toFormat("yyyy-MM-dd'T'HH:mm")
                             break
                         }
+                        if ('format' in property && property.format === 'date') {
+                            emptyState[propertyKey] = (DateTime.fromISO(values[propertyKey] as string) || DateTime.now()).toFormat("yyyy-MM-dd'T'HH:mm")
+                            break
+                        }
                         emptyState[propertyKey] = values[propertyKey] || ''
                         break
                         // string
@@ -124,6 +128,18 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                                 value={formValue as string}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
+                            />
+                            break;
+                        }
+                        // Generate a date picker
+                        if ('format' in property && property.format === 'date') {
+                            content = <DateTimePicker
+                                name={propertyKey}
+                                label={property.name}
+                                value={formValue as string}
+                                onChange={handleChangeEvent}
+                                required={isRequired}
+                                type='date'
                             />
                             break;
                         }

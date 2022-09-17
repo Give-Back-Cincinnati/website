@@ -7,6 +7,7 @@ export interface DateTimePickerProps extends ComponentPropsWithoutRef<'input'> {
     name: string
     onChange: ChangeEventHandler<HTMLInputElement>
     value: string
+    type?: string
     label?: string
     fullWidth?: boolean
     error?: boolean
@@ -28,9 +29,11 @@ export const DateTimePicker = ({
     label,
     value,
     onChange,
+    type = 'datetime-local',
     error = false,
     errorText,
     fullWidth = false,
+    min = DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm"),
     ...props
 }: DateTimePickerProps) => {
     const [labelStyles, api] = useSpring(() => value === '' ? nullStyle : withValueStyle)
@@ -72,8 +75,8 @@ export const DateTimePicker = ({
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 ref={inputEl}
-                type='datetime-local'
-                min={DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm")}
+                type={type}
+                min={min}
                 pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
             />
             <div className={styles.errorText}>

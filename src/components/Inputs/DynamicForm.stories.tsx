@@ -9,7 +9,7 @@ const story = {
     args: {
         entity: {
             "type":"object",
-            "required":["name","description","category","address","startTime","endTime"],
+            "required":["name","description","category","address","startDate","endTime"],
             "properties":{
                 "_id":{"type":"string","readonly":true},
                 "name":{"type":"string","example":"Back to School"},
@@ -17,14 +17,14 @@ const story = {
                 "category":{"type":"string","enum":["Hands-On","Social","Interactive","Civic Engagement","New Member","Cincy YP","Leadership","Fall Feast","Paint the Town","Give Back Beyond Cincinnati"],
                 "example":"Hands-On"},
                 "address":{"type":"string","example":"312 Walnut St. Cincinnati OH 45202"},
-                "startTime":{"type":"string","format":"date-time"},
+                "startDate":{"type":"string","format":"date"},
                 "endTime":{"type":"string","format":"date-time"},
                 'subscribe': {"type": 'boolean'} 
             }
         }
     },
     argTypes: {
-        onSubmit: { action: 'onSubmit' }
+        onSubmit: { action: 'onSubmit' }
     }
 } as ComponentMeta<typeof DynamicForm>
 
