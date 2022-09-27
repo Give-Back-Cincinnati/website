@@ -31,6 +31,12 @@ interface Props {
     events: SearchEventsApiResponse
 }
 
+export async function getStaticProps (): Promise<{ props: { events: SearchEventsApiResponse } }> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events?limit=6&endTime%5B%24gt%5D=${new Date().toLocaleDateString()}`)
+    const events = await res.json()
+    return { props: { events } }
+}
+
 const Home: NextPage<Props> = ({ events }: Props) => {
     return (
         <div>
@@ -156,12 +162,6 @@ const Home: NextPage<Props> = ({ events }: Props) => {
 
         </div>
     )
-}
-
-Home.getInitialProps = async (): Promise<{ events: [] }> => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
-    const events = await res.json()
-    return { events }
 }
 
 export default Home

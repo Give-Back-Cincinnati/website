@@ -10,8 +10,8 @@ interface Props {
     events: SearchEventsApiResponse
 }
 
-export async function getStaticProps(): Promise<{ props: { events: Events[] } }> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
+export async function getStaticProps(): Promise<{ props: { events: SearchEventsApiResponse } }> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events?endTime%5B%24gt%5D=${new Date().toLocaleDateString()}`)
     const events = await res.json() as Events[]
     return { props: { events } }
 }
