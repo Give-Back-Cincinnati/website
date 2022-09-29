@@ -60,3 +60,8 @@ export const HiddenFields = Template.bind({})
 HiddenFields.args = {
     hiddenFields: ['description', 'category', 'startTime', 'endTime']
 }
+
+export const WithTurnstile = Template.bind({})
+WithTurnstile.args = {
+    isProtected: true
+}

@@ -50,7 +50,7 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                 >
                     Developing today&apos;s communities and tomorrow&apos;s leaders.
                 </div>
-                <div className={`sm md lg xl xxl ${styles.missionEvents}`}>
+                <div className={styles.missionEvents}>
                     <div>
                         <h1 style={{ textAlign: 'center', marginBottom: 30 }}>Our Next Event{events.length > 1 ? 's' : ''}</h1>
                         {
@@ -59,6 +59,7 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                                 {...eventDetails}
                             />)
                         }
+                        {/* TODO: add a newsletter signup here */}
                     </div>
                 </div>
             </div>

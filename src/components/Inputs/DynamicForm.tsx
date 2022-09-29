@@ -19,9 +19,10 @@ export interface DynamicFormProps {
     values?: Record<string, unknown>
     hiddenFields?: string[]
     isLoading?: boolean
+    isProtected: boolean
 }
 
-export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], isLoading = false }: DynamicFormProps) => {
+export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], isLoading = false, isProtected = false }: DynamicFormProps) => {
     // Derive the initial and empty states so they can be used in the created inputs
     const { initialState } = useMemo(() => {
         const { properties } = entity
@@ -183,6 +184,9 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
     
     return <div className={styles.container}>
         { inputs }
+        {
+            isProtected && <div className='cf-turnstile' data-sitekey="0x4AAAAAAAAkh6TU2qJvk6ao"></div>
+        }
         <Button onClick={handleSubmit} isLoading={isLoading}>Submit</Button>
     </div>
 }

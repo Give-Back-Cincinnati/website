@@ -1,13 +1,14 @@
 /**
- * ANY CHANGES HERE NEED TO BE MADE IN STORYBOOK-GLOBALS.SCSS TOO
- **/
+ * THIS FILE EXISTS TO FIX A WEBPACK ERROR IN @FONT-FACE LOADING THE FONT,
+ *      IN NEXTJS WE WANT TO PRELOAD THE FONT FOR OPTIMAL END USER PERFORMANCE
+ */
 
 @import './fonts.scss';
 @import './colors.scss';
 
 @font-face {
     font-family: AlternateGotNo3D;
-    src: url("/AlternateGotNo3D_Regular.ttf") format('truetype');
+    src: url(../../public/AlternateGotNo3D_Regular.ttf) format('truetype');
     font-display: optional;
 }
 

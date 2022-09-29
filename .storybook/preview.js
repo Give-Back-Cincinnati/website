@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { store, actions } from '../src/store'
-import '../src/styles/globals.scss'
+import '../src/styles/storybook-global.scss'
 import * as NextImage from "next/image";
 import { RouterContext } from "next/dist/shared/lib/router-context"
 import { ErrorBoundary } from '@/components/Utils/ErrorBoundary'
