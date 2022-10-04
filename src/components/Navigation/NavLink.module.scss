@@ -1,0 +1,28 @@
+@import '../../styles/fonts.scss';
+@import '../../styles/colors.scss';
+
+.container {
+    position: relative;
+    font-family: $alt-goth;
+    font-size: 1.7rem;
+    margin-right: 1.7em;
+    color: $gbc-red;
+    width: fit-content;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.childrenContainer {
+    position: absolute;
+    top: 4rem;
+    width: fit-content;
+}
+
+.navigationLinks {
+    min-height: 40px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    cursor: pointer;
+}

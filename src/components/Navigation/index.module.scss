@@ -1,11 +1,13 @@
 @import '../../styles/colors.scss';
 @import '../../styles/fonts.scss';
+@import '../../styles/shadows.scss';
 
 .nav {
     height: 93px;
     width: 100%;
     display: flex;
     z-index: 19;
+    @include elevation-4;
     aside {
         position: fixed;
         width: 250px;
@@ -43,20 +45,7 @@
 .navBarHorizontalContainer {
     display: flex;
     flex-flow: row;
-}
 
-.navBarHorizontal {
-    font-family: $alt-goth;
-    font-size: 1.7rem;
-    color: $gbc-red;
-    margin-right: 1.7em;
-    min-height: 40px;
-    cursor: pointer;
-}
-
-.login {
-    @extend .navBarHorizontal;
-    margin-right: 0;
 }
 
 .navigationLinks {

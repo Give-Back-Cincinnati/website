@@ -1,0 +1,12 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/shadows.scss';
+
+.container {
+    width: fit-content;
+    height: fit-content;
+    max-height: 99vh;
+    max-width: 99vw;
+    background-color: $white;
+    border-radius: 3px;
+    overflow-y: scroll;
+}

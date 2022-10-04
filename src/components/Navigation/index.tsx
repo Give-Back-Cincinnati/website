@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from "react"
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Overlay } from '../Utils'
+import { Overlay } from '@/components/Utils'
 import { Avatar } from "components/DataDisplay"
+import { NavLink, NavLinkProps } from "./NavLink"
 
 import { MdOutlineMenu } from 'react-icons/md'
-import Logo from '../../../public/logos/half_circle.svg'
 import styles from './index.module.scss'
 
 import { useGetMeQuery } from "@/store/api/openApi"
@@ -32,14 +32,17 @@ export const Navigation = () => {
         return createEventPermissionFound
     }, [user])
 
-    const navigationRoutes = [
-        // {
-        //     label: 'About Us',
-        //     href: '/about-us',
-        // },
+    const navigationRoutes: NavLinkProps[] = [
         {
             label: 'Upcoming Events',
             href: '/events',
+        },
+        {
+            label: 'Our Programs',
+            childRoutes: [
+                { label: 'Fall Feast', href: '/fall-feast' },
+                { label: 'Fuel Cincinnati', href: '/fuel-cincinnati' }
+            ]
         },
         // {
         //     label: 'Join GBC',
@@ -65,13 +68,25 @@ export const Navigation = () => {
         })
     }
 
+    if (!user) {
+        navigationRoutes.push({
+            label: 'Login',
+            href: () => {
+                void router.push('https://accounts.google.com/o/oauth2/v2/auth'
+                + '?response_type=code'
+                + `&redirect_uri=${encodeURIComponent(window.location.origin)}%2Fauth%2Fgoogle%2Fcallback`
+                + '&scope=profile%20email'
+                + `&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`)
+        }})
+    }
+
     return (
         <nav
             className={styles.nav}
         >
             <div className={styles.logo}>
                 <Image
-                    src={Logo}
+                    src='/logos/half_circle.svg'
                     width={144}
                     height={93}
                     alt='logo'
@@ -81,16 +96,8 @@ export const Navigation = () => {
             <div className={styles.navigationLinks}>
                 <div className={styles.navBarHorizontalContainer}>
                     {
-                        navigationRoutes.map(({ label, href }, idx) => (
-                            <div
-                            key={href}
-                            onClick={() => {
-                                    void router.push(href)
-                                }}
-                                className={styles.navBarHorizontal}
-                                >
-                                { label }
-                            </div>
+                        navigationRoutes.map(props => (
+                            <NavLink key={props.label} {...props} />
                         ))
                     }
                 </div>
@@ -101,18 +108,7 @@ export const Navigation = () => {
                         name={user.firstName || ''}
                         src={user.profilePicture}
                     />
-                    : <div
-                            className={styles.login}
-                            onClick={() => {
-                                    void router.push('https://accounts.google.com/o/oauth2/v2/auth'
-                                    + '?response_type=code'
-                                    + `&redirect_uri=${encodeURIComponent(window.location.origin)}%2Fauth%2Fgoogle%2Fcallback`
-                                    + '&scope=profile%20email'
-                                    + `&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`)
-                                }}
-                        >
-                            Login
-                        </div>
+                    : ''
                 }
                 <MdOutlineMenu className={styles.menuIcon} onClick={() => setNavigationOpen(true)} />
             </div>
@@ -125,29 +121,34 @@ export const Navigation = () => {
                     <header>
                         <span onClick={() => setNavigationOpen(false)}>X</span>
                     </header>
-                    {navigationRoutes.map(({ label, href }, idx) => (
+                    {navigationRoutes.map(({ label, href, childRoutes }, idx) => (
                         <div
-                            key={href}
+                            key={label}
                             onClick={() => {
-                                setNavigationOpen(false)
-                                void router.push(href)
+                                if (href) {
+                                    setNavigationOpen(false)
+                                    if (typeof href === 'string') void router.push(href)
+                                    if (typeof href === 'function') href()
+                                }
                             }}
                         >
                             {label}
+                            {childRoutes?.map(({ label, href }) => (
+                                <div
+                                    key={label}
+                                    onClick={() => {
+                                        if (href) {
+                                            setNavigationOpen(false)
+                                            if (typeof href === 'string') void router.push(href)
+                                            if (typeof href === 'function') href()
+                                        }
+                                    }}
+                                >
+                                    {label}
+                                </div>
+                            ))}
                         </div>
                     ))}
-                    <div
-                        onClick={() => {
-                            setNavigationOpen(false)
-                            void router.push('https://accounts.google.com/o/oauth2/v2/auth'
-                            + '?response_type=code'
-                            + `&redirect_uri=${encodeURIComponent(window.location.origin)}%2Fauth%2Fgoogle%2Fcallback`
-                            + '&scope=profile%20email'
-                            + `&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`)
-                        }}
-                    >
-                        Login
-                    </div>
                 </aside>
             </Overlay>
         </nav>

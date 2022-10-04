@@ -1,6 +1,5 @@
 import { ReactElement } from "react"
-import { Overlay } from "@/components/Utils"
-
+import { Paper, Overlay } from "@/components/Utils"
 import styles from './index.module.scss'
 
 export interface ModalProps {
@@ -12,9 +11,9 @@ export interface ModalProps {
 export const Modal = ({ children, ...props }: ModalProps) => {
     return <Overlay {...props}>
         <div className={styles.modalContainer}>
-            <div className={styles.childContainer}>
+            <Paper>
                 { children }
-            </div>
+            </Paper>
         </div>
     </Overlay>
 }
