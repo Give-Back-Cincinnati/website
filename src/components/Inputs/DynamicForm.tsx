@@ -19,7 +19,7 @@ export interface DynamicFormProps {
     values?: Record<string, unknown>
     hiddenFields?: string[]
     isLoading?: boolean
-    isProtected: boolean
+    isProtected?: boolean
 }
 
 export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], isLoading = false, isProtected = false }: DynamicFormProps) => {
