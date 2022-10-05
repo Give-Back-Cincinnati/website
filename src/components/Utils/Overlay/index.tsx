@@ -45,8 +45,7 @@ export const Overlay = ({
     )
 
 /**
-    *   Prevent the body from scrolling when overlay isOpen
-    *   We DON'T need a cleanup because overlay WILL close before cleanup runs
+*   Prevent the body from scrolling when overlay isOpen
 */ 
     useEffect(() => {
         let bodyClasses = document.body.className
@@ -59,7 +58,7 @@ export const Overlay = ({
 
         return () => {
             // make sure to remove the no scroll class from body on unmount, regardless of render status
-            bodyClasses.replace(styles.noScroll, '')
+            bodyClasses = bodyClasses.replace(styles.noScroll, '')
             document.body.className = bodyClasses
         }
     }, [isOpen])
