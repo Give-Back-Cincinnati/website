@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Paper } from '@/components/Utils'
 import { MdKeyboardArrowDown } from 'react-icons/md'
-import { animated, useSpring } from '@react-spring/web'
+import { animated, useSpring, config } from '@react-spring/web'
 
 import styles from './NavLink.module.scss'
 
@@ -19,6 +19,7 @@ export type NavLinkProps = {
 
 export const NavLink = ({ label, href, childRoutes }: NavLinkProps) => {
     const [ isOpen, setOpen ] = useState(false)
+    const parentNav = useRef<HTMLDivElement | null>(null)
     const router = useRouter()
 
     const containerClasses = useMemo(() => {
@@ -27,8 +28,22 @@ export const NavLink = ({ label, href, childRoutes }: NavLinkProps) => {
         return classes.join(' ')
     }, [ href ])
 
+    const calculatedChildRouteStyles = (() => {
+        if (parentNav.current) {
+            const box = parentNav.current.getBoundingClientRect()
+            return {
+                top: box.y + box.height
+            }
+        }
+        return {}
+    })()
+
     const showOptionsAnimationStyles = useSpring(({
-        transform: isOpen ? 'translateY(0%) scaleY(1)' : 'translateY(-35%) scaleY(0)'
+        opacity: isOpen ? 1 : 0,
+        transform: isOpen ? 'translateY(0%) scaleY(1)' : 'translateY(-45%) scaleY(0)',
+        // transform: isOpen ? 'translateY(0%) scale(1, 1)' : 'translateY(-35%) scale(0, 0)',
+        ...calculatedChildRouteStyles,
+        config: config.stiff
     }))
 
     const arrowAnimationStyles = useSpring({
@@ -42,6 +57,7 @@ export const NavLink = ({ label, href, childRoutes }: NavLinkProps) => {
     return <>
     <div onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
         <div
+            ref={parentNav}
             className={containerClasses}
             onClick={() => {
                 if (href && typeof href === 'string') void router.push(href)
@@ -57,8 +73,8 @@ export const NavLink = ({ label, href, childRoutes }: NavLinkProps) => {
         </div>
         {
             childRoutes && <animated.div style={showOptionsAnimationStyles} className={styles.childrenContainer}>
-                <Paper elevation={6} padding='.5rem'>
-                    <div onClick={toggleOpen}>
+                <Paper elevation={6} padding='.5rem' className={styles.paperContainer}>
+                    <div onClick={toggleOpen} style={calculatedChildRouteStyles}>
                         {
                             childRoutes.map((args) => <NavLink key={args.label} {...args} />)
                         }
