@@ -41,13 +41,14 @@ export const NavLink = ({ label, href, childRoutes }: NavLinkProps) => {
     const showOptionsAnimationStyles = useSpring(({
         opacity: isOpen ? 1 : 0,
         transform: isOpen ? 'translateY(0%) scaleY(1)' : 'translateY(-45%) scaleY(0)',
-        // transform: isOpen ? 'translateY(0%) scale(1, 1)' : 'translateY(-35%) scale(0, 0)',
         ...calculatedChildRouteStyles,
         config: config.stiff
     }))
 
     const arrowAnimationStyles = useSpring({
-        transform: isOpen ? 'scaleY(1)' : 'scaleY(-1)'
+        transform: isOpen ? 'scaleY(1)' : 'scaleY(-1)',
+        top: isOpen ? 5 : 0,
+        config: config.stiff
     })
 
     function toggleOpen () {
@@ -68,7 +69,7 @@ export const NavLink = ({ label, href, childRoutes }: NavLinkProps) => {
             <span
                 className={styles.navigationLinks}
             >
-                { label } { childRoutes && <animated.div style={arrowAnimationStyles}><MdKeyboardArrowDown /></animated.div> }
+                { label } { childRoutes && <animated.div style={arrowAnimationStyles} className={styles.keyboardArrow}><MdKeyboardArrowDown /></animated.div> }
             </span>
         </div>
         {
