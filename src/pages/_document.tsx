@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html>
         <Head>
-            <link rel="preload" href='/AlternateGotNo3D_Regular.ttf' as="font" type="font/ttf" />
+            <link rel="preload" href='/AlternateGotNo3D_Regular.ttf' as="font" type="font/ttf" crossOrigin='true' />
         </Head>
       <body>
         <Main />

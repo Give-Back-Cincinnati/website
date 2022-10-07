@@ -32,6 +32,9 @@ export const EventCard = ({
                 ? <p className={styles.description}>{description}</p>
                 : ''
         }
-        
+        <svg viewBox='10 0 84 25' style={{ border: '1px solid currentcolor' }}>
+            <line x1='10' y1='12' x2='90' y2='12' stroke="currentcolor" />
+            <polygon points='70,2 92,12 70,22' stroke='currentcolor' fill='currentcolor' style={{ strokeWidth: 2, strokeLinejoin: 'round' }} />
+        </svg>
     </div>
 }

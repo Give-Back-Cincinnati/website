@@ -1,0 +1,11 @@
+.modalContainer {
+    border-radius: 10px;
+    width: calc(100vw - 2rem);
+    min-height: 100px;
+}
+
+@media all and (min-width: 576px) {
+    .modalContainer {
+        max-width: 500px;
+    }
+}

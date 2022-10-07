@@ -8,7 +8,7 @@ const story = {
     component: EventCard,
     args: {
         startTime: '2022-08-03T04:00:00.000Z',
-        title: 'Don\'t Rock the Boat',
+        name: 'Don\'t Rock the Boat',
         description: 'An annual favorite! Get in a rowboat and pick up trash in the Winton Woods lake'
     }
 } as ComponentMeta<typeof EventCard>
