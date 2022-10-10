@@ -11,14 +11,15 @@
 
     <script>
         (() => {
-            const searchParams = new URL(window.location).searchParams
-            let campaign = searchParams.has('campaign') ? searchParams.get('campaign') : ''
+            const url = new URL(window.location)
+            let campaign = url.searchParams.has('campaign') ? url.searchParams.get('campaign') : ''
 
             if (campaign[0] !== '/') {
                 campaign = '/' + campaign
             }
 
-            console.log(campaign)
+            document.location.href = url.origin
+
             const scriptEl = document.createElement('script')
             scriptEl.src = `https://secure.givelively.org/widgets/branded_donation/give-back-cincinnati${campaign}.js`
             document.head.appendChild(scriptEl)
@@ -28,6 +29,10 @@
             divEl.id = 'give-lively-widget'
             divEl.class = 'gl-branded-donation-widget'
             document.body.appendChild(divEl)
+
+            let x = document.createElement('div')
+            x.innerText = scriptEl.src
+            document.body.appendChild(x)
         })()
     </script>
 </html>
