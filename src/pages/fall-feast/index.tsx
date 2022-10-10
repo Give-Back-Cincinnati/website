@@ -1,15 +1,14 @@
-import { useState } from 'react'
 import { NextPage } from "next"
+import { useRouter } from "next/router"
 import styles from './index.module.scss'
-import { Button, DonateModal } from "@/components/Utils"
+import { Button } from "@/components/Utils"
 import { HorizontalBreak, LeftDashedBorder } from '@/components/Backgrounds'
 
 
 const FallFeast: NextPage = () => {
-    const [isDonateOpen, setDonateOpen] = useState(false)
-
+    const router = useRouter()
     function toggleDonate () {
-        setDonateOpen(!isDonateOpen)
+        router.push('https://secure.givelively.org/donate/give-back-cincinnati/fall-feast-2022')
     }
 
     return <div>
@@ -32,7 +31,6 @@ const FallFeast: NextPage = () => {
                 </p>
                 <div>
                     <Button onClick={toggleDonate}>Donate</Button>
-                    <DonateModal campaign='/fall-feast-2022' isOpen={isDonateOpen} onRequestClose={toggleDonate} />
                 </div>
             </div>
         </LeftDashedBorder>
