@@ -1,9 +1,17 @@
+import { useState } from 'react'
 import { NextPage } from "next"
 import styles from './index.module.scss'
+import { Button, DonateModal } from "@/components/Utils"
 import { HorizontalBreak, LeftDashedBorder } from '@/components/Backgrounds'
 
 
 const FallFeast: NextPage = () => {
+    const [isDonateOpen, setDonateOpen] = useState(false)
+
+    function toggleDonate () {
+        setDonateOpen(!isDonateOpen)
+    }
+
     return <div>
         <HorizontalBreak style={{ marginBottom: '2rem', marginTop: '2rem' }}>
                 <h1>Fall Feast</h1>
@@ -22,6 +30,10 @@ const FallFeast: NextPage = () => {
                 <p>
                     Fall Feast has a mission to change our community for the better through celebration, connection, and the passion to serve others. This calling has led to the rapid growth of one of the largest Thanksgiving meals in the region. With the help of local businesses, neighbors, and community members, this event has blossomed into a true community celebration that oﬀers more than a meal. 
                 </p>
+                <div>
+                    <Button onClick={toggleDonate}>Donate</Button>
+                    <DonateModal campaign='/fall-feast-2022' isOpen={isDonateOpen} onRequestClose={toggleDonate} />
+                </div>
             </div>
         </LeftDashedBorder>
         <div>

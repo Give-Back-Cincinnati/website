@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { DonateModal } from './index'
 
 const storyMeta = {
-    title: 'Navigation/Donate',
+    title: 'Utils/Donate',
     component: DonateModal,
     args: {
         isOpen: false

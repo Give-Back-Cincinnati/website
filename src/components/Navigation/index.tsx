@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Overlay } from '@/components/Utils'
 import { Avatar } from "components/DataDisplay"
 import { NavLink, NavLinkProps } from "./NavLink"
-import { DonateModal } from './Donate'
+import { DonateModal } from '../Utils/DonateModal'
 
 import { MdOutlineMenu } from 'react-icons/md'
 import styles from './index.module.scss'
