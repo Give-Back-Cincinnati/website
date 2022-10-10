@@ -18,7 +18,7 @@
                 campaign = '/' + campaign
             }
 
-            document.location.href = url.origin
+            document.location.href = url.origin + 'donation_iframe.html'
 
             const scriptEl = document.createElement('script')
             scriptEl.src = `https://secure.givelively.org/widgets/branded_donation/give-back-cincinnati${campaign}.js`
