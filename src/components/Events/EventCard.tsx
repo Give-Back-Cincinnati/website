@@ -14,6 +14,7 @@ export interface EventCardProps extends Events {
 export const EventCard = ({
     startTime,
     name,
+    slug,
     description,
     opts = { dateHasBorder: false }
 }: EventCardProps) => {
@@ -22,7 +23,7 @@ export const EventCard = ({
     return <div
         className={styles.container}
         onClick={() => {
-            router.push(`/events/${encodeURIComponent(name)}`)
+            router.push(`/events/${slug}`)
         }}
     >
         <h3 className={`${styles.date} ${opts.dateHasBorder ? styles.dateHasBorder : ''}`}>{DateTime.fromISO(startTime || '').toLocaleString(DateTime.DATE_MED)}</h3>
@@ -32,9 +33,10 @@ export const EventCard = ({
                 ? <p className={styles.description}>{description}</p>
                 : ''
         }
-        <svg viewBox='10 0 84 25' style={{ border: '1px solid currentcolor' }}>
-            <line x1='10' y1='12' x2='90' y2='12' stroke="currentcolor" />
-            <polygon points='70,2 92,12 70,22' stroke='currentcolor' fill='currentcolor' style={{ strokeWidth: 2, strokeLinejoin: 'round' }} />
-        </svg>
+        <div className={styles.learnMore}>
+            <p>
+                Learn More
+            </p>
+        </div>
     </div>
 }

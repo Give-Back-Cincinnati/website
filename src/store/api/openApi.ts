@@ -465,8 +465,14 @@ export type SearchEventsApiArg = {
   order?: "asc" | "desc";
   name?: any;
   category?: EventCategories;
-  startTime?: string;
-  endTime?: string;
+  startTime?: {
+    $gt?: string;
+    $lt?: string;
+  };
+  endTime?: {
+    $gt?: string;
+    $lt?: string;
+  };
 };
 export type CreateEventsApiResponse = /** status 201 undefined */ Events;
 export type CreateEventsApiArg = {
@@ -546,12 +552,14 @@ export type UsersMe = Users & {
 };
 export type Events = {
   _id?: string;
+  slug?: string;
   name: string;
   description: string;
   category: any;
   address: string;
   startTime: string;
   endTime: string;
+  maxRegistrations?: number;
 };
 export type EventCategories =
   | "Hands-On"

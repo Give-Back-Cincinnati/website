@@ -28,3 +28,15 @@
 .description {
     color: color.adjust($color: $gbc-black, $alpha: -0.3)
 }
+
+.learnMore {
+    color: $gbc-red;
+    display: flex;
+    flex-flow: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    p {
+        border-bottom: currentColor 2px solid;
+        text-align: right;
+    }
+}

@@ -9,6 +9,7 @@ const story = {
     args: {
         startTime: '2022-08-03T04:00:00.000Z',
         name: 'Don\'t Rock the Boat',
+        slug: 'dont\'t-rock-the-boat',
         description: 'An annual favorite! Get in a rowboat and pick up trash in the Winton Woods lake'
     }
 } as ComponentMeta<typeof EventCard>

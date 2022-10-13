@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import styles from './[name].module.scss'
+import styles from './[slug].module.scss'
 import { EventHeader, EventDetails } from "@/components/Events"
 import { HorizontalBreak } from '@/components/Backgrounds'
 import { DynamicForm } from '@/components/Inputs/DynamicForm'
@@ -9,8 +9,7 @@ import { Events, useGetMeQuery, usePostEventsByEventIdRegisterMutation, GuestReg
 import { useGetSchema } from 'hooks'
 
 export async function getStaticPaths () {
-    // Add $gt endTime filter once the server can handle it
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events?endTime%5B%24gt%5D=${new Date().toLocaleDateString()}`)
     const events: Events[] = await res.json()
     const mapped = events.map(event => ({ params: event }))
     return {
@@ -20,7 +19,7 @@ export async function getStaticPaths () {
 }
 
 export async function getStaticProps (context: { params: Events }) {
-    const params = new URLSearchParams({ name: context.params.name }).toString()
+    const params = new URLSearchParams({ slug: context.params.slug || '' }).toString()
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events?${params}`)
     const event: Events[] = await res.json()
 
@@ -30,7 +29,6 @@ export async function getStaticProps (context: { params: Events }) {
 }
 
 export const Event = ({ event }: { event: Events }) => {
-    // TODO: ADD LOGGED IN REGISTRATION IF USER IS LOGGED IN
     const userRegistrationSchema = useGetSchema('UserRegistration')
     const guestRegistrationSchema = useGetSchema('GuestRegistration')
     const { data: me } = useGetMeQuery()
@@ -56,7 +54,7 @@ export const Event = ({ event }: { event: Events }) => {
     }, [reset, error, status])
 
     return <div>
-        <EventHeader title={event.name} category='Hands On' />
+        <EventHeader title={event.name} category={event.category} />
         <div className={styles.detailsContainer}>
 
             <EventDetails startTime={event.startTime} endTime={event.endTime} address={event.address} />

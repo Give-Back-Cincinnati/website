@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { Overlay } from '@/components/Utils'
 import { Avatar } from "components/DataDisplay"
 import { NavLink, NavLinkProps } from "./NavLink"
-import { DonateModal } from '../Utils/DonateModal'
 
 import { MdOutlineMenu } from 'react-icons/md'
 import styles from './index.module.scss'
@@ -15,7 +14,6 @@ import type { Permissions } from "@/store/api/openApi"
 export const Navigation = () => {
     const router = useRouter()
     const [ isNavigationOpen, setNavigationOpen ] = useState(false)
-    const [ isDonateOpen, setDonateOpen ] = useState(false)
     
     const {
         data: user
@@ -66,9 +64,7 @@ export const Navigation = () => {
     if (!isAdmin) {
         navigationRoutes.push({
             label: 'Donate',
-            href: () => {
-                setDonateOpen(true)
-            }
+            href: 'https://secure.givelively.org/donate/give-back-cincinnati'
         })
     }
 
@@ -116,8 +112,6 @@ export const Navigation = () => {
                 }
                 <MdOutlineMenu className={styles.menuIcon} onClick={() => setNavigationOpen(true)} />
             </div>
-
-            <DonateModal isOpen={isDonateOpen} onRequestClose={()=> setDonateOpen(false)} />
 
             <Overlay
                 isOpen={isNavigationOpen}
