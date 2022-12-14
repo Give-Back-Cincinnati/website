@@ -37,7 +37,7 @@ export const TextArea = ({
 }: TextAreaProps) => {
     const [labelStyles, api] = useSpring(() => value === '' ? nullStyle : withValueStyle)
     const formattedLabel = useMemo(() => {
-        return (label || name).replace(/([A-Z])/g, ' $1')
+        return (label || name).replace(/([A-Z])/g, ' $1');
     }, [label, name])
     const inputEl = useRef<HTMLTextAreaElement | null>(null)
     
