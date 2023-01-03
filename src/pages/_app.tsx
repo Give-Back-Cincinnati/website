@@ -1,4 +1,5 @@
 import '../styles/globals.scss'
+import "@cloudscape-design/global-styles/index.css"
 import React, { ReactElement, ReactNode} from 'react'
 import Head from 'next/head'
 import type { NextPage } from 'next'
