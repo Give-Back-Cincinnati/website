@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useUserHasPermission, useServices } from 'hooks'
 import { Modal, Button } from "@/components/Utils"
-import { DynamicForm } from '@/components/Inputs'
+import { DynamicForm } from '@/components/DynamicForm'
 import { useSearchPermissionsQuery, useCreateRoleMutation } from '@/store/api/openApi'
 import { EntitySchema } from '@/types/schema'
 

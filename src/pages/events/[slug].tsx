@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import styles from './[slug].module.scss'
 import { EventHeader, EventDetails } from "@/components/Events"
 import { HorizontalBreak } from '@/components/Backgrounds'
-import { DynamicForm } from '@/components/Inputs/DynamicForm'
+import { DynamicForm } from '@/components/DynamicForm'
 import { Spinner, Notify } from '@/components/DataDisplay'
 import { Alert } from '@/components/Utils'
 import { Events, useGetMeQuery, usePostEventsByEventIdRegisterMutation, GuestRegistration } from '@/store/api/openApi'
@@ -52,6 +52,7 @@ export const Event = ({ event }: { event: Events }) => {
             reset()
         }
     }, [reset, error, status])
+
 
     return <div>
         <EventHeader title={event.name} category={event.category} />

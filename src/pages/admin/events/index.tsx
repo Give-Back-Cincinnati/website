@@ -14,7 +14,7 @@ import {
     useDeleteEventsMutation, 
     Events
 } from '@/store/api/openApi'
-import { DynamicForm } from '@/components/Inputs/DynamicForm'
+import { DynamicForm } from '@/components/DynamicForm'
 import { DateTime } from 'luxon'
 
 const EventsAdmin: NextPageWithLayout = () => {

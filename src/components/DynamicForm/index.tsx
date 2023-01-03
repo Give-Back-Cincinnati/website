@@ -9,7 +9,7 @@ import {
     Select,
     TextField,
     TextArea,
-} from "./index"
+} from "@/components/Inputs"
 import { Button } from "../Utils"
 import { DateTime } from "luxon"
 

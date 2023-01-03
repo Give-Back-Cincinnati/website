@@ -3,10 +3,10 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import type { Events } from '../../store/api/openApi'
 
-import Event from '../../pages/events/[name]'
+import Event from '../../pages/events/[slug]'
 
 const story = {
-    title: 'Pages/Events/[name]',
+    title: 'Pages/Events/[slug]',
     component: Event,
     parameters: {
         layout: 'fullscreen',
@@ -27,6 +27,7 @@ const story = {
             address: 'Gorman Heritage Farms',
             startTime: '2022-08-24T13:00:00.000+00:00',
             endTime: '2022-08-24T17:00:00.000+00:00',
+            slug: 'dont-rock-the-boat'
         } as Events
     }
 } as ComponentMeta<typeof Event>

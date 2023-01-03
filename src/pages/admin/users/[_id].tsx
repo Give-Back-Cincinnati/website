@@ -6,7 +6,7 @@ import { useGetSchema, useServices } from 'hooks'
 import { NewRole } from '@/components/Admin/Users/NewRole'
 
 import { Users, useUpdateUserMutation, useLazyGetUserQuery } from '@/store/api/openApi'
-import { DynamicForm } from '@/components/Inputs'
+import { DynamicForm } from '@/components/DynamicForm'
 
 import styles from './[_id].module.scss'
 
