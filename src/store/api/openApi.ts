@@ -239,6 +239,7 @@ const injectedRtkApi = api
             sort: queryArg.sort,
             order: queryArg.order,
             name: queryArg.name,
+            slug: queryArg.slug,
             category: queryArg.category,
             startTime: queryArg.startTime,
             endTime: queryArg.endTime,
@@ -464,6 +465,7 @@ export type SearchEventsApiArg = {
   sort?: "name" | "category" | "startTime" | "endTime";
   order?: "asc" | "desc";
   name?: any;
+  slug?: any;
   category?: EventCategories;
   startTime?: {
     $gt?: string;
@@ -552,7 +554,7 @@ export type UsersMe = Users & {
 };
 export type Events = {
   _id?: string;
-  slug?: string;
+  slug: string;
   name: string;
   description: string;
   category: any;

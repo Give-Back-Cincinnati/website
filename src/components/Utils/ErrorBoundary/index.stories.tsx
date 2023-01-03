@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import { ErrorBoundary } from './index'
 
-import ErrorPage from '../../../pages/events/[name]'
+import ErrorPage from '../../../pages/events/[slug]'
 
 const story = {
     title: 'Utils/ErrorBoundary',

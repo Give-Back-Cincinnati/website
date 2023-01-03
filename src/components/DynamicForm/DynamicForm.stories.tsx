@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import { DynamicForm, DynamicFormProps} from './DynamicForm'
+import { DynamicForm, DynamicFormProps} from './'
 
 const story = {
     title: 'Inputs/DynamicForm',

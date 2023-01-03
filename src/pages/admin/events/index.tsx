@@ -14,7 +14,7 @@ import {
     useDeleteEventsMutation, 
     Events
 } from '@/store/api/openApi'
-import { DynamicForm } from '@/components/Inputs/DynamicForm'
+import { DynamicForm } from '@/components/DynamicForm'
 import { DateTime } from 'luxon'
 
 const EventsAdmin: NextPageWithLayout = () => {
@@ -97,11 +97,11 @@ const EventsAdmin: NextPageWithLayout = () => {
             registrations: (obj._id && typeof formattedEventRegistrations[obj._id] === 'number' ? formattedEventRegistrations[obj._id] : 0).toString(),
             actions: <div>
                 <Link href={`/admin/events/${obj._id}`}>
-                    <a>
-                        <Button variant='outlined'>
-                            See Details
-                        </Button>
-                    </a>
+
+                    <Button variant='outlined'>
+                        See Details
+                    </Button>
+
                 </Link>
                 {
                     canDeleteEvent
@@ -109,7 +109,7 @@ const EventsAdmin: NextPageWithLayout = () => {
                         : ''
                 }
             </div>
-        }))
+        }));
     }, [data, canDeleteEvent, deleteEvent, formattedEventRegistrations])
 
     return <div>

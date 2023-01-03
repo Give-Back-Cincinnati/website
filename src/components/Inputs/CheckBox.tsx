@@ -25,7 +25,7 @@ export const CheckBox = ({
     if (fullWidth) containerStyles.push(styles.fullWidth)
 
     const formattedLabel = useMemo(() => {
-        return (label || name).replace(/([A-Z])/g, ' $1')
+        return (label || name).replace(/([A-Z])/g, ' $1');
     }, [label, name])
 
     return <div className={styles.container}>

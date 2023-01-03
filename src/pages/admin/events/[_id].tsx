@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "pages/_app"
 import { AdminLayout } from 'layouts/AdminLayout'
 import { useRouter } from "next/router"
 import { Events, useLazyGetEventsQuery, useUpdateEventsMutation } from "@/store/api/openApi"
-import { DynamicForm } from "@/components/Inputs"
+import { DynamicForm } from "@/components/DynamicForm"
 import { useGetSchema, useServices } from "hooks"
 
 import { AdminEventRegistrations } from "@/components/Admin/Events/Registrations"

@@ -1,6 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { EventCard } from '@/components/Events'
 import { Button } from '@/components/Utils'
 import { BulletList, LeftDashedBorder } from '@/components/Backgrounds'
@@ -38,6 +39,7 @@ export async function getStaticProps (): Promise<{ props: { events: SearchEvents
 }
 
 const Home: NextPage<Props> = ({ events }: Props) => {
+    const router = useRouter()
     return (
         <div>
             <Head>
@@ -131,7 +133,7 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                     />)
                 }
                 <div className={styles.seeAllEvents}>
-                    <Button size='lg'>
+                    <Button size='lg' onClick={() => void router.push('/events')}>
                         See all Upcoming Events
                     </Button>
                 </div>

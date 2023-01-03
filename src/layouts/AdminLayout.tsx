@@ -30,36 +30,37 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
     if (canSeeRoles) { adminRoutes.push('roles') }
     if (canSeePermissions) { adminRoutes.push('permissions') }
 
-    return <div className={styles.container}>
+    return (
+        <div className={styles.container}>
 
-        <div className={styles.adminNav}>
-            {
-                adminRoutes.map(permission => {
-                    const linkStyles = [styles.link]
-                    const permissionPath = permission ? `/admin/${permission}` : '/admin'
-        
-                    // need to include router.asPath, if first page load it has not registered correctly [name]
-                    if (currentRoute === permissionPath || router.asPath === permissionPath) {
-                        linkStyles.push(styles.activePath)
-                    }
-        
-                    return <Link
-                        key={permission}
-                        href={permissionPath}
-                    >
-                        <a className={linkStyles.join(' ')}>
-                            {permission || 'Admin'}
-                        </a>
-                    </Link>
-                })
-            }
+            <div className={styles.adminNav}>
+                {
+                    adminRoutes.map(permission => {
+                        const linkStyles = [styles.link]
+                        const permissionPath = permission ? `/admin/${permission}` : '/admin'
+            
+                        // need to include router.asPath, if first page load it has not registered correctly [name]
+                        if (currentRoute === permissionPath || router.asPath === permissionPath) {
+                            linkStyles.push(styles.activePath)
+                        }
+            
+                        return (
+                            <Link key={permission} href={permissionPath} className={linkStyles.join(' ')}>
+
+                                {permission || 'Admin'}
+
+                            </Link>
+                        );
+                    })
+                }
+            </div>
+
+            <div className={styles.content}>
+                { children }
+            </div>
+
         </div>
-
-        <div className={styles.content}>
-            { children }
-        </div>
-
-    </div>
+    );
 }
 
 export default AdminLayout
