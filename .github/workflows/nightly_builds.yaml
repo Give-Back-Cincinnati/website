@@ -1,0 +1,13 @@
+name: "Trigger Cloudflare Pages Nightly Build"
+
+on:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    name: Trigger Cloudflare Pages Build
+    steps:
+      - name: Send Request
+        run: curl -X POST "${{ secrets.CF_PAGES_DEPLOY_HOOK }}"
