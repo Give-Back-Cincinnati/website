@@ -11,18 +11,17 @@ import { useGetSchema } from 'hooks'
 export async function getStaticPaths () {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events?endTime%5B%24gt%5D=${new Date().toLocaleDateString()}`)
     const events: Events[] = await res.json()
-    const mapped = events.map(event => ({ params: event }))
+    const mapped = events.map(event => ({ params: { slug: event.slug } }))
     return {
         paths: mapped,
         fallback: false
     }
 }
 
-export async function getStaticProps (context: { params: Events }) {
+export async function getStaticProps (context: { params: Events }): Promise<{ props: { event: Events } }> {
     const params = new URLSearchParams({ slug: context.params.slug || '' }).toString()
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events?${params}`)
     const event: Events[] = await res.json()
-
     return {
         props: { event: event[0] }
     }
