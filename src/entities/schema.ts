@@ -2,7 +2,8 @@ export interface EntitySchema {
     type: string
     required: string[]
     properties: Record<string, {
-        type: string,
+        type?: string,
+        schema?: $Ref,
         name?: string,
         enum?: string[],
         format?: string,
@@ -14,11 +15,16 @@ export interface EntitySchema {
     }>
 }
 
+export interface EntityEnum {
+    type: 'string',
+    enum: string[]
+}
+
 export interface $Ref {
     $ref: string
 }
 
-export type Schema = EntitySchema | $Ref | Record<'allOf', (EntitySchema | $Ref)[]>
+export type Schema = EntitySchema | EntityEnum | $Ref | Record<'allOf', (EntitySchema | $Ref)[]>
 
 export interface Components {
     securitySchemas: Record<string, unknown>
