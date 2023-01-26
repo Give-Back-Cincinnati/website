@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { EventCard } from '@/components/Events'
-import { Button } from '@/components/Utils'
+import { Button, NewsletterSignup } from '@/components/Utils'
 import { BulletList, LeftDashedBorder } from '@/components/Backgrounds'
 
 import styles from './index.module.scss'
@@ -62,6 +62,7 @@ const Home: NextPage<Props> = ({ events }: Props) => {
                             />)
                         }
                         {/* TODO: add a newsletter signup here */}
+                        <NewsletterSignup />
                     </div>
                 </div>
             </div>

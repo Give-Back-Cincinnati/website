@@ -76,6 +76,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
             }
             if (name in formState) {
                 setFormState({ ...formState, [name]: value })
+                return
             }
         }
     }, [formState])
@@ -147,23 +148,23 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
 
                         if (property.maxLength && property.maxLength > 40) {
                             content = <TextArea
+                                {...property}
                                 value={formValue as string}
                                 name={propertyKey}
                                 label={property.name}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
-                                {...property}
                             />
                             break;
                         }
                         // Generic text field 
                         content =  <TextField
+                            {...property}
                             value={formValue as string}
                             name={propertyKey}
                             label={property.name}
                             onChange={handleChangeEvent}
                             required={isRequired}
-                            {...property}
                         />
                         break;
                     default:
