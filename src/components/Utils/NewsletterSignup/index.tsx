@@ -33,7 +33,7 @@ export const NewsletterSignup = () => {
         try {
             await Axios.post('https://givebackcincinnati.us12.list-manage.com/subscribe/post?u=160bf2c9daa8af34307358b18&amp;id=0992f3a90c&amp;f_id=00d941e0f0', form)
         } catch (e) {
-            if (e && typeof e === 'object' && 'message' in e) {
+            if (e && typeof e === 'object' && 'message' in e && typeof e.message === 'string') {
                 setSubmitError(e.message as string)
             } else {
                 setSubmitError('Something went wrong, please try again later')
