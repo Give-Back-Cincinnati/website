@@ -16,7 +16,7 @@ export type AdminEventRegistrationsProps = {
 
 export const AdminEventRegistrations = ({ eventId }: AdminEventRegistrationsProps) => {
     const { data: users } = useSearchUsersQuery({ limit: 0 }) // limit 0 will return all users
-    const { data: eventRegistrations } = useGetEventsByEventIdRegisterQuery({ eventId })
+    const { data: eventRegistrations } = useGetEventsByEventIdRegisterQuery({ eventId, limit: 0 })
 
     const formattedUsers = useMemo(() => {
         if (!users) return {}
