@@ -8,6 +8,7 @@ import {
     Users
 } from "@/store/api/openApi"
 import { CheckBox } from '@/components/Inputs'
+import { Button } from '@/components/Utils'
 import { DateTime } from 'luxon'
 
 export type AdminEventRegistrationsProps = {
@@ -47,17 +48,32 @@ export const AdminEventRegistrations = ({ eventId }: AdminEventRegistrationsProp
         })
     }, [eventRegistrations, formattedUsers, eventId])
 
+    const emailList = useMemo(() => {
+        return formattedEventRegistrations
+            .map(registration => registration.email)
+            .join()
+    }, [ formattedEventRegistrations ])
+
     return <div>
     <h2>Registrations: {eventRegistrations?.length || 0}</h2>
     {
         eventRegistrations &&
-        <Table
-            keys={['firstName', 'lastName', 'phone', 'email', 'dateOfBirth', 'hasAgreedToTerms', 'checkedIn', 'delete']}
-            data={formattedEventRegistrations}
-            formatFunctions={{
-                dateOfBirth: (val) => DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT)
-            }}
-        />
+        <>
+            <a href={`mailto:?bcc=${emailList}`}>
+                <Button
+                    variant='outlined'
+                >
+                    Email All Registrations
+                </Button>
+            </a>
+            <Table
+                keys={['firstName', 'lastName', 'phone', 'email', 'dateOfBirth', 'hasAgreedToTerms', 'checkedIn', 'delete']}
+                data={formattedEventRegistrations}
+                formatFunctions={{
+                    dateOfBirth: (val) => DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT)
+                }}
+            />
+        </>
     }
 </div>
 }
