@@ -10,6 +10,15 @@ import { AdminEventRegistrations } from "@/components/Admin/Events/Registrations
 
 import styles from './[_id].module.scss'
 
+export async function getStaticPaths() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
+    const events: Events[] = await res.json()
+    return {
+        paths: events.map(event => ({ params: { _id: event._id }})),
+        fallback: false
+    }
+}
+
 export const AdminEventDetails: NextPageWithLayout = () => {
     const { isReady, query } = useRouter()
     const [ getEventsTrigger, { data: eventData, isSuccess }] = useLazyGetEventsQuery()
