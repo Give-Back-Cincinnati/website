@@ -19,8 +19,8 @@ export async function getStaticPaths () {
     }
 }
 
-export function getStaticProps (context: { params: Events }): { props: { _id: string } } {
-    return { props: { _id: context.params._id || context.params.slug } }
+export function getStaticProps (context: { params: { _id: string} }): { props: { _id: string } } {
+    return { props: { _id: context.params._id } }
 }
 
 export const AdminEventDetails: NextPageWithLayout = () => {
