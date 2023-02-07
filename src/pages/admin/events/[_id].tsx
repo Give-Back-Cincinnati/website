@@ -10,13 +10,17 @@ import { AdminEventRegistrations } from "@/components/Admin/Events/Registrations
 
 import styles from './[_id].module.scss'
 
-export async function getStaticPaths() {
+export async function getStaticPaths () {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
     const events: Events[] = await res.json()
     return {
         paths: events.map(event => ({ params: { _id: event._id }})),
         fallback: false
     }
+}
+
+export function getStaticProps (context: { params: Events }): { props: { _id: string } } {
+    return { props: { _id: context.params._id || context.params.slug } }
 }
 
 export const AdminEventDetails: NextPageWithLayout = () => {
