@@ -2,13 +2,14 @@ import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, useMemo } 
 import { useSpring, animated } from '@react-spring/web'
 import { DateTime } from 'luxon'
 import styles from './DateTimePicker.module.scss'
+import { useFormatInputLabel } from 'hooks'
 
 export interface DateTimePickerProps extends ComponentPropsWithoutRef<'input'> {
     name: string
     onChange: ChangeEventHandler<HTMLInputElement>
     value: string
     type?: string
-    label?: string
+    label?: string | JSX.Element
     fullWidth?: boolean
     error?: boolean
     errorText?: string
@@ -55,9 +56,7 @@ export const DateTimePicker = ({
         value === '' && api.start(nullStyle)
     }
 
-    const formattedLabel = useMemo(() => {
-        return (label || name).replace(/([A-Z])/g, ' $1');
-    }, [label, name])
+    const formattedLabel = useFormatInputLabel({ label, name })
 
     return <div className={containerStyles.join(' ')}>
             <animated.label

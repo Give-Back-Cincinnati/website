@@ -1,5 +1,6 @@
 import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, useMemo } from 'react'
 import { useSpring, animated } from '@react-spring/web'
+import { useFormatInputLabel } from 'hooks'
 
 import styles from './TextArea.module.scss'
 
@@ -7,7 +8,7 @@ export interface TextAreaProps extends ComponentPropsWithoutRef<'textarea'> {
     name: string
     onChange: ChangeEventHandler<HTMLTextAreaElement>
     value: string
-    label?: string
+    label?: string | JSX.Element
     fullWidth?: boolean
     error?: boolean
     errorText?: string
@@ -36,9 +37,7 @@ export const TextArea = ({
     ...props
 }: TextAreaProps) => {
     const [labelStyles, api] = useSpring(() => value === '' ? nullStyle : withValueStyle)
-    const formattedLabel = useMemo(() => {
-        return (label || name).replace(/([A-Z])/g, ' $1');
-    }, [label, name])
+    const formattedLabel = useFormatInputLabel({ label, name })
     const inputEl = useRef<HTMLTextAreaElement | null>(null)
     
     const containerStyles = [styles.container]

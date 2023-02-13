@@ -18,11 +18,20 @@ export interface DynamicFormProps {
     onSubmit: (state: Record<string, unknown>) => void
     values?: Record<string, unknown>
     hiddenFields?: string[]
+    labelOverrides?: Record<string, (label: string) => string | JSX.Element>
     isLoading?: boolean
     isProtected?: boolean
 }
 
-export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], isLoading = false, isProtected = false }: DynamicFormProps) => {
+export const DynamicForm = ({
+    entity,
+    onSubmit,
+    values = {},
+    hiddenFields = [],
+    labelOverrides = {},
+    isLoading = false,
+    isProtected = false
+}: DynamicFormProps) => {
     // Derive the initial and empty states so they can be used in the created inputs
     const { initialState } = useMemo(() => {
         const { properties } = entity
@@ -117,13 +126,18 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                 const isRequired = required.includes(propertyKey)
                 const formValue = formState[propertyKey]
 
+                let label: string | undefined | JSX.Element = property.name
+                if (labelOverrides[propertyKey]) {
+                    label = labelOverrides[propertyKey](propertyKey)
+                }
+
                 let content: ReactElement | '' = ''
                 switch (property.type) {
                     case 'boolean':
                         if (typeof formState[propertyKey] === 'boolean') {
                             content = <CheckBox
                                 name={propertyKey}
-                                label={property.name}
+                                label={label}
                                 checked={formValue as boolean} // this is created as a boolean in initialState construction
                                 onChange={handleChangeEvent}
                                 required={isRequired}
@@ -138,7 +152,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                                 value={formValue as string}
                                 options={selectOptions}
                                 name={propertyKey}
-                                label={property.name}
+                                label={label}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
                             />
@@ -148,7 +162,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                         if ('format' in property && property.format === 'date-time') {
                             content = <DateTimePicker
                                 name={propertyKey}
-                                label={property.name}
+                                label={label}
                                 value={formValue as string}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
@@ -159,7 +173,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                         if ('format' in property && property.format === 'date') {
                             content = <DateTimePicker
                                 name={propertyKey}
-                                label={property.name}
+                                label={label}
                                 value={formValue as string}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
@@ -173,7 +187,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                                 {...property}
                                 value={formValue as string}
                                 name={propertyKey}
-                                label={property.name}
+                                label={label}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
                             />
@@ -184,7 +198,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                             {...property}
                             value={formValue as string}
                             name={propertyKey}
-                            label={property.name}
+                            label={label}
                             onChange={handleChangeEvent}
                             required={isRequired}
                         />
@@ -193,7 +207,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                         content = <TextField
                             value={formValue as string}
                             name={propertyKey}
-                            label={property.name}
+                            label={label}
                             onChange={handleChangeEvent}
                             required={isRequired}
                         />
@@ -203,7 +217,7 @@ export const DynamicForm = ({ entity, onSubmit, values = {}, hiddenFields = [], 
                     { content }
                 </div>
             })
-    }, [entity, handleChangeEvent, formState, hiddenFields])
+    }, [entity, handleChangeEvent, formState, hiddenFields, labelOverrides])
     
     return <div className={styles.container}>
         { inputs }
