@@ -1,24 +1,25 @@
-import React, { use, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './index.module.scss'
 
 import { Modal, Button } from '@/components/Utils'
+import { TermsOfUse } from '../../../pages/terms-of-use'
+import { PrivacyPolicy } from '../../../pages/privacy-policy'
+
+type ContentEnum = 'waiver' | 'terms' | 'privacy'
 
 export const Waiver = () => {
-    const [isOpen, setOpen] = useState(false)
+    const [isOpen, setOpen] = useState<ContentEnum | undefined>(undefined)
 
-    function toggleOpen () {
-        setOpen(!isOpen)
+    function close () {
+        setOpen(undefined)
     }
 
-    return <>
-        I have read and agreed to the terms, conditions, and <span onClick={toggleOpen} className={styles.link}>waiver</span>
+    function open (content: ContentEnum) {
+        setOpen(content)
+    }
 
-        <Modal
-            isOpen={isOpen}
-            onRequestClose={toggleOpen}
-        >
-            <div className={styles.content}>
-                <div className={styles.waiver}>
+    const content: Record<ContentEnum, JSX.Element> = {
+        waiver: <div className={styles.waiver}>
                     <h2>
                         RELEASE AND WAIVER OF LIABILITY PLEASE READ CAREFULLY! THIS IS A LEGAL DOCUMENT THAT AFFECTS YOUR LEGAL RIGHTS!
                     </h2>
@@ -84,9 +85,28 @@ export const Waiver = () => {
                     <h3>
                         My electronic submission of this Release is intended to be and shall be deemed my legal signature and my acceptance of this Release.
                     </h3>
-                </div>
-                
-                <Button onClick={toggleOpen}>Close</Button>
+                </div>,
+        terms: <TermsOfUse />,
+        privacy: <PrivacyPolicy />
+    }
+
+    return <>
+        I have read and agree to the 
+        <span onClick={() => open('waiver')} className={styles.link}> terms of use</span>
+        ,
+        <span onClick={() => open('waiver')} className={styles.link}> privacy policy</span>
+        , and
+        <span onClick={() => open('waiver')} className={styles.link}> waiver</span>
+
+        <Modal
+            isOpen={isOpen !== undefined}
+            onRequestClose={close}
+        >
+            <div className={styles.content}>
+                {
+                    isOpen !== undefined && content[isOpen]
+                }
+                <Button onClick={close}>Close</Button>
             </div>
         </Modal>
     </>

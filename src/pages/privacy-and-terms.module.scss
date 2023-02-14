@@ -1,0 +1,14 @@
+@import '../styles/colors.scss';
+
+.container {
+    h1 {
+        text-align: center;
+    }
+    p {
+        padding-bottom: 1rem;
+    }
+    a {
+        color: $gbc-red;
+        border-bottom: 1px dashed currentColor;
+    }
+}
