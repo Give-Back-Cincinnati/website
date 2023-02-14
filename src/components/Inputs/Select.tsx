@@ -1,6 +1,7 @@
 import React, { ComponentPropsWithoutRef, useMemo } from 'react'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import styles from './Select.module.scss'
+import { useFormatInputLabel } from 'hooks'
 
 export interface SelectOptions {
     _id: string
@@ -11,7 +12,7 @@ export interface SelectProps extends ComponentPropsWithoutRef<'select'> {
     name: string
     options: SelectOptions[]
     value: string
-    label?: string
+    label?: string | JSX.Element
     nullable?: boolean,
     fullWidth?: boolean
     error?: boolean
@@ -33,9 +34,7 @@ export const Select = ({
     if (error) containerStyles.push(styles.errorState)
     if (fullWidth) containerStyles.push(styles.fullWidth)
 
-    const formattedLabel = useMemo(() => {
-        return (label || name).replace(/([A-Z])/g, ' $1');
-    }, [label, name])
+    const formattedLabel = useFormatInputLabel({ label, name })
 
     return <div className={containerStyles.join(' ')}>
             <label htmlFor={name}>{ formattedLabel }{ props.required ? '*' : '' }</label>

@@ -1,0 +1,26 @@
+@use 'sass:color';
+@import '../../../styles/colors.scss';
+
+.link {
+    color: $gbc-red;
+    cursor: pointer;
+    border-bottom: 1px dashed currentColor;
+    &:hover {
+        border-bottom: solid;
+    }
+}
+
+.content {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+}
+
+.waiver {
+    padding-bottom: 2em;
+    h2, h3 {
+        text-align: center;
+    }
+}

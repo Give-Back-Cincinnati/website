@@ -65,3 +65,12 @@ export const WithTurnstile = Template.bind({})
 WithTurnstile.args = {
     isProtected: true
 }
+
+export const WithLabelOverride = Template.bind({})
+WithLabelOverride.args = {
+    labelOverrides: {
+        'subscribe': (str) => {
+            return <>This is an <a href="#">override</a></>
+        }
+    }
+}

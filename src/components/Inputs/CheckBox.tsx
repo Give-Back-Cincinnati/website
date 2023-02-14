@@ -1,12 +1,13 @@
 import { useMemo, ComponentPropsWithoutRef, ChangeEventHandler } from 'react'
 import { DateTime } from 'luxon'
+import { useFormatInputLabel } from 'hooks'
 import styles from './CheckBox.module.scss'
 
 export interface CheckBoxProps extends ComponentPropsWithoutRef<'input'> {
     name: string
     checked: boolean
     onChange: ChangeEventHandler
-    label?: string
+    label?: string | JSX.Element
     fullWidth?: boolean
     error?: boolean
     errorText?: string
@@ -24,9 +25,7 @@ export const CheckBox = ({
     if (error) containerStyles.push(styles.errorState)
     if (fullWidth) containerStyles.push(styles.fullWidth)
 
-    const formattedLabel = useMemo(() => {
-        return (label || name).replace(/([A-Z])/g, ' $1');
-    }, [label, name])
+    const formattedLabel = useFormatInputLabel({ label, name })
 
     return <div className={styles.container}>
         <label htmlFor={name}>

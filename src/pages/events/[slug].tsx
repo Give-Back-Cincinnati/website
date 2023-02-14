@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styles from './[slug].module.scss'
-import { EventHeader, EventDetails } from "@/components/Events"
+import { EventHeader, EventDetails, Waiver } from "@/components/Events"
 import { HorizontalBreak } from '@/components/Backgrounds'
 import { DynamicForm } from '@/components/DynamicForm'
 import { Spinner, Notify } from '@/components/DataDisplay'
@@ -77,6 +77,9 @@ export const Event = ({ event }: { event: Events }) => {
                     onSubmit={handleRegistrationSubmit}
                     values={me} // if we add new fields in the future, autopopulate them for logged in users
                     hiddenFields={['user']}
+                    labelOverrides={{
+                        hasAgreedToTerms: (_) => <Waiver />
+                    }}
                     isLoading={status === 'pending'}
                 />
                 : ''
