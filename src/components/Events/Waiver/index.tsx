@@ -92,9 +92,9 @@ export const Waiver = () => {
 
     return <>
         I have read and agree to the 
-        <span onClick={() => open('waiver')} className={styles.link}> terms of use</span>
+        <span onClick={() => open('terms')} className={styles.link}> terms of use</span>
         ,
-        <span onClick={() => open('waiver')} className={styles.link}> privacy policy</span>
+        <span onClick={() => open('privacy')} className={styles.link}> privacy policy</span>
         , and
         <span onClick={() => open('waiver')} className={styles.link}> waiver</span>
 
