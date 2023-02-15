@@ -70,8 +70,6 @@ const EventsAdmin: NextPageWithLayout = () => {
 
     function handleCreateEventSubmit (data: Record<string, unknown>): void {
         const newEvent = data as Events
-        newEvent.startTime = DateTime.fromFormat(newEvent.startTime, "yyyy-MM-dd'T'HH:mm").toISO()
-        newEvent.endTime = DateTime.fromFormat(newEvent.endTime, "yyyy-MM-dd'T'HH:mm").toISO()
         addEvent({
             events: newEvent
         })
@@ -96,7 +94,7 @@ const EventsAdmin: NextPageWithLayout = () => {
             endTime: DateTime.fromISO(obj.endTime).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY),
             registrations: (obj._id && typeof formattedEventRegistrations[obj._id] === 'number' ? formattedEventRegistrations[obj._id] : 0).toString(),
             actions: <div>
-                <Link href={`/admin/events/${obj._id}`}>
+                <Link href={`/admin/events/${obj._id}`} passHref>
 
                     <Button variant='outlined'>
                         See Details

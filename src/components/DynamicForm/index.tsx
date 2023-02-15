@@ -79,6 +79,7 @@ export const DynamicForm = ({
         const target = e.target as HTMLInputElement
         if (target) {
             const { name, value, checked, type } = target
+            console.log(name, value, type)
             if (type === 'checkbox') {
                 setFormState({ ...formState, [name]: checked })
                 return
@@ -91,7 +92,7 @@ export const DynamicForm = ({
     }, [formState])
 
     const handleSubmit = useCallback(() => {
-        const outputState = {...formState}
+        const outputState = { ...formState }
         // loop through state on submit to make sure to include timezone data in any datetime-local
         const { properties } = entity
         Object.keys(properties)
@@ -101,11 +102,11 @@ export const DynamicForm = ({
                     case 'string':
                         // date
                         if ('format' in property && property.format === 'date-time' && typeof formState[propertyKey] === 'string') {
-                            outputState[propertyKey] = DateTime.fromISO(formState[propertyKey] as string).toISO()
+                            outputState[propertyKey] = DateTime.fromISO(outputState[propertyKey] as string).toISO()
                             break
                         }
                         if ('format' in property && property.format === 'date' && typeof formState[propertyKey] === 'string') {
-                            outputState[propertyKey] = DateTime.fromISO(formState[propertyKey] as string).toISODate()
+                            outputState[propertyKey] = DateTime.fromISO(outputState[propertyKey] as string).toISODate()
                             break
                         }
                         break
