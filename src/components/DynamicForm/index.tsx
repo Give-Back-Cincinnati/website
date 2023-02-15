@@ -79,7 +79,6 @@ export const DynamicForm = ({
         const target = e.target as HTMLInputElement
         if (target) {
             const { name, value, checked, type } = target
-            console.log(name, value, type)
             if (type === 'checkbox') {
                 setFormState({ ...formState, [name]: checked })
                 return
