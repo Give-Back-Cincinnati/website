@@ -1,7 +1,9 @@
-import { useMemo, ComponentPropsWithoutRef, ChangeEventHandler } from 'react'
-import { DateTime } from 'luxon'
+import { ComponentPropsWithoutRef, ChangeEventHandler, ChangeEvent } from 'react'
 import { useFormatInputLabel } from 'hooks'
 import styles from './CheckBox.module.scss'
+
+import CSCheckBox, { CheckboxProps } from '@cloudscape-design/components/checkbox'
+import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events'
 
 export interface CheckBoxProps extends ComponentPropsWithoutRef<'input'> {
     name: string
@@ -27,11 +29,26 @@ export const CheckBox = ({
 
     const formattedLabel = useFormatInputLabel({ label, name })
 
+    const handleChange: NonCancelableEventHandler<CheckboxProps.ChangeDetail> = (e) => {
+        props.onChange({
+            target: {
+                name,
+                type: 'checkbox',
+                checked: e.detail.checked
+            }
+        } as unknown as ChangeEvent<HTMLInputElement>)
+    }
+
     return <div className={styles.container}>
-        <label htmlFor={name}>
-            <input type='checkbox' id={name} name={name} {...props} />
-            { formattedLabel }{ props.required ? '*' : '' }
-        </label>
+        <CSCheckBox
+            checked={props.checked}
+            onChange={handleChange}
+            disabled={props.disabled}
+        >
+            <label>
+                { formattedLabel }
+            </label>
+        </CSCheckBox>
         <div className={styles.errorText}>
             {errorText}
         </div>

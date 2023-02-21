@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import styles from './DateTimePicker.module.scss'
 import { useFormatInputLabel } from 'hooks'
 
-import { FormField, DatePicker, TimeInput, CalendarProps, DatePickerProps } from '@cloudscape-design/components'
+import { FormField, DatePicker, TimeInput, CalendarProps } from '@cloudscape-design/components'
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events'
 import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces'
 
