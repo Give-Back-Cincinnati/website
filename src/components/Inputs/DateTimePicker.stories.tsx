@@ -9,7 +9,7 @@ const story = {
     title: 'Inputs/DateTimePicker',
     component: DateTimePicker,
     argTypes: {
-        onChange: { action: 'onChange' }
+        onChange: { action: 'onChange' }
     }
 } as ComponentMeta<typeof DateTimePicker>
 

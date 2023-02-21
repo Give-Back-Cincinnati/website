@@ -53,11 +53,14 @@ export const DynamicForm = ({
                         }
                         // date
                         if ('format' in property && property.format === 'date-time') {
-                            emptyState[propertyKey] = (DateTime.fromISO(values[propertyKey] as string) || DateTime.now()).toFormat("yyyy-MM-dd'T'HH:mm")
+                            emptyState[propertyKey] = {
+                                date: '',
+                                time: ''
+                            }
                             break
                         }
                         if ('format' in property && property.format === 'date') {
-                            emptyState[propertyKey] = (DateTime.fromISO(values[propertyKey] as string) || DateTime.now()).toFormat("yyyy-MM-dd'T'HH:mm")
+                            emptyState[propertyKey] = ''
                             break
                         }
                         emptyState[propertyKey] = values[propertyKey] || ''
@@ -100,12 +103,25 @@ export const DynamicForm = ({
                 switch (property.type) {
                     case 'string':
                         // date
-                        if ('format' in property && property.format === 'date-time' && typeof formState[propertyKey] === 'string') {
-                            outputState[propertyKey] = DateTime.fromISO(outputState[propertyKey] as string).toISO()
+                        if ('format' in property && property.format === 'date-time') {
+                            const value = outputState[propertyKey]
+                            if (value
+                                && typeof value === 'object'
+                                && 'date' in value
+                                && 'time' in value
+                                && typeof value.date === 'string'
+                                && typeof value.time === 'string'
+                            ) {
+                                outputState[propertyKey] = DateTime.fromFormat(value.date + value.time, "yyyy'-'MM'-'ddhh':'mm").toISO()
+                            }
                             break
                         }
-                        if ('format' in property && property.format === 'date' && typeof formState[propertyKey] === 'string') {
-                            outputState[propertyKey] = DateTime.fromISO(outputState[propertyKey] as string).toISODate()
+                        if ('format' in property && property.format === 'date') {
+                            // { date: '2022-02-16' }
+                            const value = outputState[propertyKey]
+                            if (value && typeof value === 'object' && 'date' in value && typeof value.date === 'string') {
+                                outputState[propertyKey] = DateTime.fromFormat(value.date, 'yyyy-MM-dd').toISODate()
+                            }
                             break
                         }
                         break
@@ -163,7 +179,7 @@ export const DynamicForm = ({
                             content = <DateTimePicker
                                 name={propertyKey}
                                 label={label}
-                                value={formValue as string}
+                                value={formValue as { date: string, time: string }}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
                             />
@@ -174,7 +190,7 @@ export const DynamicForm = ({
                             content = <DateTimePicker
                                 name={propertyKey}
                                 label={label}
-                                value={formValue as string}
+                                value={formValue as { date: string, time: string }}
                                 onChange={handleChangeEvent}
                                 required={isRequired}
                                 type='date'
