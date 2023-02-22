@@ -8,10 +8,11 @@ import {
     DateTimePicker,
     Select,
     TextField,
-    TextArea,
+    TextArea
 } from "@/components/Inputs"
 import { Button } from "../Utils"
 import { DateTime } from "luxon"
+import { SelectProps } from "@cloudscape-design/components"
 
 export interface DynamicFormProps {
     entity: EntitySchema
@@ -100,6 +101,10 @@ export const DynamicForm = ({
         Object.keys(properties)
             .forEach(propertyKey => {
                 const property = properties[propertyKey]
+                if (property.enum) {
+                    outputState[propertyKey] = (outputState[propertyKey] as SelectProps.Option).value
+                    return
+                }
                 switch (property.type) {
                     case 'string':
                         // date
@@ -165,7 +170,7 @@ export const DynamicForm = ({
                         if ('enum' in property && Array.isArray(property.enum)) {
                             const selectOptions = property.enum.map(option => ({ _id: option }))
                             content =  <Select
-                                value={formValue as string}
+                                value={formValue as SelectOptions}
                                 options={selectOptions}
                                 name={propertyKey}
                                 label={label}

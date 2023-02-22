@@ -40,6 +40,13 @@
     }
 }
 
+.selectContainer {
+    min-width: 250px;
+    label {
+        text-transform: capitalize;
+    }
+}
+
 .fullWidth {
     min-width: 100%;
 }
