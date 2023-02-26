@@ -7,7 +7,7 @@ const story = {
     title: 'Inputs/TextField',
     component: TextField,
     argTypes: {
-        onChange: { action: 'onChange' }
+        onChange: { action: 'onChange' }
     }
 } as ComponentMeta<typeof TextField>
 
@@ -52,6 +52,8 @@ Errored.args = {
 export const WithPattern = Template.bind({})
 WithPattern.args = {
     ...Primary.args,
+    name: 'emailAddress',
+    label: 'Email Address',
     value: 'not an email',
     pattern: '^.+\@.+\.[a-zA-Z]{2,}$'
 }

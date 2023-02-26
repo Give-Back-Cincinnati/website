@@ -1,8 +1,10 @@
-import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, useMemo } from 'react'
-import { useSpring, animated } from '@react-spring/web'
+import React, { ChangeEvent, ComponentPropsWithoutRef, ChangeEventHandler, useMemo } from 'react'
 import { useFormatInputLabel } from 'hooks'
 
+import { Input, FormField, InputProps } from '@cloudscape-design/components'
+
 import styles from './TextField.module.scss'
+import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events'
 
 export interface TextFieldProps extends ComponentPropsWithoutRef<'input'> {
     name: string
@@ -13,16 +15,6 @@ export interface TextFieldProps extends ComponentPropsWithoutRef<'input'> {
     error?: boolean
     errorText?: string
     pattern?: string
-}
-
-const withValueStyle = {
-    top: '5px',
-    fontSize: '12px'
-}
-
-const nullStyle = {
-    top: '15px',
-    fontSize: '20px'
 }
 
 export const TextField = ({
@@ -36,56 +28,50 @@ export const TextField = ({
     pattern,
     ...props
 }: TextFieldProps) => {
-    const [labelStyles, api] = useSpring(() => value === '' ? nullStyle : withValueStyle)
     const formattedLabel = useFormatInputLabel({ label, name })
-    const inputEl = useRef<HTMLInputElement | null>(null)
-    
-    const containerStyles = [styles.container]
+
     const isValid = useMemo(() => {
-        return pattern
-            ? value !== '' && new RegExp(pattern).test(value)
-            : true
+        if (value === '') return true
+
+        if (pattern && new RegExp(pattern).test(value) === false) {
+            return false
+        }
+
+        return true
     }, [value, pattern])
 
     if (error || !isValid) {
-        containerStyles.push(styles.errorState)
         if (!isValid && !errorText) {
             errorText = `Invalid ${formattedLabel} format`
         }
     }
-    if (fullWidth) containerStyles.push(styles.fullWidth)
 
-    function handleLabelClick () {
-        inputEl.current?.focus()
+    const handleChange: NonCancelableEventHandler<InputProps.ChangeDetail> = (e) => {
+        onChange({
+            target: {
+                name,
+                value: e.detail.value
+            }
+        } as unknown as ChangeEvent<HTMLInputElement>)
     }
 
-    function handleFocus () {
-        api.start(withValueStyle)
-    }
+    const formattedValue = useMemo(() => {
+        if (!pattern) return value
+        // return value
+    }, [value, pattern])
 
-    function handleBlur () {
-        value === '' && api.start(nullStyle)
-    }
-
-    return <div className={containerStyles.join(' ')}>
-            <animated.label
-                htmlFor={name}
-                style={labelStyles}
-                onClick={handleLabelClick}
-            >
-                {formattedLabel}{props.required ? '*' : ''}
-            </animated.label>
-            <input
-                {...props}
-                name={name}
+    return <div className={styles.container}>
+        <FormField
+            label={formattedLabel + (props.required ? '*' : '')}
+            errorText={errorText}
+        >
+            <Input
+                onChange={handleChange}
                 value={value}
-                onChange={onChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                ref={inputEl}
             />
-            <div className={styles.errorText}>
-                {errorText}
-            </div>
-        </div>
+        </FormField>
+            {
+                formattedValue
+            }
+    </div>
 }

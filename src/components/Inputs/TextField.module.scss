@@ -2,6 +2,13 @@
 @import '../../styles/colors.scss';
 
 .container {
+    min-width: 250px;
+    label {
+        text-transform: capitalize;
+    }
+}
+
+.containerx {
     display: inline-block;
     position: relative;
     padding-top: 1rem;

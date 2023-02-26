@@ -53,6 +53,7 @@ export const Select = ({
     return <div className={styles.selectContainer}>
         <FormField
             label={formattedLabel}
+            errorText={errorText || error}
         >
             <CSSelect
                 selectedOption={{ label: value.label, value: value.value }}
@@ -61,24 +62,4 @@ export const Select = ({
             />
         </FormField>
     </div>
-
-    // return <div className={containerStyles.join(' ')}>
-    //         <label htmlFor={name}>{ formattedLabel }{ props.required ? '*' : '' }</label>
-    //         <select 
-    //             {...props}
-    //             value={value}
-    //             name={name}
-    //         >
-    //             {
-    //                 nullable ? <option value=''></option> : ''
-    //             }
-    //             {
-    //                 options.map(({ label, _id }) => <option key={_id} value={_id}>{label || _id}</option>)
-    //             }
-    //         </select>
-    //         <MdKeyboardArrowDown className={styles.downArrow} />
-    //         <div className={styles.errorText}>
-    //             {errorText}
-    //         </div>
-    //     </div>
 }

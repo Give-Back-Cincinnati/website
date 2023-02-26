@@ -34,7 +34,9 @@
 
 .datePickerContainer {
     max-width: fit-content;
+    min-width: 250px;
     label, h4 {
+        color: $gbc-black;
         text-transform: capitalize;
     }
 }

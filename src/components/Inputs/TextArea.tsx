@@ -1,8 +1,10 @@
-import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, useMemo } from 'react'
-import { useSpring, animated } from '@react-spring/web'
+import React, { ComponentPropsWithoutRef, ChangeEventHandler, useMemo, ChangeEvent } from 'react'
 import { useFormatInputLabel } from 'hooks'
 
+import { Textarea, TextareaProps, FormField } from '@cloudscape-design/components'
+
 import styles from './TextArea.module.scss'
+import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events'
 
 export interface TextAreaProps extends ComponentPropsWithoutRef<'textarea'> {
     name: string
@@ -13,16 +15,6 @@ export interface TextAreaProps extends ComponentPropsWithoutRef<'textarea'> {
     error?: boolean
     errorText?: string
     pattern?: string
-}
-
-const withValueStyle = {
-    top: '5px',
-    fontSize: '12px'
-}
-
-const nullStyle = {
-    top: '15px',
-    fontSize: '20px'
 }
 
 export const TextArea = ({
@@ -36,61 +28,42 @@ export const TextArea = ({
     pattern,
     ...props
 }: TextAreaProps) => {
-    const [labelStyles, api] = useSpring(() => value === '' ? nullStyle : withValueStyle)
     const formattedLabel = useFormatInputLabel({ label, name })
-    const inputEl = useRef<HTMLTextAreaElement | null>(null)
     
-    const containerStyles = [styles.container]
     const isValid = useMemo(() => {
-        return pattern
-            ? value !== '' && new RegExp(pattern).test(value)
-            : true
+        if (value === '') return true
+
+        if (pattern && new RegExp(pattern).test(value) === false) {
+            return false
+        }
+
+        return true
     }, [value, pattern])
 
     if (error || !isValid) {
-        containerStyles.push(styles.errorState)
         if (!isValid && !errorText) {
             errorText = `Invalid ${formattedLabel} format`
         }
     }
-    if (fullWidth) containerStyles.push(styles.fullWidth)
 
-    function handleLabelClick () {
-        inputEl.current?.focus()
+    const handleChange: NonCancelableEventHandler<TextareaProps.ChangeDetail> = (e) => {
+        onChange({
+            target: {
+                name,
+                value: e.detail.value
+            }
+        } as unknown as ChangeEvent<HTMLTextAreaElement>)
     }
 
-    function handleFocus () {
-        api.start(withValueStyle)
-    }
-
-    function handleBlur () {
-        value === '' && api.start(nullStyle)
-    }
-
-    return <div className={containerStyles.join(' ')}>
-            <animated.label
-                htmlFor={name}
-                style={labelStyles}
-                onClick={handleLabelClick}
-            >
-                {formattedLabel}{props.required ? '*' : ''}
-            </animated.label>
-            <div className={styles.textContainer}>
-                <textarea
-                    {...props}
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    ref={inputEl}
-                />
-                <p className={styles.textDisplay}>
-                    { value }
-                </p>
-            </div>
-            <div className={styles.errorText}>
-                {errorText}
-            </div>
-        </div>
+    return <div className={styles.container}>
+        <FormField
+            label={formattedLabel + (props.required ? '*' : '')}
+            errorText={errorText}
+        >
+            <Textarea
+                onChange={handleChange}
+                value={value}
+            />
+        </FormField>
+    </div>
 }
