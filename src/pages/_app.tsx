@@ -1,5 +1,4 @@
 import '../styles/globals.scss'
-import "@cloudscape-design/global-styles/index.css"
 import React, { ReactElement, ReactNode} from 'react'
 import Head from 'next/head'
 import type { NextPage } from 'next'
@@ -8,6 +7,8 @@ import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
 import { Toaster } from '@/components/DataDisplay/Toaster'
 
+import { ThemeProvider } from '@mui/material/styles'
+import { CreateThemeHook } from 'hooks'
 import { store, actions } from 'store'
 import { Provider } from 'react-redux'
 import { createServices } from 'services'
@@ -15,16 +16,18 @@ createServices(store, actions)
 
 export type NextPageWithLayout = NextPage & {
     getLayout?: (page: ReactElement) => ReactNode
-  }
+}
   
-  type AppPropsWithLayout = AppProps & {
+type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout
-  }
+}
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page) => page)
+    const theme = CreateThemeHook()
 
-    return <Provider store={store}>
+    return <ThemeProvider theme={theme}>
+        <Provider store={store}>
             <Head>
                 <title>Give Back Cincinnati</title>
                 <meta name='description' content="Give Back Cincinnati's Website" />
@@ -46,6 +49,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
             <Toaster />
         </Provider>
+    </ThemeProvider>
 }
 
 export default MyApp

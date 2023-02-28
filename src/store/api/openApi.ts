@@ -4,6 +4,7 @@ export const addTagTypes = [
   "permissions",
   "registrations",
   "roles",
+  "uploads",
   "users",
   "auth",
   "events",
@@ -162,6 +163,51 @@ const injectedRtkApi = api
           method: "DELETE",
         }),
         invalidatesTags: ["roles"],
+      }),
+      searchUploads: build.query<SearchUploadsApiResponse, SearchUploadsApiArg>(
+        {
+          query: (queryArg) => ({
+            url: `/uploads`,
+            params: {
+              limit: queryArg.limit,
+              offset: queryArg.offset,
+              sort: queryArg.sort,
+              order: queryArg.order,
+            },
+          }),
+          providesTags: ["uploads"],
+        }
+      ),
+      createUploads: build.mutation<
+        CreateUploadsApiResponse,
+        CreateUploadsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/uploads`,
+          method: "POST",
+          body: queryArg.body,
+        }),
+        invalidatesTags: ["uploads"],
+      }),
+      updateUploads: build.mutation<
+        UpdateUploadsApiResponse,
+        UpdateUploadsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/uploads/${queryArg.id}`,
+          method: "PATCH",
+        }),
+        invalidatesTags: ["uploads"],
+      }),
+      deleteUploads: build.mutation<
+        DeleteUploadsApiResponse,
+        DeleteUploadsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/uploads/${queryArg.id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["uploads"],
       }),
       searchUsers: build.query<SearchUsersApiResponse, SearchUsersApiArg>({
         query: (queryArg) => ({
@@ -409,6 +455,35 @@ export type DeleteRoleApiResponse = unknown;
 export type DeleteRoleApiArg = {
   id?: any;
 };
+export type SearchUploadsApiResponse = /** status 200 undefined */ Uploads[];
+export type SearchUploadsApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?;
+  order?: "asc" | "desc";
+};
+export type CreateUploadsApiResponse = /** status 201 undefined */ {
+  _id?: string;
+  uploadUrl?: string;
+};
+export type CreateUploadsApiArg = {
+  body: {
+    name?: string;
+    "mime-type"?:
+      | "image/png"
+      | "image/jpeg"
+      | "image/svg+xml"
+      | "application/pdf";
+  };
+};
+export type UpdateUploadsApiResponse = unknown;
+export type UpdateUploadsApiArg = {
+  id?: any;
+};
+export type DeleteUploadsApiResponse = unknown;
+export type DeleteUploadsApiArg = {
+  id?: any;
+};
 export type SearchUsersApiResponse = /** status 200 undefined */ Users[];
 export type SearchUsersApiArg = {
   limit?: number;
@@ -535,6 +610,12 @@ export type Roles = {
   permissions: string[];
   filters?: string[];
 };
+export type Uploads = {
+  _id?: string;
+  name: string;
+  url?: string;
+  isLive?: boolean;
+};
 export type Users = {
   _id?: string;
   firstName: string;
@@ -615,6 +696,11 @@ export const {
   useLazyGetRoleQuery,
   useUpdateRoleMutation,
   useDeleteRoleMutation,
+  useSearchUploadsQuery,
+  useLazySearchUploadsQuery,
+  useCreateUploadsMutation,
+  useUpdateUploadsMutation,
+  useDeleteUploadsMutation,
   useSearchUsersQuery,
   useLazySearchUsersQuery,
   useCreateUserMutation,
