@@ -84,7 +84,7 @@ const story = {
   },
   parameters: {
     layout: 'fullscreen',
-}
+  }
 } as ComponentMeta<typeof ExperienceDisplay>
 
 export default story

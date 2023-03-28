@@ -1,11 +1,27 @@
 import { Box, Typography } from "@mui/material"
-
+import { AvailableFields } from "../Display"
 import styles from './Descriptors.module.scss'
 
 export type DescriptorsProps = {
   title: string,
   description?: string,
   highlights: { title: string, description: string }[]
+}
+
+export const DescriptorsFields: AvailableFields<{
+  title: { type: string },
+  description: { type: string },
+  highlights: AvailableFields<{ title: string, description: string }>
+}> = {
+  title: { type: 'string' },
+  description: { type: 'string' },
+  highlights: {
+    type: 'array',
+    shape: {
+      title: { type: 'string' },
+      description: { type: 'string' }
+    }
+  }
 }
 
 export const Descriptors = ({ title, description, highlights }: DescriptorsProps) => {

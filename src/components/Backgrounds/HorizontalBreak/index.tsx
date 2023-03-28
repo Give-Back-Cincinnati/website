@@ -2,8 +2,16 @@ import React, { ComponentPropsWithoutRef, ReactElement } from 'react'
 
 import styles from './index.module.scss'
 
+import { AvailableFields } from '@/components/ExperienceBuilder'
+
 export interface HorizontalBreakProps extends ComponentPropsWithoutRef<'div'> {
     children: ReactElement | string
+}
+
+export const HorizontalBreakFields: AvailableFields<
+{ children: { type: string }}
+> = {
+    children: { type: 'string' }
 }
 
 export const HorizontalBreak = ({ children, ...props }: HorizontalBreakProps) => {

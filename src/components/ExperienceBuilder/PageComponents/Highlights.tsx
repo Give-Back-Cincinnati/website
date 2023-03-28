@@ -1,5 +1,7 @@
 import { Box, Typography } from '@mui/material'
 
+import { AvailableFields } from '../Display'
+
 import styles from './Descriptors.module.scss'
 
 export type HighlightProps = {
@@ -8,7 +10,25 @@ export type HighlightProps = {
   highlights: { title: string, tag: string, description: string }[]
 }
 
-export const Highlights = ({ title, description, highlights }: HighlightProps) => {
+export const HighlightFields: AvailableFields<{
+  title: { type: string },
+  description: { type: string },
+  highlights: AvailableFields<{ title: string, tag: string, description: string }>
+}> = {
+  title: { type: 'string' },
+  description: { type: 'string' },
+  highlights: {
+    type: 'array',
+    shape: {
+      title: { type: 'string' },
+      tag: { type: 'string' },
+      description: { type: 'string' }
+    }
+  }
+}
+
+export const Highlights = ({ title = "", description = "", highlights = [] }: HighlightProps) => {
+  console.log(title, description, highlights)
   return <Box>
     <Typography padding='1.5rem 0 0 0' align='center' variant="h4" textTransform='capitalize'>
       { title }
