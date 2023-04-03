@@ -8,12 +8,15 @@ const meta: ComponentMeta<typeof ExperienceBuilder> = {
   component: ExperienceBuilder,
   parameters: {
     layout: 'fullscreen',
-  }
+  },
+  argTypes: { saveExperience: { action: 'clicked' } }
 }
 
 export default meta
 
-const Template: ComponentStory<typeof ExperienceBuilder> = (args) => <ExperienceBuilder {...args} />
+const Template: ComponentStory<typeof ExperienceBuilder> = (args) => <ExperienceBuilder
+  {...args} 
+/>
 
 export const Primary = Template.bind({})
 
@@ -23,10 +26,10 @@ WithComponents.args = {
     {
       component: 'Header',
       props: {
-        title: 'Hello World'
+        title: 'Edited Title'
       }
     },
-    { component: 'HorizontalBreak', props: {} },
+    { component: 'HorizontalBreak', props: { children: '<hr />' } },
     { component: 'FAQ', props: { items: [{ question: 'What do I need to bring to Paint Day?', answer: 'A good attitude!' }] } },
   ]
 }

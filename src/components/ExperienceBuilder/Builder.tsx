@@ -14,7 +14,13 @@ export interface InputShape<T> {
   shape?: T
 }
 
-export const ExperienceBuilder = ({ initialExperience = [] }: { initialExperience?: Experience[]}) => {
+export const ExperienceBuilder = ({ 
+  initialExperience = [],
+  saveExperience
+}: {
+  initialExperience?: Experience[],
+  saveExperience: (experience: Experience[]) => void
+}) => {
   const convertToSchema = useConvertToSchemaHook()
   const [ newElementIsOpen, setNewElementIsOpen ] = useState(false)
   const [ componentToAdd, setComponentToAdd ] = useState<Experience | undefined>()
@@ -88,6 +94,7 @@ export const ExperienceBuilder = ({ initialExperience = [] }: { initialExperienc
                 </div>
                 <DynamicForm
                   entity={form}
+                  values={experience[index].props}
                   onSubmit={value => setExperienceValue(index, value)}
                 />
               </>
@@ -132,7 +139,13 @@ export const ExperienceBuilder = ({ initialExperience = [] }: { initialExperienc
     </div>
     <ErrorBoundary>
       <div className={styles.display}>
-        <h2 className={styles.previewHeader}>Preview</h2>
+        <div className={styles.preview}>
+          <h2>Preview</h2>
+          <Button onClick={() => {
+            console.log(experience)
+            saveExperience(experience)
+          }} >Save Experience</Button>
+        </div>
         <ExperienceDisplay experience={experience} />
       </div>
     </ErrorBoundary>
