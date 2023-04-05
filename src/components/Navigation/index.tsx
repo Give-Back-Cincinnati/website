@@ -40,11 +40,11 @@ export const Navigation = () => {
         {
             label: 'Our Programs',
             childRoutes: [
-                { label: 'Cincy YP', href: '/cincy-yp' },
+                // { label: 'Cincy YP', href: '/cincy-yp' },
                 { label: 'Fall Feast', href: '/fall-feast' },
                 { label: 'Fuel Cincinnati', href: '/fuel-cincinnati' },
-                { label: 'Give Back Beyond Cincinnati', href: '/give-back-beyond-cincinnati' },
-                { label: 'Paint the Town', href: '/paint-the-town' },
+                // { label: 'Give Back Beyond Cincinnati', href: '/give-back-beyond-cincinnati' },
+                // { label: 'Paint the Town', href: '/paint-the-town' },
             ]
         },
         // {
