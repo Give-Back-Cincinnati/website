@@ -26,6 +26,7 @@ const injectedRtkApi = api
             offset: queryArg.offset,
             sort: queryArg.sort,
             order: queryArg.order,
+            url: queryArg.url,
           },
         }),
         providesTags: ["dynamicpages"],
@@ -391,8 +392,9 @@ export type SearchDynamicPagesApiResponse =
 export type SearchDynamicPagesApiArg = {
   limit?: number;
   offset?: number;
-  sort?;
+  sort?: "name" | "url";
   order?: "asc" | "desc";
+  url?: string;
 };
 export type CreateDynamicPagesApiResponse =
   /** status 201 undefined */ DynamicPages;
@@ -605,8 +607,8 @@ export type DeleteRegistrationApiArg = {
 export type DynamicPages = {
   _id?: string;
   name: string;
-  url?: string;
-  experience?: string;
+  url: string;
+  experience: string;
 };
 export type Filters = {
   _id?: string;
