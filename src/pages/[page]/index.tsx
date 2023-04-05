@@ -3,6 +3,7 @@ import { DynamicPages } from '@/store/api/openApi'
 import { ExperienceDisplay } from '@/components/ExperienceBuilder'
 
 export async function getStaticPaths() {
+  const params = new URLSearchParams({ url: '^[a-z|\-]+$'}).toString() // only get pages with url that starts with a-z or - (root pages)
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dynamicpages`)
 
   const pages: DynamicPages[] = await res.json()

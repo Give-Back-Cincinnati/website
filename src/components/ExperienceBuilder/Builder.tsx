@@ -38,8 +38,10 @@ export const ExperienceBuilder = ({
   }, [])
 
   const handleNewElementChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    const component = e.target.value as Experience["component"]
+    const component: Experience["component"] | undefined = e.target.value as Experience["component"]
     
+    if (!component) return setComponentToAdd(undefined)
+
     const exp: Experience = {
       component: component,
       props: {}
@@ -134,6 +136,14 @@ export const ExperienceBuilder = ({
           }}>
             Add
           </Button>
+          <div>
+            {
+              componentToAdd && <>
+                <h3>Preview</h3>
+                <ExperienceDisplay experience={[componentToAdd]}/>
+              </>
+            }
+          </div>
         </>
       </Modal>
     </div>
