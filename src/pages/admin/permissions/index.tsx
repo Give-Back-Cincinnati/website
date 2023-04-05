@@ -6,7 +6,7 @@ import { Table } from '@/components/DataDisplay'
 
 const AdminPermissions: NextPageWithLayout = () => {
     const canSeePermissions = useUserHasPermission('permissions.get')
-    const { data: permissions } = useSearchPermissionsQuery({ sort: 'group', order: 'asc' })
+    const { data: permissions } = useSearchPermissionsQuery({ sort: 'group', order: 'asc', limit: 0 })
 
     return <div>
         <h2>

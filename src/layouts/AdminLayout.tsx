@@ -10,6 +10,7 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
         '',
         'events',
         'users',
+        'dynamic-pages',
     ]
     const router = useRouter()
     const [currentRoute, setCurrentRoute] = useState<string>(router.asPath)

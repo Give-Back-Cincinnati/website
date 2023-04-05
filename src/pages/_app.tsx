@@ -34,7 +34,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 <link rel="icon" href="/favicon-16x16.ico" sizes="16x16" />
                 <link rel="icon" href="/favicon-32x32.ico" sizes="32x32" />
                 <link rel="icon" href="/favicon-96x96.ico" sizes="96x96" />
-            
+                <link rel="preload" href='/AlternateGotNo3D_Regular.ttf' as="font" type="font/ttf" crossOrigin='true' />
+                <meta name="viewport" content="initial-scale=1, width=device-width" />
             </Head>
 
             <Navigation />

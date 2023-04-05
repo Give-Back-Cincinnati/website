@@ -28,7 +28,6 @@ export const HighlightFields: AvailableFields<{
 }
 
 export const Highlights = ({ title = "", description = "", highlights = [] }: HighlightProps) => {
-  console.log(title, description, highlights)
   return <Box>
     <Typography padding='1.5rem 0 0 0' align='center' variant="h4" textTransform='capitalize'>
       { title }

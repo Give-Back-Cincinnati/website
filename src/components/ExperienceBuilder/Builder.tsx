@@ -142,7 +142,6 @@ export const ExperienceBuilder = ({
         <div className={styles.preview}>
           <h2>Preview</h2>
           <Button onClick={() => {
-            console.log(experience)
             saveExperience(experience)
           }} >Save Experience</Button>
         </div>
