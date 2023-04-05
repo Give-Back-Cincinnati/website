@@ -1,8 +1,17 @@
 import styles from './index.module.scss'
 
+import { AvailableFields } from '@/components/ExperienceBuilder'
+
 export interface EventHeaderProps {
     title?: string
     category?: string
+}
+
+export const EventHeaderFields: AvailableFields<
+    { title: { type: string }, category: { type: string } }
+> = {
+    title: { type: 'string' },
+    category: { type: 'string' }
 }
 
 export const EventHeader = ({ title = 'Give Back Cincinnati Events', category = '' }: EventHeaderProps) => {

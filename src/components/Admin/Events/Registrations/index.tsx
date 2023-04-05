@@ -8,6 +8,7 @@ import {
     Users
 } from "@/store/api/openApi"
 import { CheckBox } from '@/components/Inputs'
+import { Button } from '@/components/Utils'
 import { DateTime } from 'luxon'
 
 export type AdminEventRegistrationsProps = {
@@ -16,7 +17,7 @@ export type AdminEventRegistrationsProps = {
 
 export const AdminEventRegistrations = ({ eventId }: AdminEventRegistrationsProps) => {
     const { data: users } = useSearchUsersQuery({ limit: 0 }) // limit 0 will return all users
-    const { data: eventRegistrations } = useGetEventsByEventIdRegisterQuery({ eventId })
+    const { data: eventRegistrations } = useGetEventsByEventIdRegisterQuery({ eventId, limit: 0 })
 
     const formattedUsers = useMemo(() => {
         if (!users) return {}
@@ -47,17 +48,32 @@ export const AdminEventRegistrations = ({ eventId }: AdminEventRegistrationsProp
         })
     }, [eventRegistrations, formattedUsers, eventId])
 
+    const emailList = useMemo(() => {
+        return formattedEventRegistrations
+            .map(registration => registration.email)
+            .join()
+    }, [ formattedEventRegistrations ])
+
     return <div>
     <h2>Registrations: {eventRegistrations?.length || 0}</h2>
     {
         eventRegistrations &&
-        <Table
-            keys={['firstName', 'lastName', 'phone', 'email', 'dateOfBirth', 'hasAgreedToTerms', 'checkedIn', 'delete']}
-            data={formattedEventRegistrations}
-            formatFunctions={{
-                dateOfBirth: (val) => DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT)
-            }}
-        />
+        <>
+            <a href={`mailto:?bcc=${emailList}`}>
+                <Button
+                    variant='outlined'
+                >
+                    Email All Registrations
+                </Button>
+            </a>
+            <Table
+                keys={['firstName', 'lastName', 'phone', 'email', 'dateOfBirth', 'hasAgreedToTerms', 'checkedIn', 'delete']}
+                data={formattedEventRegistrations}
+                formatFunctions={{
+                    dateOfBirth: (val) => DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT)
+                }}
+            />
+        </>
     }
 </div>
 }

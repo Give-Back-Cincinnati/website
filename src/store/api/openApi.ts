@@ -1,5 +1,6 @@
 import { apiSlice as api } from "./apiSlice";
 export const addTagTypes = [
+  "dynamicpages",
   "filters",
   "permissions",
   "registrations",
@@ -14,6 +15,60 @@ const injectedRtkApi = api
   })
   .injectEndpoints({
     endpoints: (build) => ({
+      searchDynamicPages: build.query<
+        SearchDynamicPagesApiResponse,
+        SearchDynamicPagesApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/dynamicpages`,
+          params: {
+            limit: queryArg.limit,
+            offset: queryArg.offset,
+            sort: queryArg.sort,
+            order: queryArg.order,
+          },
+        }),
+        providesTags: ["dynamicpages"],
+      }),
+      createDynamicPages: build.mutation<
+        CreateDynamicPagesApiResponse,
+        CreateDynamicPagesApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/dynamicpages`,
+          method: "POST",
+          body: queryArg.dynamicPages,
+        }),
+        invalidatesTags: ["dynamicpages"],
+      }),
+      getDynamicPages: build.query<
+        GetDynamicPagesApiResponse,
+        GetDynamicPagesApiArg
+      >({
+        query: (queryArg) => ({ url: `/dynamicpages/${queryArg.id}` }),
+        providesTags: ["dynamicpages"],
+      }),
+      updateDynamicPages: build.mutation<
+        UpdateDynamicPagesApiResponse,
+        UpdateDynamicPagesApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/dynamicpages/${queryArg.id}`,
+          method: "PATCH",
+          body: queryArg.dynamicPages,
+        }),
+        invalidatesTags: ["dynamicpages"],
+      }),
+      deleteDynamicPages: build.mutation<
+        DeleteDynamicPagesApiResponse,
+        DeleteDynamicPagesApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/dynamicpages/${queryArg.id}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["dynamicpages"],
+      }),
       searchFilters: build.query<SearchFiltersApiResponse, SearchFiltersApiArg>(
         {
           query: (queryArg) => ({
@@ -331,6 +386,33 @@ const injectedRtkApi = api
     overrideExisting: false,
   });
 export { injectedRtkApi as openApi };
+export type SearchDynamicPagesApiResponse =
+  /** status 200 undefined */ DynamicPages[];
+export type SearchDynamicPagesApiArg = {
+  limit?: number;
+  offset?: number;
+  sort?;
+  order?: "asc" | "desc";
+};
+export type CreateDynamicPagesApiResponse =
+  /** status 201 undefined */ DynamicPages;
+export type CreateDynamicPagesApiArg = {
+  dynamicPages: DynamicPages;
+};
+export type GetDynamicPagesApiResponse = /** status 200 Success */ DynamicPages;
+export type GetDynamicPagesApiArg = {
+  id?: any;
+};
+export type UpdateDynamicPagesApiResponse =
+  /** status 200 Success */ DynamicPages;
+export type UpdateDynamicPagesApiArg = {
+  id?: any;
+  dynamicPages: DynamicPages;
+};
+export type DeleteDynamicPagesApiResponse = unknown;
+export type DeleteDynamicPagesApiArg = {
+  id?: any;
+};
 export type SearchFiltersApiResponse = /** status 200 undefined */ Filters[];
 export type SearchFiltersApiArg = {
   limit?: number;
@@ -520,6 +602,12 @@ export type DeleteRegistrationApiArg = {
   eventId?: any;
   registrationId?: any;
 };
+export type DynamicPages = {
+  _id?: string;
+  name: string;
+  url?: string;
+  experience?: string;
+};
 export type Filters = {
   _id?: string;
   name: string;
@@ -590,6 +678,13 @@ export type GuestRegistration = {
   email: string;
 } & BasicRegistration;
 export const {
+  useSearchDynamicPagesQuery,
+  useLazySearchDynamicPagesQuery,
+  useCreateDynamicPagesMutation,
+  useGetDynamicPagesQuery,
+  useLazyGetDynamicPagesQuery,
+  useUpdateDynamicPagesMutation,
+  useDeleteDynamicPagesMutation,
   useSearchFiltersQuery,
   useLazySearchFiltersQuery,
   useCreateFiltersMutation,

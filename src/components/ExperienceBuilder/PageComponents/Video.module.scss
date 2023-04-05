@@ -1,0 +1,21 @@
+@import '../../../styles/colors.scss';
+
+.container {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  background-color: $gbc-black;
+  padding: 2rem 0;
+}
+
+.video {
+  width: 750px;
+}
+
+.titleContainer {
+  padding: 1rem 0 0 0;
+  width: 375px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}

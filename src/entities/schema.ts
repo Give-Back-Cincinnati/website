@@ -1,6 +1,7 @@
 export interface EntitySchema {
     type: string
     required: string[]
+    items?: EntitySchema,
     properties: Record<string, {
         type?: string,
         schema?: $Ref,
@@ -12,6 +13,7 @@ export interface EntitySchema {
         maxLength?: number,
         readonly?: boolean
         pattern?: string
+        items?: EntitySchema,
     }>
 }
 
