@@ -1,7 +1,9 @@
 import React, { ComponentPropsWithoutRef } from 'react'
 import styles from './index.module.scss'
 
-import { Spinner } from '@/components/DataDisplay'
+import { Button as XButton, CircularProgress } from '@mui/material'
+
+// import { Spinner } from '@/components/DataDisplay'
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
     children: string
@@ -9,6 +11,28 @@ export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
     size?: 'sm' | 'md' | 'lg' | 'xl'
     isLoading?: boolean
 }
+
+const sizeMap: {
+    sm: 'small',
+    md: 'medium',
+    lg: 'large',
+    xl: 'large'
+} = {
+    sm: 'small',
+    md: 'medium',
+    lg: 'large',
+    xl: 'large'
+}
+
+const variantMap: {
+    default: 'contained',
+    outlined: 'outlined'
+} = {
+    default: 'contained',
+    outlined: 'outlined'
+}
+
+const paddingSize = 10
 
 export const Button = ({
     children,
@@ -30,14 +54,21 @@ export const Button = ({
         buttonStyles.push(styles.disabled)
     }
 
-    return <button className={buttonStyles.join(' ')} {...props} disabled={isDisabled}>
-        {
-            isLoading
-                ? <Spinner color='alt' className={styles.loadingSpinner} />
-                : ''
-        }
-        <span>
+    return <XButton
+        variant={variantMap[variant]}
+        size={sizeMap[size]}
+        disabled={isDisabled}
+        onClick={props.onClick}
+        startIcon={isLoading
+            ? <CircularProgress
+                size={paddingSize}
+                color='inherit'
+            />
+            : <span style={{ width: paddingSize }} />}
+        endIcon={<span style={{ width: paddingSize }} />}
+    >
+        <>
             { children.toUpperCase() }
-        </span>
-    </button>
+        </>
+    </XButton>
 }

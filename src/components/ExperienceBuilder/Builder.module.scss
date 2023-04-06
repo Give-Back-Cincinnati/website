@@ -1,0 +1,47 @@
+@import '../../styles/colors.scss';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid $gbc-black;
+  margin-right: 1rem;
+  padding: 1rem 1rem 1rem 0;
+  .addElementButton {
+    padding-top: 1rem;
+  }
+}
+
+.display {
+  flex: 1;
+  .preview {
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px solid $gbc-black;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+.formContainer {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.formHeader {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}

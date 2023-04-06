@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, ReactElement, ChangeEventHandler } from "react"
+import React, { useState, useEffect, useMemo, useCallback, ReactElement, ChangeEventHandler } from "react"
 import { EntitySchema } from "@/types/schema"
 
 import styles from './DynamicForm.module.scss'
@@ -10,7 +10,7 @@ import {
     TextField,
     TextArea,
 } from "@/components/Inputs"
-import { Button } from "../Utils"
+import { Button, Paper } from "../Utils"
 import { DateTime } from "luxon"
 
 export interface DynamicFormProps {
@@ -21,6 +21,8 @@ export interface DynamicFormProps {
     labelOverrides?: Record<string, (label: string) => string | JSX.Element>
     isLoading?: boolean
     isProtected?: boolean
+    hideSubmit?: boolean
+    submitLabel?: string
 }
 
 export const DynamicForm = ({
@@ -30,7 +32,9 @@ export const DynamicForm = ({
     hiddenFields = [],
     labelOverrides = {},
     isLoading = false,
-    isProtected = false
+    isProtected = false,
+    hideSubmit = false,
+    submitLabel = 'Submit',
 }: DynamicFormProps) => {
     // Derive the initial and empty states so they can be used in the created inputs
     const { initialState } = useMemo(() => {
@@ -66,6 +70,9 @@ export const DynamicForm = ({
                     case 'boolean':
                         emptyState[propertyKey] = values[propertyKey] || false
                         break;
+                    case 'array':
+                        emptyState[propertyKey] = values[propertyKey] || []
+                        break;
                     default:
                         emptyState[propertyKey] = values[propertyKey] || ''
                 }
@@ -74,21 +81,6 @@ export const DynamicForm = ({
     }, [entity, values, hiddenFields])
 
     const [formState, setFormState] = useState(initialState)
-
-    const handleChangeEvent: ChangeEventHandler = useCallback((e) => {
-        const target = e.target as HTMLInputElement
-        if (target) {
-            const { name, value, checked, type } = target
-            if (type === 'checkbox') {
-                setFormState({ ...formState, [name]: checked })
-                return
-            }
-            if (name in formState) {
-                setFormState({ ...formState, [name]: value })
-                return
-            }
-        }
-    }, [formState])
 
     const handleSubmit = useCallback(() => {
         const outputState = { ...formState }
@@ -115,6 +107,41 @@ export const DynamicForm = ({
             })
         onSubmit(outputState)
     }, [ formState, onSubmit, entity ])
+
+    const handleChangeEvent: ChangeEventHandler = useCallback((e) => {
+        const target = e.target as HTMLInputElement
+        if (target) {
+            const { name, value, checked, type } = target
+            if (type === 'checkbox') {
+                setFormState({ ...formState, [name]: checked })
+            } else if (name in formState) {
+                setFormState({ ...formState, [name]: value })
+            }
+        }
+    }, [formState])
+
+    const handleArrChangeEvent = useCallback((name: string, e: Record<string, any>, index?: number) => {
+        setFormState(formState => {
+            const arr = formState[name] as Record<string, any>[]
+            if (Array.isArray(arr)) {
+                index ??= (formState[name] as Record<string, any>[]).length
+                arr[index] = e
+                return { ...formState, [name]: arr }
+            }
+            return formState
+        })
+    }, [])
+
+    const deleteFromArr = useCallback((index: number, name: string) => {
+        setFormState(formState => {
+            const arr = formState[name] as Record<string, any>[]
+            if (Array.isArray(arr)) {
+                arr.splice(index, 1)
+                return { ...formState, [name]: arr }
+            }
+            return formState
+        })
+    }, [])
 
     const inputs = useMemo(() => {
         const { required, properties } = entity
@@ -203,6 +230,41 @@ export const DynamicForm = ({
                             required={isRequired}
                         />
                         break;
+                    case 'array':
+                        const arrItems = property.items
+                        if (arrItems) {
+                            const arr = (formValue as []).map((item, index) => {
+                                return <React.Fragment key={index}>
+                                    <div className={styles.arrHeader}>
+                                        <h3>Item: { (index + 1).toString() }</h3>
+                                        <Button variant="outlined" size="sm" onClick={() => deleteFromArr(index, propertyKey)}>Delete</Button>
+                                    </div>
+                                    <DynamicForm
+                                        submitLabel="Save"
+                                        onSubmit={itmVal => handleArrChangeEvent(propertyKey, itmVal, index)}
+                                        entity={arrItems}
+                                        values={item}
+                                    />
+                                </React.Fragment>
+                            })
+
+                            arr.push(<React.Fragment key="new">
+                                <h3>New Item</h3>
+                                <DynamicForm
+                                    submitLabel="Save"
+                                    onSubmit={itmVal => handleArrChangeEvent(propertyKey, itmVal)}
+                                    entity={arrItems}
+                                />
+                            </React.Fragment>)
+                            content = <Paper elevation={4}>
+                                <>
+                                    {
+                                        arr
+                                    }
+                                </>
+                            </Paper>
+                        }
+                        break;
                     default:
                         content = <TextField
                             value={formValue as string}
@@ -217,13 +279,24 @@ export const DynamicForm = ({
                     { content }
                 </div>
             })
-    }, [entity, handleChangeEvent, formState, hiddenFields, labelOverrides])
-    
+    }, [entity, handleChangeEvent, handleArrChangeEvent, deleteFromArr, formState, hiddenFields, labelOverrides])
+
+    // if we are hiding the submit button, we want to submit the form on change
+    //   to allow the parent element to handle the change
+    useEffect(() => {
+        if (hideSubmit) {
+            handleSubmit()
+        }
+    }, [ formState, hideSubmit, handleSubmit])
+
     return <div className={styles.container}>
         { inputs }
         {
             isProtected && <div className='cf-turnstile' data-sitekey="0x4AAAAAAAAkh6TU2qJvk6ao"></div>
         }
-        <Button onClick={handleSubmit} isLoading={isLoading}>Submit</Button>
+        {
+            hideSubmit ||
+            <Button onClick={handleSubmit} isLoading={isLoading}>{ submitLabel }</Button>
+        }
     </div>
 }

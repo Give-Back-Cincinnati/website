@@ -7,6 +7,8 @@ import { RouterContext } from "next/dist/shared/lib/router-context"
 import { ErrorBoundary } from '@/components/Utils/ErrorBoundary'
 import { Toaster } from '@/components/DataDisplay/Toaster'
 
+import { ThemeProvider } from '@mui/material/styles'
+import { CreateThemeHook } from '../src/hooks'
 import { createServices } from 'services'
 createServices(store, actions)
 
@@ -37,11 +39,14 @@ export const parameters = {
 
 export const decorators = [
     (Story) => {
-        return <Provider store={store}>
-            <ErrorBoundary>
-                <Story />
-                <Toaster />
-            </ErrorBoundary>
-        </Provider>
+        const theme = CreateThemeHook()
+        return <ThemeProvider theme={theme}>
+          <Provider store={store}>
+              <ErrorBoundary>
+                  <Story />
+                  <Toaster />
+              </ErrorBoundary>
+          </Provider>
+        </ThemeProvider>
     }
 ]
