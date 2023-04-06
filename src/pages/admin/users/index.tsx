@@ -14,7 +14,7 @@ const UsersAdmin: NextPageWithLayout = () => {
     const {
         isSuccess,
         data
-    } = useSearchUsersQuery({})
+    } = useSearchUsersQuery({ limit: 0 })
     const { 
         data: roles
     } = useSearchRolesQuery({})
