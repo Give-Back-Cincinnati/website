@@ -40,10 +40,10 @@ export const Navigation = () => {
         {
             label: 'Our Programs',
             childRoutes: [
-                // { label: 'Cincy YP', href: '/cincy-yp' },
+                { label: 'Cincy YP', href: '/cincy-yp' },
                 { label: 'Fall Feast', href: '/fall-feast' },
                 { label: 'Fuel Cincinnati', href: '/fuel-cincinnati' },
-                // { label: 'Give Back Beyond Cincinnati', href: '/give-back-beyond' },
+                { label: 'Give Back Beyond Cincinnati', href: '/give-back-beyond' },
                 { label: 'Paint the Town', href: '/paint-the-town' },
             ]
         },
