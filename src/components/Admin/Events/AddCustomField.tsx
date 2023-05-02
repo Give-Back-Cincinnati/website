@@ -81,7 +81,7 @@ export const AddCustomField = (props: { eventId: string }) => {
                 customFields
             } as unknown as Events
         })
-    }, [ updateEventTrigger, toggleOpen, props.eventId, formState, eventData ])
+    }, [ updateEventTrigger, props.eventId, formState, eventData ])
 
     return <div>
         <h3>Add Custom Fields</h3>

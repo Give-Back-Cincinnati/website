@@ -27,7 +27,7 @@ const EventsAdmin: NextPageWithLayout = () => {
     } = useSearchEventsQuery({})
     const {
         data: registrationInformation
-    } = useSearchRegistrationsQuery()
+    } = useSearchRegistrationsQuery({})
     const canSeeEvents = useUserHasPermission('events.get')
     const canCreateEvent = useUserHasPermission('events.post')
     const canDeleteEvent = useUserHasPermission('events.id.delete')
