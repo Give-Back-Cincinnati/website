@@ -78,7 +78,7 @@ export const AdminEventDetails: NextPageWithLayout = () => {
                     {
                         eventData && eventData.customFields &&
                             Object.entries(eventData.customFields).map(([key, field], idx) => <li key={idx} className={styles.customFieldItem}>
-                                { field.name }{ field.required ? ' (required)' : '' }
+                                { field.name }{ field.isRequired ? ' (required)' : '' }
                                 <span
                                     className={styles.editCustomField}
                                     onClick={handleEditCustomField}

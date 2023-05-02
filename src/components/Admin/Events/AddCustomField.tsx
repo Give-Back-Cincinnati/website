@@ -16,7 +16,7 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
     const [ formState, setFormState ] = useState({
         name: '',
         options: '',
-        required: false
+        isRequired: false
     })
     const [ updateEventTrigger, updateEventResult ] = useUpdateEventsMutation()
     const Toaster = useServices('Toaster')
@@ -25,7 +25,7 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
         setFormState({
             name: '',
             options: '',
-            required: false
+            isRequired: false
         })
         setOpen(isCurrentlyOpen => !isCurrentlyOpen)
     }, [])
@@ -42,7 +42,7 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
             const values = {
                 name: eventData.customFields[props.editFieldId].name || '',
                 options: '',
-                required: !!eventData.customFields[props.editFieldId].required,
+                isRequired: !!eventData.customFields[props.editFieldId].isRequired,
             }
             const enumVal = eventData.customFields[props.editFieldId].enum
             if (enumVal) {
@@ -60,7 +60,7 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
             setFormState({
                 name: '',
                 options: '',
-                required: false
+                isRequired: false
             })
             updateEventResult.reset()
         }
@@ -92,7 +92,7 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
         customFields[fieldId] = {
             type: 'string',
             name: formState.name,
-            required: formState.required
+            isRequired: formState.isRequired
         }
 
         const options = formState.options.split('\n').filter(option => option !== '')
@@ -129,9 +129,9 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
                 
                 <div className={styles.fieldContainer}>
                     <CheckBox
-                        name="required"
+                        name="isRequired"
                         label="Required"
-                        checked={formState.required}
+                        checked={formState.isRequired}
                         onChange={handleFormChange}
                     />
                 </div>
