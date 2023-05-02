@@ -1,8 +1,26 @@
+@import '../../../styles/colors.scss';
+
 .container {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
     h2 {
         margin-bottom: 1rem;
+    }
+}
+
+.customFieldItem {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding-bottom: .3rem;
+}
+
+.editCustomField {
+    color: $gbc-red;
+    cursor: pointer;
+    text-decoration: underline dashed;
+    &:hover {
+        text-decoration: underline solid;
     }
 }

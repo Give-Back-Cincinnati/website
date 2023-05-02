@@ -8,7 +8,7 @@ import { useServices } from "hooks"
 
 import styles from './AddCustomField.module.scss'
 
-export const AddCustomField = (props: { eventId: string }) => {
+export const AddCustomField = (props: { eventId: string, editFieldId?: string, onSave?: () => void }) => {
     const { isReady, query } = useRouter()
     const [ getEventsTrigger, { data: eventData, isSuccess }] = useLazyGetEventsQuery()
     const [ isOpen, setOpen ] = useState(false)
@@ -22,6 +22,11 @@ export const AddCustomField = (props: { eventId: string }) => {
     const Toaster = useServices('Toaster')
 
     const toggleOpen = useCallback(() => {
+        setFormState({
+            name: '',
+            options: '',
+            required: false
+        })
         setOpen(isCurrentlyOpen => !isCurrentlyOpen)
     }, [])
 
@@ -30,6 +35,22 @@ export const AddCustomField = (props: { eventId: string }) => {
             getEventsTrigger({ id: query._id })
         }
     }, [isReady, query, getEventsTrigger])
+
+    useEffect(() => {
+        if (props.editFieldId && eventData && eventData.customFields) {
+            setOpen(true)
+            const values = {
+                name: eventData.customFields[props.editFieldId].name || '',
+                options: '',
+                required: !!eventData.customFields[props.editFieldId].required,
+            }
+            const enumVal = eventData.customFields[props.editFieldId].enum
+            if (enumVal) {
+                values.options = enumVal.join('\n')
+            }
+            setFormState(values)
+        }
+    }, [ props.editFieldId, eventData ])
 
     useEffect(() => {        
         if (updateEventResult.status === 'fulfilled') {
@@ -56,7 +77,8 @@ export const AddCustomField = (props: { eventId: string }) => {
     const handleSave = useCallback(() => {
         setSaving(true)
 
-        const fieldId = nanoid()
+        const fieldId = props.editFieldId || nanoid()
+
         const customFields: Events['customFields'] = {}
 
         if (eventData && eventData.customFields) {
@@ -84,7 +106,10 @@ export const AddCustomField = (props: { eventId: string }) => {
                 customFields
             } as unknown as Events
         })
-    }, [ updateEventTrigger, props.eventId, formState, eventData ])
+        props.onSave && props.onSave()
+    }, [ updateEventTrigger, formState, eventData, props ])
+
+    console.log(props.editFieldId)
 
     return <div>
         <h3>Add Custom Fields</h3>
