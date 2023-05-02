@@ -109,8 +109,6 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
         props.onSave && props.onSave()
     }, [ updateEventTrigger, formState, eventData, props ])
 
-    console.log(props.editFieldId)
-
     return <div>
         <h3>Add Custom Fields</h3>
         <Button onClick={toggleOpen}>Add Field</Button>
