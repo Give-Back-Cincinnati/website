@@ -178,7 +178,10 @@ const injectedRtkApi = api
         SearchRegistrationsApiResponse,
         SearchRegistrationsApiArg
       >({
-        query: () => ({ url: `/registrations` }),
+        query: (queryArg) => ({
+          url: `/registrations`,
+          params: { eventId: queryArg.eventId },
+        }),
         providesTags: ["registrations"],
       }),
       searchRoles: build.query<SearchRolesApiResponse, SearchRolesApiArg>({
@@ -469,7 +472,9 @@ export type SearchRegistrationsApiResponse = /** status 200 undefined */ {
   _id: string;
   numRegistrations: number;
 }[];
-export type SearchRegistrationsApiArg = void;
+export type SearchRegistrationsApiArg = {
+  eventId?: string;
+};
 export type SearchRolesApiResponse = /** status 200 undefined */ Roles[];
 export type SearchRolesApiArg = {
   limit?: number;
@@ -652,6 +657,13 @@ export type Events = {
   startTime: string;
   endTime: string;
   maxRegistrations?: number;
+  customFields?: {
+    [key: string]: {
+      type?: "string";
+      name?: string;
+      enum?: string[];
+    };
+  };
 };
 export type EventCategories =
   | "Hands-On"
@@ -670,15 +682,24 @@ export type BasicRegistration = {
   dateOfBirth: string;
   hasAgreedToTerms: boolean;
   checkedIn?: boolean;
+  customFields?: {
+    [key: string]: any;
+  };
 };
-export type UserRegistration = BasicRegistration & {
-  user?: Users | string;
+export type EmergencyContact = {
+  eContactName?: string;
+  eContactPhone?: string;
 };
+export type UserRegistration = BasicRegistration &
+  EmergencyContact & {
+    user?: Users | string;
+  };
 export type GuestRegistration = {
   firstName: string;
   lastName: string;
   email: string;
-} & BasicRegistration;
+} & BasicRegistration &
+  EmergencyContact;
 export const {
   useSearchDynamicPagesQuery,
   useLazySearchDynamicPagesQuery,

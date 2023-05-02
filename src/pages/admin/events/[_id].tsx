@@ -4,6 +4,7 @@ import { AdminLayout } from 'layouts/AdminLayout'
 import { useRouter } from "next/router"
 import { Events, useLazyGetEventsQuery, useUpdateEventsMutation } from "@/store/api/openApi"
 import { DynamicForm } from "@/components/DynamicForm"
+import { AddCustomField } from "@/components/Admin/Events/AddCustomField"
 import { useGetSchema, useServices } from "hooks"
 
 import { AdminEventRegistrations } from "@/components/Admin/Events/Registrations"
@@ -58,8 +59,24 @@ export const AdminEventDetails: NextPageWithLayout = () => {
                         entity={eventSchema}
                         onSubmit={handleEventUpdate}
                         values={eventData}
+                        hiddenFields={['customFields']}
                     />
                 : ''
+            }
+            <div>
+                <h3>Custom Fields</h3>
+                <ul>
+                    {
+                        eventData && eventData.customFields &&
+                            Object.values(eventData.customFields).map((field, idx) => <li key={idx}>
+                                { field.name }
+                            </li>)
+                    }
+                </ul>
+            </div>
+            {
+                eventData && eventData._id &&
+                <AddCustomField eventId={eventData?._id} />
             }
         </div>
         {
