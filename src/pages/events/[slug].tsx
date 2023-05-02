@@ -58,7 +58,7 @@ export const Event = ({ event }: { event: Events }) => {
 
         if (Object.keys(event.customFields || {}).length > 0) {
             Object.entries(event.customFields || {}).forEach(([key, value]) => {
-                if (value.required) {
+                if (value.isRequired) {
                     schema.required.push(key)
                 }
             })
