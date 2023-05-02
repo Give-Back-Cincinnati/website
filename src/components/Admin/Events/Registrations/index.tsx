@@ -67,10 +67,11 @@ export const AdminEventRegistrations = ({ eventId }: AdminEventRegistrationsProp
                 </Button>
             </a>
             <Table
-                keys={['firstName', 'lastName', 'phone', 'email', 'dateOfBirth', 'hasAgreedToTerms', 'checkedIn', 'delete']}
+                keys={['firstName', 'lastName', 'phone', 'email', 'dateOfBirth', 'hasAgreedToTerms', 'customFields', 'checkedIn', 'delete']}
                 data={formattedEventRegistrations}
                 formatFunctions={{
-                    dateOfBirth: (val) => DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT)
+                    dateOfBirth: (val) => DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT),
+                    customFields: (val) => Object.values(val).join(', ')
                 }}
             />
         </>

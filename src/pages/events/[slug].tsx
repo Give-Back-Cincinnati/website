@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styles from './[slug].module.scss'
 import { EventHeader, EventDetails, Waiver } from "@/components/Events"
 import { HorizontalBreak } from '@/components/Backgrounds'
@@ -52,6 +52,20 @@ export const Event = ({ event }: { event: Events }) => {
         }
     }, [reset, error, status])
 
+    const registrationSchema = useMemo(() => {
+        const schema = me ? userRegistrationSchema : guestRegistrationSchema
+        if (!schema) return schema
+
+        if (Object.keys(event.customFields || {}).length > 0) {
+            schema.properties = {
+                ...schema.properties,
+                ...event.customFields
+            }
+        }
+
+        return schema
+    }, [ userRegistrationSchema, guestRegistrationSchema, me, event ])
+
 
     return <div>
         <EventHeader title={event.name} category={event.category} />
@@ -71,9 +85,9 @@ export const Event = ({ event }: { event: Events }) => {
         }
 
         {
-            guestRegistrationSchema && userRegistrationSchema && !isSuccess
+            registrationSchema && !isSuccess
                 ? <DynamicForm
-                    entity={me ? userRegistrationSchema : guestRegistrationSchema}
+                    entity={registrationSchema}
                     onSubmit={handleRegistrationSubmit}
                     values={me} // if we add new fields in the future, autopopulate them for logged in users
                     hiddenFields={['user']}

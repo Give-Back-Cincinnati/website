@@ -123,6 +123,7 @@ const EventsAdmin: NextPageWithLayout = () => {
                             entity={schema}
                             onSubmit={handleCreateEventSubmit}
                             isLoading={status === 'pending'}
+                            hiddenFields={['customFields']}
                         />
                     </Modal>
                 </>
