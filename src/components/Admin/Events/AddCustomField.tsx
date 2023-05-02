@@ -46,10 +46,10 @@ export const AddCustomField = (props: { eventId: string }) => {
     }, [updateEventResult, updateEventResult.status, setFormState, Toaster, toggleOpen])
 
 
-    const handleFormChange: ChangeEventHandler = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleFormChange: ChangeEventHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setFormState((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.type !== 'checkbox' ? e.target.value : e.target.checked
+            [e.target.name]: e.target.type !== 'checkbox' ? e.target.value : e.target.checked 
         }))
     }, [])
 
