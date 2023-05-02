@@ -662,6 +662,7 @@ export type Events = {
       type?: "string";
       name?: string;
       enum?: string[];
+      required?: boolean;
     };
   };
 };

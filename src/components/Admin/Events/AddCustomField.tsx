@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, ChangeEventHandler } from 'react'
 import { useRouter } from 'next/router'
 import { Button, Modal } from '@/components/Utils'
-import { TextField, TextArea } from '@/components/Inputs'
+import { TextField, TextArea, CheckBox } from '@/components/Inputs'
 import { nanoid } from 'nanoid'
 import { Events, useLazyGetEventsQuery, useUpdateEventsMutation } from '@/store/api/openApi'
 import { useServices } from "hooks"
@@ -15,7 +15,8 @@ export const AddCustomField = (props: { eventId: string }) => {
     const [ isSaving, setSaving ] = useState(false)
     const [ formState, setFormState ] = useState({
         name: '',
-        options: ''
+        options: '',
+        required: false
     })
     const [ updateEventTrigger, updateEventResult ] = useUpdateEventsMutation()
     const Toaster = useServices('Toaster')
@@ -37,17 +38,18 @@ export const AddCustomField = (props: { eventId: string }) => {
             Toaster.notify({ key: updateEventResult.requestId, title: 'Update Successful', intent: 'positive'})
             setFormState({
                 name: '',
-                options: ''
+                options: '',
+                required: false
             })
             updateEventResult.reset()
         }
     }, [updateEventResult, updateEventResult.status, setFormState, Toaster, toggleOpen])
 
 
-    const handleFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleFormChange: ChangeEventHandler = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormState((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.type !== 'checkbox' ? e.target.value : e.target.checked
         }))
     }, [])
 
@@ -68,6 +70,7 @@ export const AddCustomField = (props: { eventId: string }) => {
         customFields[fieldId] = {
             type: 'string',
             name: formState.name,
+            required: formState.required
         }
 
         const options = formState.options.split('\n').filter(option => option !== '')
@@ -100,6 +103,16 @@ export const AddCustomField = (props: { eventId: string }) => {
                         onChange={handleFormChange}
                     />
                 </div>
+                
+                <div className={styles.fieldContainer}>
+                    <CheckBox
+                        name="required"
+                        label="Required"
+                        checked={formState.required}
+                        onChange={handleFormChange}
+                    />
+                </div>
+
                 <div className={styles.fieldContainer}>
                     <TextArea
                         name="options"

@@ -69,7 +69,7 @@ export const AdminEventDetails: NextPageWithLayout = () => {
                     {
                         eventData && eventData.customFields &&
                             Object.values(eventData.customFields).map((field, idx) => <li key={idx}>
-                                { field.name }
+                                { field.name }{ field.required ? ' (required)' : '' }
                             </li>)
                     }
                 </ul>
