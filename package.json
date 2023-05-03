@@ -7,7 +7,7 @@
     "build": "yarn generate-rtk && next build",
     "export": "next export",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && tsc --noEmit",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "generate-rtk": "npx @rtk-query/codegen-openapi ./src/store/api/openapi-config.js",
