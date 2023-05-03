@@ -4,8 +4,9 @@ const nextConfig = {
     images: {
         unoptimized: true
     },
-    transpilePackages: ['@cloudscape-design/components']
-    
+    experimental: {
+        runtime: 'experimental-edge',
+    }
 }
 
 module.exports = nextConfig
