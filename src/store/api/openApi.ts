@@ -662,6 +662,7 @@ export type Events = {
       type?: "string";
       name?: string;
       enum?: string[];
+      isRequired?: boolean;
     };
   };
 };
@@ -687,8 +688,8 @@ export type BasicRegistration = {
   };
 };
 export type EmergencyContact = {
-  eContactName?: string;
-  eContactPhone?: string;
+  eContactName: string;
+  eContactPhone: string;
 };
 export type UserRegistration = BasicRegistration &
   EmergencyContact & {

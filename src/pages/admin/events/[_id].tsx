@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { NextPageWithLayout } from "pages/_app"
 import { AdminLayout } from 'layouts/AdminLayout'
 import { useRouter } from "next/router"
@@ -26,6 +26,7 @@ export function getStaticProps (context: { params: { _id: string} }): { props: {
 
 export const AdminEventDetails: NextPageWithLayout = () => {
     const { isReady, query } = useRouter()
+    const [ editCustomFieldId, setEditCustomFieldId ] = useState<string | undefined>()
     const [ getEventsTrigger, { data: eventData, isSuccess }] = useLazyGetEventsQuery()
     const [ updateEventTrigger, updateEventResult] = useUpdateEventsMutation()
     
@@ -48,6 +49,14 @@ export const AdminEventDetails: NextPageWithLayout = () => {
         updateEventTrigger({ id: query._id, events: eventUpdate as Events })
     }
 
+    const handleEditCustomField = useCallback((e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        setEditCustomFieldId(e.currentTarget.dataset.fieldId)
+    }, [])
+
+    const clearEditCustomField = useCallback(() => {
+        setEditCustomFieldId(undefined)
+    }, [])
+
     return <div className={styles.container}>
         <div>
             <h2>
@@ -68,15 +77,22 @@ export const AdminEventDetails: NextPageWithLayout = () => {
                 <ul>
                     {
                         eventData && eventData.customFields &&
-                            Object.values(eventData.customFields).map((field, idx) => <li key={idx}>
-                                { field.name }
+                            Object.entries(eventData.customFields).map(([key, field], idx) => <li key={idx} className={styles.customFieldItem}>
+                                { field.name }{ field.isRequired ? ' (required)' : '' }
+                                <span
+                                    className={styles.editCustomField}
+                                    onClick={handleEditCustomField}
+                                    data-field-id={key}
+                                >
+                                    Edit
+                                </span>
                             </li>)
                     }
                 </ul>
             </div>
             {
                 eventData && eventData._id &&
-                <AddCustomField eventId={eventData?._id} />
+                <AddCustomField eventId={eventData?._id} editFieldId={editCustomFieldId} onSave={clearEditCustomField} />
             }
         </div>
         {

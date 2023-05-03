@@ -1,4 +1,4 @@
-import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, useMemo } from 'react'
+import React, { useRef, ComponentPropsWithoutRef, ChangeEventHandler, useMemo, useEffect } from 'react'
 import { useSpring, animated } from '@react-spring/web'
 import { useFormatInputLabel } from 'hooks'
 
@@ -66,6 +66,10 @@ export const TextArea = ({
     function handleBlur () {
         value === '' && api.start(nullStyle)
     }
+
+    useEffect(() => {
+        value === '' ? api.start(nullStyle) : api.start(withValueStyle)
+    }, [ value, api ])
 
     return <div className={containerStyles.join(' ')}>
             <animated.label
