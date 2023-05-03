@@ -5,11 +5,14 @@ import { Delete } from './Delete'
 import {
     useSearchUsersQuery,
     useGetEventsByEventIdRegisterQuery,
+    useGetEventsQuery,
     Users
 } from "@/store/api/openApi"
 import { CheckBox } from '@/components/Inputs'
 import { Button } from '@/components/Utils'
 import { DateTime } from 'luxon'
+
+import styles from './index.module.scss'
 
 export type AdminEventRegistrationsProps = {
     eventId: string
@@ -17,6 +20,7 @@ export type AdminEventRegistrationsProps = {
 
 export const AdminEventRegistrations = ({ eventId }: AdminEventRegistrationsProps) => {
     const { data: users } = useSearchUsersQuery({ limit: 0 }) // limit 0 will return all users
+    const { data: event } = useGetEventsQuery({ id: eventId })
     const { data: eventRegistrations } = useGetEventsByEventIdRegisterQuery({ eventId, limit: 0 })
 
     const formattedUsers = useMemo(() => {
@@ -71,7 +75,27 @@ export const AdminEventRegistrations = ({ eventId }: AdminEventRegistrationsProp
                 data={formattedEventRegistrations}
                 formatFunctions={{
                     dateOfBirth: (val) => DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT),
-                    customFields: (val) => Object.values(val).join(', ')
+                    customFields: (val) => {
+                        if (!event || !event?.customFields) return 'Loading...'
+                        
+                        if (event.customFields) {
+                            return <>
+                                {
+                                    Object.entries(val).map(([key, value]) => (
+                                        <div key={key} className={styles.customFields}>
+                                            <span>
+                                                {
+                                                    (event.customFields && event.customFields[key]) ? event.customFields[key].name : 'Deleted'
+                                                }:
+                                            </span>
+                                            { value as string }
+                                        </div>
+                                    ))
+                                }
+                            </>
+                        }
+                        return 'Not Found'
+                    }
                 }}
             />
         </>
