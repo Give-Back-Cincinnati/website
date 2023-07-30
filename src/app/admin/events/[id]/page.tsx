@@ -1,8 +1,6 @@
+"use client"
 import { useEffect, useState, useCallback } from "react"
-import { NextPageWithLayout } from "pages/_app"
-import { AdminLayout } from 'layouts/AdminLayout'
-import { useRouter } from "next/router"
-import { Events, useLazyGetEventsQuery, useUpdateEventsMutation } from "@/store/api/openApi"
+import { Events, useGetEventsQuery, useUpdateEventsMutation } from "@/store/api/openApi"
 import { DynamicForm } from "@/components/DynamicForm"
 import { AddCustomField } from "@/components/Admin/Events/AddCustomField"
 import { useGetSchema, useServices } from "hooks"
@@ -11,33 +9,22 @@ import { AdminEventRegistrations } from "@/components/Admin/Events/Registrations
 
 import styles from './[_id].module.scss'
 
-export async function getStaticPaths () {
+export async function generateStaticParams () {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
     const events: Events[] = await res.json()
     return {
-        paths: events.map(event => ({ params: { _id: event._id }})),
+        paths: events.map(event => ({ _id: event._id })),
         fallback: false
     }
 }
 
-export function getStaticProps (context: { params: { _id: string} }): { props: { _id: string } } {
-    return { props: { _id: context.params._id } }
-}
-
-export const AdminEventDetails: NextPageWithLayout = () => {
-    const { isReady, query } = useRouter()
+export const AdminEventDetails = (props: { params: { id: string }}) => {
     const [ editCustomFieldId, setEditCustomFieldId ] = useState<string | undefined>()
-    const [ getEventsTrigger, { data: eventData, isSuccess }] = useLazyGetEventsQuery()
+    const { data: eventData, isSuccess } = useGetEventsQuery({ id: props.params.id })
     const [ updateEventTrigger, updateEventResult] = useUpdateEventsMutation()
     
     const Toaster = useServices('Toaster')
     const eventSchema = useGetSchema('Events')
-
-    useEffect(() => {
-        if (isReady) {
-            getEventsTrigger({ id: query._id })
-        }
-    }, [isReady, query, getEventsTrigger])
 
     useEffect(() => {
         if (updateEventResult.status === 'fulfilled') {
@@ -46,7 +33,7 @@ export const AdminEventDetails: NextPageWithLayout = () => {
     }, [updateEventResult, Toaster])
 
     function handleEventUpdate (eventUpdate: Record<string, unknown>) {
-        updateEventTrigger({ id: query._id, events: eventUpdate as Events })
+        updateEventTrigger({ id: props.params.id, events: eventUpdate as Events })
     }
 
     const handleEditCustomField = useCallback((e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -96,16 +83,10 @@ export const AdminEventDetails: NextPageWithLayout = () => {
             }
         </div>
         {
-            query._id && typeof query._id === 'string' &&
-                <AdminEventRegistrations eventId={query._id} />
+            props.params.id && typeof props.params.id === 'string' &&
+                <AdminEventRegistrations eventId={props.params.id} />
         }
     </div>
-}
-
-AdminEventDetails.getLayout = function getLayout(page) {
-    return <AdminLayout>
-        { page }
-    </AdminLayout>
 }
 
 export default AdminEventDetails

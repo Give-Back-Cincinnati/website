@@ -244,7 +244,7 @@ const injectedRtkApi = api
       }),
       getMe: build.query<GetMeApiResponse, GetMeApiArg>({
         query: () => ({ url: `/users/me` }),
-        providesTags: ["users"],
+        providesTags: ["users", "auth"],
       }),
       getUser: build.query<GetUserApiResponse, GetUserApiArg>({
         query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
@@ -288,6 +288,10 @@ const injectedRtkApi = api
           },
         }),
         providesTags: ["auth"],
+      }),
+      logout: build.mutation<LogoutApiResponse, LogoutApiArg>({
+        query: () => ({ url: `/auth/logout`, method: "POST" }),
+        invalidatesTags: ["auth"],
       }),
       searchEvents: build.query<SearchEventsApiResponse, SearchEventsApiArg>({
         query: (queryArg) => ({
@@ -547,6 +551,8 @@ export type AuthGoogleCallbackApiArg = {
   /** whether to prompt the user */
   prompt: string;
 };
+export type LogoutApiResponse = unknown;
+export type LogoutApiArg = void;
 export type SearchEventsApiResponse = /** status 200 undefined */ Events[];
 export type SearchEventsApiArg = {
   limit?: number;
@@ -746,6 +752,7 @@ export const {
   useLoginMutation,
   useAuthGoogleCallbackQuery,
   useLazyAuthGoogleCallbackQuery,
+  useLogoutMutation,
   useSearchEventsQuery,
   useLazySearchEventsQuery,
   useCreateEventsMutation,

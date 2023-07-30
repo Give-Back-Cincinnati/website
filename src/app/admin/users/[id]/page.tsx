@@ -1,28 +1,27 @@
+"use client"
 import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { AdminLayout } from 'layouts/AdminLayout'
-import { NextPageWithLayout } from "pages/_app"
 import { useGetSchema, useServices } from 'hooks'
 import { NewRole } from '@/components/Admin/Users/NewRole'
 
-import { Users, useUpdateUserMutation, useLazyGetUserQuery } from '@/store/api/openApi'
+import { Users, useUpdateUserMutation, useGetUserQuery } from '@/store/api/openApi'
 import { DynamicForm } from '@/components/DynamicForm'
 
 import styles from './[_id].module.scss'
 
-const AdminEditUser: NextPageWithLayout = () => {
-    const {query, isReady} = useRouter()
-    const [ trigger, { data, isSuccess } ] = useLazyGetUserQuery()
+export async function generateStaticParams () {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users`)
+    const users: Users[] = await res.json()
+    return {
+        paths: users.map(user => ({ _id: user._id })),
+        fallback: false
+    }
+}
+
+const AdminEditUser = (props: { params: { id: string } }) => {
+    const { data, isSuccess } = useGetUserQuery({ id: props.params.id })
     const [ updateUserTrigger, updateUserResult ] = useUpdateUserMutation()
     const Toaster = useServices('Toaster')
     const userSchema = useGetSchema('Users')
-
-    useEffect(() => {
-        if (isReady) {
-            trigger({ id: query._id })
-        }
-
-    }, [trigger, query, isReady])
 
     useEffect(() => {
         if (updateUserResult.status === 'fulfilled') {
@@ -31,7 +30,7 @@ const AdminEditUser: NextPageWithLayout = () => {
     }, [updateUserResult, Toaster])
 
     function handleSubmit (userUpdate: Record<string, unknown>) {
-        updateUserTrigger({ id: query._id, body: userUpdate as Users })
+        updateUserTrigger({ id: props.params.id, body: userUpdate as Users })
     }
 
     return <div>
@@ -61,12 +60,6 @@ const AdminEditUser: NextPageWithLayout = () => {
 
         </div>
     </div>
-}
-
-AdminEditUser.getLayout = function getLayout(page) {
-    return <AdminLayout>
-        { page }
-    </AdminLayout>
 }
 
 export default AdminEditUser
