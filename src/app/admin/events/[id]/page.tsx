@@ -12,13 +12,10 @@ import styles from './[_id].module.scss'
 export async function generateStaticParams () {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
     const events: Events[] = await res.json()
-    return {
-        paths: events.map(event => ({ _id: event._id })),
-        fallback: false
-    }
+    return events.map(event => ({ _id: event._id }))
 }
 
-export const AdminEventDetails = (props: { params: { id: string }}) => {
+const AdminEventDetails = (props: { params: { id: string }}) => {
     const [ editCustomFieldId, setEditCustomFieldId ] = useState<string | undefined>()
     const { data: eventData, isSuccess } = useGetEventsQuery({ id: props.params.id })
     const [ updateEventTrigger, updateEventResult] = useUpdateEventsMutation()

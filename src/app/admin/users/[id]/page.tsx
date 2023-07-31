@@ -11,10 +11,7 @@ import styles from './[_id].module.scss'
 export async function generateStaticParams () {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users`)
     const users: Users[] = await res.json()
-    return {
-        paths: users.map(user => ({ _id: user._id })),
-        fallback: false
-    }
+    return users.map(user => ({ _id: user._id }))
 }
 
 const AdminEditUser = (props: { params: { id: string } }) => {

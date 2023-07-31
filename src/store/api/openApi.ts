@@ -244,7 +244,7 @@ const injectedRtkApi = api
       }),
       getMe: build.query<GetMeApiResponse, GetMeApiArg>({
         query: () => ({ url: `/users/me` }),
-        providesTags: ["users", "auth"],
+        providesTags: ["users"],
       }),
       getUser: build.query<GetUserApiResponse, GetUserApiArg>({
         query: (queryArg) => ({ url: `/users/${queryArg.id}` }),
