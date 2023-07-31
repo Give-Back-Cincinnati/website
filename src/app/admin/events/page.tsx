@@ -125,7 +125,7 @@ const EventsAdmin: NextPageWithLayout = () => {
                     columnDefinitions={[
                         { id: 'name', header: 'Name', cell: e => <>
                             <TextContent>
-                                <Link href={`/admin/events/${e._id}`}>
+                                <Link href={`/admin/events/${e._id}`} prefetch={false}>
                                     {e.name}
                                 </Link>
                             </TextContent>
