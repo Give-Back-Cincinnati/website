@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Paper } from '@/components/Utils'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { animated, useSpring, config } from '@react-spring/web'

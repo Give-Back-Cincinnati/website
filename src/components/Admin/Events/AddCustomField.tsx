@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useCallback, ChangeEventHandler } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Button, Modal } from '@/components/Utils'
 import { TextField, TextArea, CheckBox } from '@/components/Inputs'
 import { nanoid } from 'nanoid'
-import { Events, useLazyGetEventsQuery, useUpdateEventsMutation } from '@/store/api/openApi'
+import { Events, useGetEventsQuery, useUpdateEventsMutation } from '@/store/api/openApi'
 import { useServices } from "hooks"
 
 import styles from './AddCustomField.module.scss'
 
 export const AddCustomField = (props: { eventId: string, editFieldId?: string, onSave?: () => void }) => {
-    const { isReady, query } = useRouter()
-    const [ getEventsTrigger, { data: eventData, isSuccess }] = useLazyGetEventsQuery()
+    const { data: eventData, isSuccess } = useGetEventsQuery({ id: props.eventId })
     const [ isOpen, setOpen ] = useState(false)
     const [ isSaving, setSaving ] = useState(false)
     const [ formState, setFormState ] = useState({
@@ -29,12 +28,6 @@ export const AddCustomField = (props: { eventId: string, editFieldId?: string, o
         })
         setOpen(isCurrentlyOpen => !isCurrentlyOpen)
     }, [])
-
-    useEffect(() => {
-        if (isReady) {
-            getEventsTrigger({ id: query._id })
-        }
-    }, [isReady, query, getEventsTrigger])
 
     useEffect(() => {
         if (props.editFieldId && eventData && eventData.customFields) {

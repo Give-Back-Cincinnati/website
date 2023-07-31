@@ -1,8 +1,7 @@
 import React, { useState, useMemo } from "react"
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Overlay } from '@/components/Utils'
-import { Avatar } from "components/DataDisplay"
 import { NavLink, NavLinkProps } from "./NavLink"
 
 import { MdOutlineMenu } from 'react-icons/md'
@@ -10,6 +9,7 @@ import styles from './index.module.scss'
 
 import { useGetMeQuery } from "@/store/api/openApi"
 import type { Permissions } from "@/store/api/openApi"
+import { UserMenu } from "./UserMenu"
 
 export const Navigation = () => {
     const router = useRouter()
@@ -85,6 +85,7 @@ export const Navigation = () => {
 
     return (
         <nav
+            id="h"
             className={styles.nav}
         >
             <div className={styles.logo}>
@@ -107,10 +108,7 @@ export const Navigation = () => {
                 
                 {
                     user
-                    ? <Avatar
-                        name={user.firstName || ''}
-                        src={user.profilePicture}
-                    />
+                    ? <UserMenu />
                     : ''
                 }
                 <MdOutlineMenu className={styles.menuIcon} onClick={() => setNavigationOpen(true)} />

@@ -1,5 +1,5 @@
 import '../styles/globals.scss'
-import React, { ReactElement, ReactNode} from 'react'
+import React from 'react'
 import Head from 'next/head'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
@@ -15,7 +15,8 @@ import { createServices } from 'services'
 createServices(store, actions)
 
 export type NextPageWithLayout = NextPage & {
-    getLayout?: (page: ReactElement) => ReactNode
+    getLayout?: (page: JSX.Element)
+        => React.ReactNode
 }
   
 type AppPropsWithLayout = AppProps & {
@@ -42,6 +43,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
             <main style={{ paddingTop: 93, minHeight: 'calc(100vh - 93px)' }}>
                 {
+                    // @ts-ignore
                     getLayout(<Component {...pageProps} />)
                 }
             </main>
