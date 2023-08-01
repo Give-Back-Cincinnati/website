@@ -9,6 +9,8 @@ import { AdminEventRegistrations } from "@/components/Admin/Events/Registrations
 
 import styles from './[_id].module.scss'
 
+export const runtime = 'edge';
+
 export async function generateStaticParams () {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/events`)
     const events: Events[] = await res.json()
