@@ -8,6 +8,8 @@ import { DynamicForm } from '@/components/DynamicForm'
 
 import styles from './[_id].module.scss'
 
+export const runtime = 'edge';
+
 export async function generateStaticParams () {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users`)
     const users: Users[] = await res.json()
