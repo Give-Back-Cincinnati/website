@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "yarn generate-rtk && next build",
+    "dev": "next-on-pages --watch",
+    "dev:serve": "kill $(lsof -t -i:3000) && wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat --port 3000 --ip localhost",
+    "build": "next build",
     "export": "next export",
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "generate-rtk": "npx @rtk-query/codegen-openapi ./src/store/api/openapi-config.js",
-    "prepare": "husky install"
+    "prepare": "echo 'husky install'"
   },
   "dependencies": {
     "@cloudscape-design/collection-hooks": "^1.0.22",
@@ -26,7 +27,7 @@
     "axios": "^0.27.2",
     "luxon": "^3.0.1",
     "nanoid": "^4.0.2",
-    "next": "^13.4.5",
+    "next": "^13.4.12",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -53,6 +54,7 @@
     "@types/react-dom": "^18.2.4",
     "babel-loader": "^8.2.5",
     "chromatic": "^6.10.2",
+    "concurrently": "^8.2.0",
     "css-loader": "^6.7.1",
     "eslint": "8.10.0",
     "eslint-config-next": "^13.4.5",
@@ -63,6 +65,7 @@
     "storybook-addon-next-router": "^4.0.0",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "4.5.5",
-    "vercel": "^31.2.1"
+    "vercel": "^31.2.3",
+    "wrangler": "^3.5.0"
   }
 }
