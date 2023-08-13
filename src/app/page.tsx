@@ -84,7 +84,7 @@ export default async function Home() {
   const res = await fetch(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL
-    }/events?limit=6&endTime%5B%24gt%5D=${new Date().toLocaleDateString()}`
+    }/events?limit=6&endTime%5B%24gt%5D=${new Date().toLocaleDateString()}&sort=startTime&order=asc`
   );
   const events: SearchEventsApiResponse = await res.json();
 

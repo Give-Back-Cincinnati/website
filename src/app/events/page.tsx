@@ -11,7 +11,7 @@ export default async function Page() {
   const res = await fetch(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL
-    }/events?endTime%5B%24gt%5D=${new Date().toLocaleDateString()}`
+    }/events?endTime%5B%24gt%5D=${new Date().toLocaleDateString()}&sort=startTime&order=asc`
   );
   const events: SearchEventsApiResponse = await res.json();
 
@@ -20,6 +20,7 @@ export default async function Page() {
 
   events.forEach((event) => {
     if (event.category) {
+      event.description = event.description.slice(0, 100) + "...";
       if (eventMap[event.category]) {
         eventMap[event.category].push(event);
       } else {

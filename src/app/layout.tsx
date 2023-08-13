@@ -1,14 +1,15 @@
-"use client"
-import { ThemeProvider } from '@mui/material/styles'
-import Navigation from "@/components/Navigation"
-import { Provider } from 'react-redux'
-import { CreateThemeHook } from 'hooks'
-import { store, actions } from 'store'
-import { createServices } from 'services'
-createServices(store, actions)
+"use client";
+import { ThemeProvider } from "@mui/material/styles";
+import Navigation from "@/components/Navigation";
+import { Provider } from "react-redux";
+import { CreateThemeHook } from "hooks";
+import { store, actions } from "store";
+import { createServices } from "services";
+import { Footer } from "@/components/Footer";
+createServices(store, actions);
 
-import '../styles/globals.scss'
-import styles from './layout.module.scss'
+import "../styles/globals.scss";
+import styles from "./layout.module.scss";
 
 // const AltGothicFont = localFont({
 //   src: 'AlternateGotNo3D_Regular.ttf',
@@ -18,9 +19,9 @@ import styles from './layout.module.scss'
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const theme = CreateThemeHook()
+  const theme = CreateThemeHook();
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
@@ -30,13 +31,16 @@ export default function RootLayout({
         >
           <body>
             <Navigation />
-            <div className={styles.main}>
-              { children }
-            </div>
+            <div className={styles.main}>{children}</div>
+            <Footer />
           </body>
-          <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+          <script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            async
+            defer
+          ></script>
         </html>
       </Provider>
     </ThemeProvider>
-  )
+  );
 }
