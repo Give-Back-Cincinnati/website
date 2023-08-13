@@ -103,10 +103,16 @@ export default async function Home() {
             <h1 style={{ textAlign: "center", marginBottom: 30 }}>
               Our Next Event{events.length > 1 ? "s" : ""}
             </h1>
-            {events.slice(0, 2).map(({ _id, ...eventDetails }) => (
-              <EventCard key={_id} {...eventDetails} />
-            ))}
-            {/* TODO: add a newsletter signup here */}
+            {events.slice(0, 2).map(({ _id, ...eventDetails }) => {
+              const { description } = eventDetails;
+              return (
+                <EventCard
+                  key={_id}
+                  {...eventDetails}
+                  description={description.slice(0, 100) + "..."}
+                />
+              );
+            })}
             <NewsletterSignup />
           </div>
         </div>
