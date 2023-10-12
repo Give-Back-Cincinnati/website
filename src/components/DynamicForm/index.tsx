@@ -6,6 +6,7 @@ import React, {
   useCallback,
   ReactElement,
   ChangeEventHandler,
+  ChangeEvent,
 } from "react";
 import { EntitySchema } from "@/types/schema";
 
@@ -18,8 +19,11 @@ import {
   TextField,
   TextArea,
 } from "@/components/Inputs";
-import { Button, Paper } from "../Utils";
+import { Button, Paper, ErrorBoundary, Modal } from "../Utils";
 import { DateTime } from "luxon";
+import { Table } from "../DataDisplay";
+import ObjectEditor from "./ObjectEditor";
+import { nanoid } from "nanoid";
 
 export interface DynamicFormProps {
   entity: EntitySchema;
@@ -31,6 +35,7 @@ export interface DynamicFormProps {
   isProtected?: boolean;
   hideSubmit?: boolean;
   submitLabel?: string;
+  isAdmin?: Boolean;
 }
 
 export const DynamicForm = ({
@@ -43,6 +48,7 @@ export const DynamicForm = ({
   isProtected = false,
   hideSubmit = false,
   submitLabel = "Submit",
+  isAdmin = false,
 }: DynamicFormProps) => {
   // Derive the initial and empty states so they can be used in the created inputs
   const { initialState } = useMemo(() => {
@@ -84,6 +90,9 @@ export const DynamicForm = ({
         case "array":
           emptyState[propertyKey] = values[propertyKey] || [];
           break;
+        case "object":
+          emptyState[propertyKey] = values[propertyKey] || {};
+          break;
         default:
           emptyState[propertyKey] = values[propertyKey] || "";
       }
@@ -122,7 +131,22 @@ export const DynamicForm = ({
             ).toISODate();
             break;
           }
+          if (
+            "enum" in property &&
+            Array.isArray(property.enum) &&
+            outputState[propertyKey] === ""
+          ) {
+            outputState[propertyKey] = property.enum[0];
+            break;
+          }
           break;
+        case "number":
+          outputState[propertyKey] = Number(outputState[propertyKey]);
+          break;
+        case "array":
+          outputState[propertyKey] = (outputState[propertyKey] as string).split(
+            "\n"
+          );
         default:
           break;
       }
@@ -172,7 +196,7 @@ export const DynamicForm = ({
   }, []);
 
   const inputs = useMemo(() => {
-    const { required, properties } = entity;
+    const { required = [], properties } = entity;
     return Object.keys(properties).map((propertyKey) => {
       const property = properties[propertyKey];
       // if property is read only, we don't want the user to see it presented in the form
@@ -274,51 +298,118 @@ export const DynamicForm = ({
         case "array":
           const arrItems = property.items;
           if (arrItems) {
-            const arr = (formValue as []).map((item, index) => {
-              return (
-                <React.Fragment key={index}>
-                  <div className={styles.arrHeader}>
-                    <h3>Item: {(index + 1).toString()}</h3>
-                    <Button
-                      variant="outlined"
-                      size="sm"
-                      onClick={() => deleteFromArr(index, propertyKey)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
+            if ("properties" in arrItems) {
+              if (typeof arrItems === "string") {
+              }
+              const arr = (formValue as []).map((item, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <div className={styles.arrHeader}>
+                      <h3>Item: {(index + 1).toString()}</h3>
+                      <Button
+                        variant="outlined"
+                        size="sm"
+                        onClick={() => deleteFromArr(index, propertyKey)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                    <DynamicForm
+                      submitLabel="Save"
+                      onSubmit={(itmVal) =>
+                        handleArrChangeEvent(propertyKey, itmVal, index)
+                      }
+                      entity={arrItems}
+                      values={item}
+                    />
+                  </React.Fragment>
+                );
+              });
+
+              arr.push(
+                <React.Fragment key="new">
+                  <h3>New Item</h3>
                   <DynamicForm
                     submitLabel="Save"
                     onSubmit={(itmVal) =>
-                      handleArrChangeEvent(propertyKey, itmVal, index)
+                      handleArrChangeEvent(propertyKey, itmVal)
                     }
                     entity={arrItems}
-                    values={item}
                   />
                 </React.Fragment>
               );
-            });
-
-            arr.push(
-              <React.Fragment key="new">
-                <h3>New Item</h3>
-                <DynamicForm
-                  submitLabel="Save"
-                  onSubmit={(itmVal) =>
-                    handleArrChangeEvent(propertyKey, itmVal)
-                  }
-                  entity={arrItems}
-                />
-              </React.Fragment>
-            );
+              content = (
+                <Paper elevation={4}>
+                  <>{arr}</>
+                </Paper>
+              );
+            }
             content = (
-              <Paper elevation={4}>
-                <>{arr}</>
-              </Paper>
+              <TextArea
+                {...property}
+                value={formValue as string}
+                name={propertyKey}
+                label={label}
+                onChange={handleChangeEvent}
+                required={isRequired}
+                errorText="Enter each option on a new line or leave blank for a text field"
+              />
             );
           }
           break;
         default:
+          // if its a nested object, render a special version of the form inside a modal
+          if (property.type === "object" && property.additionalProperties) {
+            const objectShape = (
+              formState[propertyKey] as Record<string, object>
+            )[Object.keys(formState[propertyKey] as Record<string, object>)[0]];
+
+            content = (
+              <div>
+                <h3>{propertyKey}</h3>
+                <>
+                  <ObjectEditor
+                    propertyKey={propertyKey}
+                    onSave={(val) => {
+                      const id: string = val.recordId || nanoid();
+                      const newFormState = {
+                        ...formState,
+                        [propertyKey]: {
+                          ...(formState[propertyKey] as Record<
+                            string,
+                            unknown
+                          >),
+                          [id]: val.value,
+                        },
+                      };
+                      setFormState(newFormState);
+                    }}
+                    schema={property.additionalProperties}
+                  />
+                  {isAdmin &&
+                    objectShape &&
+                    formState[propertyKey] &&
+                    typeof formState[propertyKey] === "object" && (
+                      <Table
+                        keys={[...Object.keys(objectShape), "actions"]}
+                        data={Object.values(
+                          formState[propertyKey] as Record<
+                            string,
+                            Record<string, string | number | boolean>
+                          >
+                        )}
+                        formatFunctions={{
+                          enum: (val) => val.join(),
+                          capacity: (val) => val.toString(),
+                          actions: (val) => "<></>",
+                        }}
+                      />
+                    )}
+                </>
+              </div>
+            );
+            break;
+          }
           content = (
             <TextField
               value={formValue as string}
@@ -338,12 +429,13 @@ export const DynamicForm = ({
     });
   }, [
     entity,
-    handleChangeEvent,
-    handleArrChangeEvent,
-    deleteFromArr,
-    formState,
     hiddenFields,
+    formState,
     labelOverrides,
+    handleChangeEvent,
+    deleteFromArr,
+    handleArrChangeEvent,
+    isAdmin,
   ]);
 
   // if we are hiding the submit button, we want to submit the form on change

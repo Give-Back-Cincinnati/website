@@ -663,12 +663,20 @@ export type Events = {
   startTime: string;
   endTime: string;
   maxRegistrations?: number;
+  volunteerCategories?: {
+    [key: string]: {
+      type?: "object";
+      capacity?: number;
+      name?: string;
+      shift?: string;
+    };
+  };
   customFields?: {
     [key: string]: {
       type?: "string";
       name?: string;
-      enum?: string[];
       isRequired?: boolean;
+      enum?: string[];
     };
   };
 };
@@ -687,11 +695,12 @@ export type BasicRegistration = {
   _id?: string;
   phone: string;
   dateOfBirth: string;
-  hasAgreedToTerms: boolean;
+  volunteerCategory: string;
   checkedIn?: boolean;
   customFields?: {
     [key: string]: any;
   };
+  hasAgreedToTerms: boolean;
 };
 export type EmergencyContact = {
   eContactName: string;

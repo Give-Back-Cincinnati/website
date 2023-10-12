@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next-on-pages --watch",
-    "dev:serve": "kill $(lsof -t -i:3000) && wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat --port 3000 --ip localhost",
+    "dev:serve": "kill $(lsof -t -i:3000); wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat --port 3000 --ip localhost",
     "build": "next build",
     "export": "next export",
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "generate-rtk": "npx @rtk-query/codegen-openapi ./src/store/api/openapi-config.js",
+    "generate-rtk": "rtk-query-codegen-openapi ./src/store/api/openapi-config.js",
     "prepare": "echo 'husky install'"
   },
   "dependencies": {
@@ -37,8 +37,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
-    "@cloudflare/next-on-pages": "^1.5.0",
+    "@cloudflare/next-on-pages": "^1.6.1",
     "@react-spring/types": "^9.5.2",
+    "@rtk-query/codegen-openapi": "1.0.0",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addon-interactions": "^6.5.12",

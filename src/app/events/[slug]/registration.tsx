@@ -8,12 +8,14 @@ import { Alert } from "@/components/Utils";
 import {
   Events,
   useGetMeQuery,
+  useGetEventsQuery,
   usePostEventsByEventIdRegisterMutation,
   GuestRegistration,
 } from "@/store/api/openApi";
 import { useGetSchema } from "hooks";
 
 export default function Registration({ event }: { event: Events }) {
+  const { data: eventData } = useGetEventsQuery({ id: event._id });
   const userRegistrationSchema = useGetSchema("UserRegistration");
   const guestRegistrationSchema = useGetSchema("GuestRegistration");
   const { data: me } = useGetMeQuery();
@@ -40,22 +42,50 @@ export default function Registration({ event }: { event: Events }) {
 
   const registrationSchema = useMemo(() => {
     const schema = me ? userRegistrationSchema : guestRegistrationSchema;
-    if (!schema) return schema;
+    if (!schema || !eventData) return schema;
 
-    if (Object.keys(event.customFields || {}).length > 0) {
-      Object.entries(event.customFields || {}).forEach(([key, value]) => {
+    if (Object.keys(eventData.customFields || {}).length > 0) {
+      Object.entries(eventData.customFields || {}).forEach(([key, value]) => {
         if (value.isRequired) {
           schema.required.push(key);
         }
       });
       schema.properties = {
         ...schema.properties,
-        ...event.customFields,
+        ...eventData.customFields,
       };
     }
 
+    if (
+      eventData.volunteerCategories &&
+      Object.keys(eventData.volunteerCategories || {}).length > 0
+    ) {
+      const vCatEnum = Object.values(eventData.volunteerCategories || {}).map(
+        (cat) => `${cat.name} - ${cat.shift}`
+      );
+      schema.properties = {
+        ...schema.properties,
+        volunteerCategory: {
+          type: "string",
+          enum: vCatEnum,
+        },
+      };
+    } else {
+      delete schema.properties.volunteerCategory;
+    }
+
     return schema;
-  }, [userRegistrationSchema, guestRegistrationSchema, me, event]);
+  }, [me, userRegistrationSchema, guestRegistrationSchema, eventData]);
+
+  if (eventData && "isFull" in eventData) {
+    return (
+      <div>
+        <HorizontalBreak>
+          This event&apos;s registration is full
+        </HorizontalBreak>
+      </div>
+    );
+  }
 
   return (
     <div>
