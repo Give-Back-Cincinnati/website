@@ -13,7 +13,8 @@ export interface EntitySchema {
         maxLength?: number,
         readonly?: boolean
         pattern?: string
-        items?: EntitySchema,
+        items?: EntitySchema | { type: String },
+        additionalProperties?: EntitySchema,
     }>
 }
 

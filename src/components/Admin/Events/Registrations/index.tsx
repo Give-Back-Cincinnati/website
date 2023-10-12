@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-import { Table, Pagination, TextFilter } from "@cloudscape-design/components";
-import { useCollection } from "@cloudscape-design/collection-hooks";
+import { Table } from "@/components/DataDisplay";
 import { CheckIn } from "./CheckIn";
 import { Delete } from "./Delete";
 import {
@@ -72,20 +71,8 @@ export const AdminEventRegistrations = ({
       .join();
   }, [formattedEventRegistrations]);
 
-  const {
-    items,
-    collectionProps,
-    filteredItemsCount,
-    filterProps,
-    paginationProps,
-  } = useCollection(formattedEventRegistrations, {
-    filtering: {
-      fields: ["firstName", "lastName", "email"],
-    },
-  });
-
   return (
-    <div className={styles.container}>
+    <div>
       <h2>Registrations: {eventRegistrations?.length || 0}</h2>
       {eventRegistrations && (
         <>
@@ -93,96 +80,47 @@ export const AdminEventRegistrations = ({
             <Button variant="outlined">Email All Registrations</Button>
           </a>
           <Table
-            {...collectionProps}
-            items={items}
-            pagination={<Pagination {...paginationProps} />}
-            columnDefinitions={[
-              {
-                id: "name",
-                header: "Name",
-                cell: (item) => `${item.firstName} ${item.lastName}`,
-              },
-              {
-                id: "phone",
-                header: "Phone",
-                cell: (item) => item.phone,
-              },
-              {
-                id: "email",
-                header: "Email",
-                cell: (item) => item.email,
-              },
-              {
-                id: "dateOfBirth",
-                header: "Date of Birth",
-                cell: (item) => item.dateOfBirth,
-              },
-              {
-                id: "hasAgreedToTerms",
-                header: "Agreed to Terms",
-                cell: (item) => item.hasAgreedToTerms,
-              },
-              {
-                id: "eContact",
-                header: "Emergency Contact",
-                cell: (item) => (
-                  <>
-                    <div>{item.eContactName}</div>
-                    <div>{item.eContactPhone}</div>
-                  </>
-                ),
-              },
-              {
-                id: "customFields",
-                header: "Custom Fields",
-                cell: (item) => {
-                  if (!event || !event?.customFields) return "Loading...";
-
-                  if (item.customFields) {
-                    return (
-                      <>
-                        {Object.entries(item.customFields).map(
-                          ([key, value]) => {
-                            return (
-                              <div key={key} className={styles.customFields}>
-                                <span>
-                                  {event.customFields && event.customFields[key]
-                                    ? event.customFields[key].name
-                                    : "Deleted"}
-                                  :
-                                </span>
-                                {value as string}
-                              </div>
-                            );
-                          }
-                        )}
-                      </>
-                    );
-                  }
-                  return "Not Found";
-                },
-              },
-              {
-                id: "delete",
-                header: "Delete",
-                cell: (item) => item.delete,
-              },
-              {
-                id: "checkedIn",
-                header: "Check In",
-                cell: (item) => item.checkedIn,
-              },
+            keys={[
+              "firstName",
+              "lastName",
+              "phone",
+              "email",
+              "dateOfBirth",
+              "hasAgreedToTerms",
+              "eContactName",
+              "eContactPhone",
+              "volunteerCategory",
+              "customFields",
+              "checkedIn",
+              "delete",
             ]}
-            filter={
-              <TextFilter
-                {...filterProps}
-                countText={(filteredItemsCount || items.length).toString()}
-                filteringAriaLabel="Filter"
-              />
-            }
-            stickyColumns={{ first: 1, last: 1 }}
-            stripedRows
-            variant="embedded"
+            data={formattedEventRegistrations}
+            formatFunctions={{
+              dateOfBirth: (val) =>
+                DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT),
+              customFields: (val) => {
+                if (!event || !event?.customFields) return "Loading...";
+
+                if (event.customFields) {
+                  return (
+                    <>
+                      {Object.entries(val).map(([key, value]) => (
+                        <div key={key} className={styles.customFields}>
+                          <span>
+                            {event.customFields && event.customFields[key]
+                              ? event.customFields[key].name
+                              : "Deleted"}
+                            :
+                          </span>
+                          {value as string}
+                        </div>
+                      ))}
+                    </>
+                  );
+                }
+                return "Not Found";
+              },
+            }}
           />
         </>
       )}
