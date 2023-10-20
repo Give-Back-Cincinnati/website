@@ -46,17 +46,6 @@ const AdminEventDetails = (props: { params: { id: string } }) => {
     updateEventTrigger({ id: props.params.id, events: eventUpdate as Events });
   }
 
-  const handleEditCustomField = useCallback(
-    (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-      setEditCustomFieldId(e.currentTarget.dataset.fieldId);
-    },
-    []
-  );
-
-  const clearEditCustomField = useCallback(() => {
-    setEditCustomFieldId(undefined);
-  }, []);
-
   return (
     <div className={styles.container}>
       <div>

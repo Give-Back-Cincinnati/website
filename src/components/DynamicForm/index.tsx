@@ -6,7 +6,6 @@ import React, {
   useCallback,
   ReactElement,
   ChangeEventHandler,
-  ChangeEvent,
 } from "react";
 import { EntitySchema } from "@/types/schema";
 
@@ -19,7 +18,7 @@ import {
   TextField,
   TextArea,
 } from "@/components/Inputs";
-import { Button, Paper, ErrorBoundary, Modal } from "../Utils";
+import { Button, Paper } from "../Utils";
 import { DateTime } from "luxon";
 import { Table } from "../DataDisplay";
 import ObjectEditor from "./ObjectEditor";
@@ -101,6 +100,14 @@ export const DynamicForm = ({
   }, [entity, values, hiddenFields]);
 
   const [formState, setFormState] = useState(initialState);
+  const [editingObject, setEditingObject] =
+    useState<
+      | (Record<string, string | number | boolean> & {
+          propertyKey: string;
+          recordId?: string;
+        })
+      | undefined
+    >();
 
   const handleSubmit = useCallback(() => {
     const outputState = { ...formState };
@@ -368,6 +375,7 @@ export const DynamicForm = ({
               <div>
                 <h3>{propertyKey}</h3>
                 <>
+                  {/* This is being rendered 2x because of VolCat and CustomFields */}
                   <ObjectEditor
                     propertyKey={propertyKey}
                     onSave={(val) => {
@@ -382,8 +390,11 @@ export const DynamicForm = ({
                           [id]: val.value,
                         },
                       };
+                      setEditingObject(undefined);
                       setFormState(newFormState);
                     }}
+                    values={editingObject}
+                    recordId={editingObject?.recordId}
                     schema={property.additionalProperties}
                   />
                   {isAdmin &&
@@ -392,16 +403,36 @@ export const DynamicForm = ({
                     typeof formState[propertyKey] === "object" && (
                       <Table
                         keys={[...Object.keys(objectShape), "actions"]}
-                        data={Object.values(
+                        data={Object.entries(
                           formState[propertyKey] as Record<
                             string,
                             Record<string, string | number | boolean>
                           >
-                        )}
+                        ).map(([key, val]) => ({ ...val, actions: key }))}
                         formatFunctions={{
                           enum: (val) => val.join(),
                           capacity: (val) => val.toString(),
-                          actions: (val) => "<></>",
+                          actions: (val) => (
+                            <>
+                              <Button
+                                onClick={() => {
+                                  const obj = (
+                                    formState[propertyKey] as Record<
+                                      string,
+                                      Record<string, string | number | boolean>
+                                    >
+                                  )[val];
+                                  setEditingObject({
+                                    ...obj,
+                                    recordId: val,
+                                    propertyKey,
+                                  });
+                                }}
+                              >
+                                Edit
+                              </Button>
+                            </>
+                          ),
                         }}
                       />
                     )}
@@ -436,6 +467,7 @@ export const DynamicForm = ({
     deleteFromArr,
     handleArrChangeEvent,
     isAdmin,
+    editingObject,
   ]);
 
   // if we are hiding the submit button, we want to submit the form on change
