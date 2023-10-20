@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { Table } from "@/components/DataDisplay";
 import { CheckIn } from "./CheckIn";
 import { Delete } from "./Delete";
@@ -71,14 +71,72 @@ export const AdminEventRegistrations = ({
       .join();
   }, [formattedEventRegistrations]);
 
+  const downloadData = useMemo(() => {
+    if (!formattedEventRegistrations.length) return "";
+    const data = formattedEventRegistrations.reduce(
+      (acc, registration: Record<string, unknown>) => {
+        acc.push(
+          [
+            "firstName",
+            "lastName",
+            "phone",
+            "email",
+            "dateOfBirth",
+            "hasAgreedToTerms",
+            "eContactName",
+            "eContactPhone",
+            "volunteerCategory",
+            "customFields",
+          ]
+            .map((key) => {
+              switch (typeof registration[key]) {
+                case "object":
+                  break;
+                default:
+                  return String(registration[key]);
+              }
+            })
+            .join(",")
+        );
+        return acc;
+      },
+      [
+        [
+          "firstName",
+          "lastName",
+          "phone",
+          "email",
+          "dateOfBirth",
+          "hasAgreedToTerms",
+          "eContactName",
+          "eContactPhone",
+          "volunteerCategory",
+          "customFields",
+        ].join(","),
+      ]
+    );
+    const blob = new Blob([data.join("\r\n")], {
+      type: "text/csv;charset=utf-8;",
+    });
+    return URL.createObjectURL(blob);
+  }, [formattedEventRegistrations]);
+
   return (
     <div>
       <h2>Registrations: {eventRegistrations?.length || 0}</h2>
       {eventRegistrations && (
         <>
-          <a href={`mailto:?bcc=${emailList}`}>
-            <Button variant="outlined">Email All Registrations</Button>
-          </a>
+          <div className={styles.actionButtons}>
+            <a href={`mailto:?bcc=${emailList}`}>
+              <Button variant="outlined">Email All Registrations</Button>
+            </a>
+            <a
+              download={`${(event && event.name) || "registrations"}.csv`}
+              href={downloadData}
+            >
+              <Button variant="outlined">Download</Button>
+            </a>
+          </div>
           <Table
             keys={[
               "firstName",

@@ -7,3 +7,10 @@
   flex-flow: row nowrap;
   justify-content: space-between;
 }
+
+.actionButtons {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  gap: 1rem;
+}
