@@ -91,9 +91,12 @@ export const AdminEventRegistrations = ({
             .map((key) => {
               switch (typeof registration[key]) {
                 case "object":
+                  if (key === "hasAgreedToTerms") {
+                    return String(
+                      (registration[key] as React.ReactElement).props.checked
+                    );
+                  }
                   break;
-                case "boolean":
-                  return registration[key] ? "true" : "false";
                 default:
                   return String(registration[key]);
               }
