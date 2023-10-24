@@ -92,6 +92,8 @@ export const AdminEventRegistrations = ({
               switch (typeof registration[key]) {
                 case "object":
                   break;
+                case "boolean":
+                  return registration[key] ? "true" : "false";
                 default:
                   return String(registration[key]);
               }
