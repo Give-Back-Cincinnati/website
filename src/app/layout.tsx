@@ -6,6 +6,8 @@ import { CreateThemeHook } from "hooks";
 import { store, actions } from "store";
 import { createServices } from "services";
 import { Footer } from "@/components/Footer";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 createServices(store, actions);
 
 import "../styles/globals.scss";
@@ -24,23 +26,25 @@ export default function RootLayout({
   const theme = CreateThemeHook();
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <html
-          lang="en"
-          // className={AltGothicFont.className}
-        >
-          <body>
-            <Navigation />
-            <div className={styles.main}>{children}</div>
-            <Footer />
-          </body>
-          <script
-            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-            async
-            defer
-          ></script>
-        </html>
-      </Provider>
+      <LocalizationProvider dateAdapter={AdapterLuxon}>
+        <Provider store={store}>
+          <html
+            lang="en"
+            // className={AltGothicFont.className}
+          >
+            <body>
+              <Navigation />
+              <div className={styles.main}>{children}</div>
+              <Footer />
+            </body>
+            <script
+              src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+              async
+              defer
+            ></script>
+          </html>
+        </Provider>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }

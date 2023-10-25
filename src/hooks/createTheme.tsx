@@ -1,4 +1,4 @@
-import { createTheme, Theme } from "@mui/material/styles"
+import { createTheme, Theme } from "@mui/material/styles";
 
 const headerFont = [
   "AlternateGotNo3D",
@@ -12,18 +12,18 @@ const headerFont = [
   "sans-serif",
   "Apple Color Emoji",
   "Segoe UI Emoji",
-  "Segoe UI Symbol"
-].join(',')
+  "Segoe UI Symbol",
+].join(",");
 
 export const CreateThemeHook: () => Theme = () => {
   return createTheme({
     palette: {
       primary: {
-        main: "#d03236"
+        main: "#d03236",
       },
       secondary: {
-        main: "#333333"
-      }
+        main: "#333333",
+      },
     },
     typography: {
       fontFamily: [
@@ -37,8 +37,8 @@ export const CreateThemeHook: () => Theme = () => {
         "sans-serif",
         "Apple Color Emoji",
         "Segoe UI Emoji",
-        "Segoe UI Symbol"
-      ].join(','),
+        "Segoe UI Symbol",
+      ].join(","),
       h1: {
         fontFamily: headerFont,
       },
@@ -56,9 +56,9 @@ export const CreateThemeHook: () => Theme = () => {
       },
       h6: {
         fontFamily: headerFont,
-      }
-    }
-  })
-}
+      },
+    },
+  });
+};
 
-export default CreateThemeHook
+export default CreateThemeHook;
