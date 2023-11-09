@@ -5,12 +5,14 @@ import React, {
 } from "react";
 import { DateTime } from "luxon";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateTimePicker as MuiDateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { useFormatInputLabel } from "hooks";
 
-export interface DateTimePickerProps extends ComponentPropsWithoutRef<"input"> {
+export interface DateTimePickerProps
+  extends Omit<ComponentPropsWithoutRef<"input">, "value"> {
   name: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  value: string;
+  value: DateTime;
   type?: string;
   label?: string | JSX.Element;
   fullWidth?: boolean;
@@ -21,7 +23,7 @@ export interface DateTimePickerProps extends ComponentPropsWithoutRef<"input"> {
 export const DateTimePicker = ({
   name,
   label,
-  value,
+  value = DateTime.now(),
   onChange,
   type = "datetime-local",
   error = false,
@@ -34,33 +36,59 @@ export const DateTimePicker = ({
   const formattedLabel = useFormatInputLabel({ label, name });
 
   function handleChange(value: unknown) {
-    const date = value as DateTime;
     const event = {
       target: ref.current,
-    } as React.ChangeEvent<HTMLInputElement>;
-    event.target.value = date.toFormat("yyyy-MM-dd");
+      altType: type,
+    } as React.ChangeEvent<HTMLInputElement> & { altType: string };
+    event.target.value = value as string; // this is actually a DateTime object
     onChange(event);
   }
 
-  return (
-    <DatePicker
-      sx={{
-        textTransform: "capitalize",
-      }}
-      slotProps={{
-        field: {
-          // @ts-expect-error
-          color: "secondary",
-          name,
-          style: {
-            backgroundColor: "rgba(51, 51, 51, 0.07)",
+  if (type === "date") {
+    return (
+      <DatePicker
+        sx={{
+          textTransform: "capitalize",
+        }}
+        slotProps={{
+          field: {
+            // @ts-expect-error
+            color: "secondary",
+            name,
+            style: {
+              backgroundColor: "rgba(51, 51, 51, 0.07)",
+            },
           },
-        },
-      }}
-      label={formattedLabel}
-      inputRef={ref}
-      onAccept={handleChange}
-      onChange={handleChange}
-    />
-  );
+        }}
+        label={formattedLabel}
+        inputRef={ref}
+        value={value}
+        onAccept={handleChange}
+        onChange={handleChange}
+      />
+    );
+  } else {
+    return (
+      <MuiDateTimePicker
+        sx={{
+          textTransform: "capitalize",
+        }}
+        slotProps={{
+          field: {
+            // @ts-expect-error
+            color: "secondary",
+            name,
+            style: {
+              backgroundColor: "rgba(51, 51, 51, 0.07)",
+            },
+          },
+        }}
+        value={value}
+        label={formattedLabel}
+        inputRef={ref}
+        onAccept={handleChange}
+        onChange={handleChange}
+      />
+    );
+  }
 };
