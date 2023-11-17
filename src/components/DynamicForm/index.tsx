@@ -69,15 +69,13 @@ export const DynamicForm = ({
           }
           // date
           if ("format" in property && property.format === "date-time") {
-            emptyState[propertyKey] = (
-              DateTime.fromISO(values[propertyKey] as string) || DateTime.now()
-            ).toFormat("yyyy-MM-dd'T'HH:mm");
+            emptyState[propertyKey] =
+              DateTime.fromISO(values[propertyKey] as string) || DateTime.now();
             break;
           }
           if ("format" in property && property.format === "date") {
-            emptyState[propertyKey] = (
-              DateTime.fromISO(values[propertyKey] as string) || DateTime.now()
-            ).toFormat("yyyy-MM-dd'T'HH:mm");
+            emptyState[propertyKey] =
+              DateTime.fromISO(values[propertyKey] as string) || DateTime.now();
             break;
           }
           emptyState[propertyKey] = values[propertyKey] || "";
@@ -163,10 +161,15 @@ export const DynamicForm = ({
 
   const handleChangeEvent: ChangeEventHandler = useCallback(
     (e) => {
-      const target = e.target as HTMLInputElement;
+      const { target, altType } = e as React.ChangeEvent<HTMLInputElement> & {
+        altType?: string;
+      };
       if (target) {
         const { name, value, checked, type } = target;
-        if (type === "checkbox") {
+        const date = DateTime.fromISO(value);
+        if (date.isValid && altType?.includes("date")) {
+          setFormState({ ...formState, [name]: date });
+        } else if (type === "checkbox") {
           setFormState({ ...formState, [name]: checked });
         } else if (name in formState) {
           setFormState({ ...formState, [name]: value });
@@ -255,7 +258,7 @@ export const DynamicForm = ({
               <DateTimePicker
                 name={propertyKey}
                 label={label}
-                value={formValue as string}
+                value={formValue as DateTime}
                 onChange={handleChangeEvent}
                 required={isRequired}
               />
@@ -268,7 +271,7 @@ export const DynamicForm = ({
               <DateTimePicker
                 name={propertyKey}
                 label={label}
-                value={formValue as string}
+                value={formValue as DateTime}
                 onChange={handleChangeEvent}
                 required={isRequired}
                 type="date"
