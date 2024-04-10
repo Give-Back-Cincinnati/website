@@ -13,6 +13,7 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
   className?: string;
   formatFunctions?: Record<string, (val: any) => string | ReactElement>;
   actions?: React.ReactNode[] | React.ReactNode;
+  keyLabelMapping?: { [key: string]: string }
 }
 
 export const Table = ({
@@ -21,6 +22,7 @@ export const Table = ({
   className,
   formatFunctions,
   actions = [],
+  keyLabelMapping,
   ...props
 }: TableProps) => {
   const containerStyles = [styles.container];
@@ -39,9 +41,15 @@ export const Table = ({
       <table {...props} className={containerStyles.join(" ")}>
         <thead>
           <tr>
-            {keys.map((key) => (
-              <th key={getKey(key)}>{getKey(key)}</th>
-            ))}
+            {
+              keys.map((key) => {
+                if (keyLabelMapping) {
+                  return <th key={getKey(key)}>{keyLabelMapping[getKey(key)]}</th>
+                } else {
+                  return <th key={getKey(key)}>{getKey(key)}</th>
+                }
+              })
+            }
           </tr>
         </thead>
         <tbody>

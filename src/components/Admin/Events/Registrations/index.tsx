@@ -1,7 +1,9 @@
-import { useMemo, useCallback } from "react";
+import React, { useMemo, useState } from "react";
 import { Table } from "@/components/DataDisplay";
 import { CheckIn } from "./CheckIn";
 import { Delete } from "./Delete";
+import { Modal } from "@/components/Utils";
+
 import {
   useSearchUsersQuery,
   useGetEventsByEventIdRegisterQuery,
@@ -18,6 +20,17 @@ export type AdminEventRegistrationsProps = {
   eventId: string;
 };
 
+const checkIfOver21 = (timestamp: string) => {
+  const currentDate = new Date();
+  const date21YearsAgo = new Date(
+    currentDate.getFullYear() - 21,
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );  
+  const inputDate = new Date(timestamp);  
+  return inputDate < date21YearsAgo;
+}
+
 export const AdminEventRegistrations = ({
   eventId,
 }: AdminEventRegistrationsProps) => {
@@ -27,6 +40,31 @@ export const AdminEventRegistrations = ({
     eventId,
     limit: 0,
   });
+
+  const [ columns, setColumns ] = useState<{[key: string]: { label: string, isVisible: boolean, isExportable: boolean }}>({
+    firstName: { label: "First Name", isVisible: true, isExportable: true }, 
+    lastName: { label: "Last Name", isVisible: true, isExportable: true }, 
+    phone: { label: "Phone Number", isVisible: false, isExportable: true }, 
+    email: { label: "Email", isVisible: false, isExportable: true }, 
+    dateOfBirth: { label: "Date of Birth", isVisible: true, isExportable: true  }, 
+    isOver21: { label: "Over 21?", isVisible: true, isExportable: true },
+    hasAgreedToTerms: { label: "Has Agreed To Terms", isVisible: true, isExportable: true  }, 
+    firstEvent: { label: "First Event", isVisible: true, isExportable: true  },  
+    eContactName: { label: "Emergency Contact Name", isVisible: false, isExportable: true  }, 
+    eContactPhone: { label: "Emergency Contact Phone", isVisible: false, isExportable: true  }, 
+    volunteerCategory: { label: "Volunteer Category", isVisible: false, isExportable: true  }, 
+    customFields: { label: "Custom Fields", isVisible: true, isExportable: true  }, 
+    createdAt: { label: "Sign-up Time", isVisible: false, isExportable: true },
+    checkedIn: { label: "Checked In", isVisible: true, isExportable: true  }, 
+    delete: { label: "Delete", isVisible: true, isExportable: false  }, 
+  })
+
+  const [ isEditingTable, setIsEditingTable ] = useState<boolean>(false);
+
+  const exportableKeys = Object.entries(columns).reduce((keyArr, [key, data]) => {
+    data.isExportable ? keyArr.push(key) : {}
+    return keyArr
+  }, Array())
 
   const formattedUsers = useMemo(() => {
     if (!users) return {};
@@ -50,6 +88,7 @@ export const AdminEventRegistrations = ({
       return {
         ...registration,
         ...user,
+        ...{ isOver21: checkIfOver21(registration.dateOfBirth) },
         hasAgreedToTerms: (
           <CheckBox
             name=""
@@ -76,49 +115,40 @@ export const AdminEventRegistrations = ({
     const data = formattedEventRegistrations.reduce(
       (acc, registration: Record<string, unknown>) => {
         acc.push(
-          [
-            "firstName",
-            "lastName",
-            "phone",
-            "email",
-            "dateOfBirth",
-            "hasAgreedToTerms",
-            "eContactName",
-            "eContactPhone",
-            "volunteerCategory",
-            "customFields",
-          ]
+          exportableKeys
             .map((key) => {
-              switch (typeof registration[key]) {
-                case "object":
-                  if (key === "hasAgreedToTerms") {
-                    return String(
-                      (registration[key] as React.ReactElement).props.checked
-                    );
-                  }
-                  break;
-                default:
-                  return String(registration[key]);
-              }
+                switch (typeof registration[key]) {
+                  case "object":
+                    if (key === "hasAgreedToTerms") {
+                      return String(
+                        (registration[key] as React.ReactElement).props.checked
+                      );
+                    } else if (key === "checkedIn") {
+                      return String(
+                        (registration[key] as React.ReactElement).props.registration.checkedIn 
+                      )
+                    } else if (key === "customFields") {
+                      if (event && event.customFields) {
+                        let customFieldsData = "";
+                        const cfKeys: string[] = Object.keys(event.customFields);
+                        cfKeys.forEach((cfKey, idx) => {
+                          customFieldsData += `${event.customFields![cfKey].name}: ${Object(registration["customFields"])[cfKey]}`;
+                          customFieldsData += (idx < (cfKeys.length - 1)) ? " || " : ""
+                        })
+                        return customFieldsData;
+                      } else {
+                        return ""
+                      }               
+                    }
+                    break;
+                  default:
+                    return String(registration[key]);
+                }
             })
             .join(",")
         );
         return acc;
-      },
-      [
-        [
-          "firstName",
-          "lastName",
-          "phone",
-          "email",
-          "dateOfBirth",
-          "hasAgreedToTerms",
-          "eContactName",
-          "eContactPhone",
-          "volunteerCategory",
-          "customFields",
-        ].join(","),
-      ]
+      }, [ exportableKeys.join(",") ]
     );
     const blob = new Blob([data.join("\r\n")], {
       type: "text/csv;charset=utf-8;",
@@ -127,7 +157,7 @@ export const AdminEventRegistrations = ({
   }, [formattedEventRegistrations]);
 
   return (
-    <div>
+    <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
       <h2>Registrations: {eventRegistrations?.length || 0}</h2>
       {eventRegistrations && (
         <>
@@ -141,50 +171,86 @@ export const AdminEventRegistrations = ({
             >
               <Button variant="outlined">Download</Button>
             </a>
-          </div>
-          <Table
-            keys={[
-              "firstName",
-              "lastName",
-              "phone",
-              "email",
-              "dateOfBirth",
-              "hasAgreedToTerms",
-              "eContactName",
-              "eContactPhone",
-              "volunteerCategory",
-              "customFields",
-              "checkedIn",
-              "delete",
-            ]}
-            data={formattedEventRegistrations}
-            formatFunctions={{
-              dateOfBirth: (val) =>
-                DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT),
-              customFields: (val) => {
-                if (!event || !event?.customFields) return "Loading...";
 
-                if (event.customFields) {
-                  return (
-                    <>
-                      {Object.entries(val).map(([key, value]) => (
-                        <div key={key} className={styles.customFields}>
-                          <span>
-                            {event.customFields && event.customFields[key]
-                              ? event.customFields[key].name
-                              : "Deleted"}
-                            :
-                          </span>
-                          {value as string}
-                        </div>
-                      ))}
-                    </>
-                  );
+            <Button variant="outlined" onClick={() => setIsEditingTable(true)}>
+              Edit Table View
+            </Button>
+            <Modal
+                isOpen={isEditingTable}
+                onRequestClose={() => setIsEditingTable(false)}
+            >
+              <>
+                <h3>Add/Remove Columns from Table View</h3>
+                <br/>
+                {
+                  Object.entries(columns).map(([ key, data ]) => {
+                    return ( 
+                      <div key={key}>
+                        <CheckBox
+                          name={`toggle-${key}-visibility`}
+                          label={data.label}
+                          checked={data.isVisible}
+                          onChange={() => setColumns(prevColumns => {
+                            return {
+                              ...prevColumns,
+                              [key]: { label: data.label, isVisible: !data.isVisible, isExportable: data.isExportable }
+                            }
+                          })}
+                        />
+                        <br/>
+                      </div>
+                    )
+                  })
                 }
-                return "Not Found";
-              },
-            }}
-          />
+              </>
+            </Modal>
+          </div>
+          <br/>
+          <div style={{ width: "100%", display: "flex", marginLeft: "auto", marginRight: "auto" }}>
+            <Table
+              keys={
+                Object.entries(columns).reduce((keyArr, [key, data]) => {
+                  data.isVisible ? keyArr.push(key) : {}
+                  return keyArr;
+                }, Array())
+              }
+              keyLabelMapping={
+                Object.entries(columns).reduce((obj, [key, data]) => {
+                  data.isVisible ? obj[key] = data.label : {}
+                  return obj
+                }, Object())
+              }
+              data={formattedEventRegistrations}
+              formatFunctions={{
+                dateOfBirth: (val) =>
+                  DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT),
+                createdAt: (val) => 
+                  DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT),
+                customFields: (val) => {
+                  if (!event || !event?.customFields) return "Loading...";
+
+                  if (event.customFields) {
+                    return (
+                      <>
+                        {Object.entries(val).map(([key, value]) => (
+                          <div key={key} className={styles.customFields}>
+                            <span>
+                              {event.customFields && event.customFields[key]
+                                ? event.customFields[key].name
+                                : "Deleted"}
+                              :
+                            </span>
+                            {value as string}
+                          </div>
+                        ))}
+                      </>
+                    );
+                  }
+                  return "Not Found";
+                },
+              }}
+            />
+          </div>
         </>
       )}
     </div>
