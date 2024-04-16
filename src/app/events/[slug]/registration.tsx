@@ -105,6 +105,7 @@ export default function Registration({ event }: { event: Events }) {
           onSubmit={handleRegistrationSubmit}
           values={me} // if we add new fields in the future, autopopulate them for logged in users
           hiddenFields={["user"]}
+          customFields={eventData ? event.customFields: {}} // pass custom fields from event data
           labelOverrides={{
             hasAgreedToTerms: (_) => <Waiver />,
           }}
