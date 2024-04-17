@@ -30,6 +30,7 @@ export interface DynamicFormProps {
   values?: Record<string, unknown>;
   hiddenFields?: string[];
   labelOverrides?: Record<string, (label: string) => string | JSX.Element>;
+  customFields?: {[ key: string ]: any},
   isLoading?: boolean;
   isProtected?: boolean;
   hideSubmit?: boolean;
@@ -43,12 +44,14 @@ export const DynamicForm = ({
   values = {},
   hiddenFields = [],
   labelOverrides = {},
+  customFields = {},
   isLoading = false,
   isProtected = false,
   hideSubmit = false,
   submitLabel = "Submit",
   isAdmin = false,
 }: DynamicFormProps) => {
+
   // Derive the initial and empty states so they can be used in the created inputs
   const { initialState } = useMemo(() => {
     const { properties } = entity;
@@ -92,12 +95,29 @@ export const DynamicForm = ({
           break;
         default:
           emptyState[propertyKey] = values[propertyKey] || "";
+          break;
       }
     });
     return { initialState: emptyState };
   }, [entity, values, hiddenFields]);
 
   const [formState, setFormState] = useState(initialState);
+
+  // force custom fields to be in state
+  React.useEffect(() => {
+    if (Object.keys(customFields).length > 0) {
+      const initialCustomFields: { [key: string]: any } = Object.entries(customFields).reduce((obj, [cfKey, cfData]) => {
+        obj[String(cfKey)] = cfData.enum[0];
+        return obj
+      }, Object())
+
+      setFormState((prev) => {
+        return { ...prev, ...initialCustomFields }
+      })
+    }
+  }, [customFields])
+
+  
   const [editingObject, setEditingObject] =
     useState<
       | (Record<string, string | number | boolean> & {
