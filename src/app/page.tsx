@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Head from "next/head";
 import { EventCard } from "@/components/Events";
@@ -85,7 +84,8 @@ export default async function Home() {
   const res = await fetch(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL
-    }/events?limit=6&endTime%5B%24gt%5D=${new Date().toLocaleDateString()}&sort=startTime&order=asc`
+    }/events?limit=6&endTime%5B%24gt%5D=${new Date().toLocaleDateString()}&sort=startTime&order=asc`,
+    { cache: "no-store" }
   );
   const events: SearchEventsApiResponse = await res.json();
 
